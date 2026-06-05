@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -f index.html nosotros.html catalogo.html contacto.html)",
+      "Bash(rm -f assets/js/app.js assets/css/styles.css)",
+      "Bash(rm -rf \"Catálogo – MC SPINE\" img logo)",
+      "Bash(pkill -f \"http.server 8123\")"
+    ]
+  }
+}

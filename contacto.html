@@ -1,83 +1,120 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contacto | MC Spine</title>
-    <meta name="description" content="Contacta a MC Spine para información sobre productos, disponibilidad y cotizaciones de soluciones para cirugía de columna.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="description" content="Ponte en contacto con MC Spine. Atención inmediata, cotizaciones y soporte para instituciones y procedimientos de cirugía de columna vertebral." />
+    <link rel="icon" href="/assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" }, fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] } } } };
+    </script>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
-  <body>
-    <div class="preloader" aria-hidden="true"><div class="preloader__mark"><span class="preloader__ring"></span><img class="preloader__logo" src="/logo/imgi_1_logox2.png" alt=""></div></div>
+  <body data-page="contacto">
+    <div class="page-aura"></div>
+    <canvas id="bg-canvas"></canvas>
+
     <header class="site-header">
-      <nav class="nav" aria-label="Navegacion principal">
-        <a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><span>MC Spine<small>Medical solutions</small></span></a>
-        <div class="nav__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a class="is-active" href="/contacto">Contacto</a></div>
-        <div class="nav__actions"><a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a><button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button></div>
+      <nav class="nav container" aria-label="Navegación principal">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /><span>MC Spine<small>Medical Solutions</small></span></a>
+        <div class="nav__links">
+          <a href="/">Inicio</a>
+          <a href="/nosotros">Nosotros</a>
+          <a href="/catalogo">Catálogo</a>
+          <a class="is-active" href="/contacto">Contacto</a>
+        </div>
+        <div class="nav__actions">
+          <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
+          <button class="icon-button menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button>
+        </div>
       </nav>
     </header>
+
     <div class="offcanvas-backdrop" data-backdrop></div>
-    <aside class="offcanvas" data-offcanvas aria-label="Menu movil">
-      <div class="offcanvas__top"><a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"></a><button class="icon-button" type="button" aria-label="Cerrar menu" data-menu-close><span data-icon="close"></span></button></div>
-      <div class="offcanvas__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div>
+    <aside class="offcanvas" data-offcanvas aria-label="Menú móvil">
+      <div class="offcanvas__top">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /></a>
+        <button class="icon-button" type="button" aria-label="Cerrar menú" data-menu-close><span data-icon="close"></span></button>
+      </div>
+      <div class="offcanvas__links">
+        <a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a>
+      </div>
       <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
     </aside>
 
     <main>
-      <section class="page-hero">
+      <section class="section hero" style="padding-bottom:0">
         <div class="container">
-          <p class="eyebrow">Contacto</p>
-          <h1 class="display">Ponte en contacto</h1>
-          <p class="lead">Necesitas información sobre nuestros productos, disponibilidad o cotizaciones? Escribenos y nuestro equipo se pondrá en contacto contigo para brindarte atención personalizada.</p>
+          <p class="eyebrow" data-sr="left">Estamos para ayudarte</p>
+          <h1 class="display" data-sr="bottom" data-sr-delay="120">Contáctanos</h1>
+          <p class="lead" data-sr="bottom" data-sr-delay="220" style="margin-top:1.2rem">Nuestra política de calidad refleja la dedicación de nuestra empresa con el fin de garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz.</p>
         </div>
       </section>
 
+      <!-- Immediate assistance banner -->
+      <section class="section" style="padding-bottom:0">
+        <div class="container">
+          <div class="cta-band" data-sr="bottom">
+            <div>
+              <h2>¿Necesitas atención inmediata?</h2>
+              <p>Comunícate con nuestro equipo y te atenderemos lo antes posible.</p>
+              <span class="phone-big">+52 55 4367 6490</span>
+            </div>
+            <div class="cta-band__actions">
+              <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
+              <a class="btn btn--ghost" href="mailto:info@mcspine.mx" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="mail"></span>Escríbenos</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact + form -->
       <section class="section">
         <div class="container contact-grid">
-          <div class="contact-list" data-reveal="left">
-            <article class="contact-item"><span data-icon="location"></span><div><strong>Dirección</strong><span>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</span></div></article>
-            <article class="contact-item"><span data-icon="phone"></span><div><strong>Teléfono</strong><a href="tel:+525543676490">+52 55 4367 6490</a></div></article>
-            <article class="contact-item"><span data-icon="mail"></span><div><strong>Correo</strong><a href="mailto:info@mcspine.mx">info@mcspine.mx</a></div></article>
-            <article class="contact-item"><span data-icon="clock"></span><div><strong>Horario</strong><span>Lunes a viernes, 9:00 a.m. - 6:00 p.m.</span></div></article>
-            <div class="cta-band">
-              <h2>Necesitas atención inmediata?</h2>
-              <p>Comunícate con nuestro equipo y recibe asesoría sobre disponibilidad, productos y soluciones especializadas.</p>
-              <div class="cta-band__actions"><a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a></div>
-            </div>
+          <div class="contact-info" data-sr="left">
+            <img src="/assets/img/logo.png" alt="MC Spine" style="height:48px;margin-bottom:1rem" />
+            <p>Baja California 245, 4to piso.<br />Hipódromo Condesa, Cuauhtémoc, 06170.<br />Ciudad de México.</p>
+            <h3>Horario</h3>
+            <p>Lunes a viernes · 9:00 am – 6:00 pm</p>
+            <h3>Llámanos</h3>
+            <p><a href="tel:+525543676490">+52 55 4367 6490</a></p>
+            <h3>Escríbenos</h3>
+            <p><a href="mailto:info@mcspine.mx">info@mcspine.mx</a></p>
           </div>
 
-          <form class="form" data-reveal="right" action="mailto:info@mcspine.mx" method="post" enctype="text/plain">
-            <div class="form__row">
-              <div class="field"><label for="nombre">Nombre</label><input id="nombre" name="Nombre" type="text" autocomplete="name" required></div>
-              <div class="field"><label for="empresa">Empresa / institución</label><input id="empresa" name="Empresa" type="text" autocomplete="organization"></div>
-            </div>
-            <div class="form__row">
-              <div class="field"><label for="correo">Correo electrónico</label><input id="correo" name="Correo" type="email" autocomplete="email" required></div>
-              <div class="field"><label for="telefono">Teléfono</label><input id="telefono" name="Teléfono" type="tel" autocomplete="tel"></div>
-            </div>
-            <div class="field"><label for="asunto">Asunto</label><input id="asunto" name="Asunto" type="text" required></div>
-            <div class="field"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="Mensaje" required></textarea></div>
-            <div class="hero__actions">
-              <button class="btn" type="submit" data-burst>Enviar mensaje<span data-icon="arrow"></span></button>
-              <a class="btn btn--ghost" href="https://wa.me/525543676490" target="_blank" rel="noopener">Enviar WhatsApp</a>
-              <a class="btn btn--ghost" href="/catálogo">Ver catálogo</a>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <section class="section section--deep">
-        <div class="container split">
-          <div class="text-stack">
-            <p class="eyebrow">Ubicación</p>
-            <h2>Atencion desde Ciudad de México</h2>
-            <p>MC Spine atiende solicitudes de médicos, hospitales, clínicas e instituciones que buscan soluciones ortopédicas especializadas para columna.</p>
-          </div>
-          <div class="image-panel">
-            <iframe title="Mapa MC Spine" src="https://www.google.com/maps?q=Indian%C3%A1polis%2020%2C%20N%C3%A1poles%2C%20Benito%20Ju%C3%A1rez%2C%2003810%20Ciudad%20de%20M%C3%A9xico&output=embed" width="100%" height="430" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div data-sr="right" data-sr-delay="150">
+            <h2 style="font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:800;color:var(--navy);margin-bottom:1.8rem">Ponte en contacto</h2>
+            <form class="form" data-contact-form novalidate>
+              <div class="field">
+                <input type="text" id="nombre" name="nombre" placeholder=" " required />
+                <label for="nombre">Nombre</label>
+                <span class="field__line"></span>
+              </div>
+              <div class="field">
+                <input type="email" id="correo" name="correo" placeholder=" " required />
+                <label for="correo">Correo</label>
+                <span class="field__line"></span>
+              </div>
+              <div class="field">
+                <input type="text" id="asunto" name="asunto" placeholder=" " />
+                <label for="asunto">Asunto</label>
+                <span class="field__line"></span>
+              </div>
+              <div class="field">
+                <textarea id="mensaje" name="mensaje" placeholder=" " required></textarea>
+                <label for="mensaje">Mensaje</label>
+                <span class="field__line"></span>
+              </div>
+              <div>
+                <button class="btn" type="submit" data-submit>Enviar mensaje<span data-icon="arrow"></span></button>
+              </div>
+              <p class="form-success" data-form-success>¡Gracias! Tu mensaje se ha preparado. Se abrirá tu correo para completar el envío.</p>
+            </form>
           </div>
         </div>
       </section>
@@ -85,16 +122,21 @@
 
     <footer class="site-footer">
       <div class="footer__grid">
-        <div class="footer__brand"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><p>Comercializadora de implantes y equipos médicos para cirugías de columna.</p></div>
-        <div><h3>Navegacion</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
-        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr">Facebook</a></div></div>
+        <div class="footer__brand"><img src="/assets/img/logo.png" alt="MC Spine" /><p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p></div>
+        <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
+        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
         <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
       </div>
-      <div class="footer__bottom"><span>© 2026 MC Spine. Todos los derechos reservados.</span><span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span></div>
+      <div class="footer__bottom">
+        <span>© 2026 MC Spine. Todos los derechos reservados.</span>
+        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+      </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-    <script type="module" src="/assets/js/app.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
   </body>
 </html>

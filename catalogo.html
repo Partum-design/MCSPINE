@@ -1,99 +1,123 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Catálogo | MC Spine</title>
-    <meta name="description" content="Catálogo de productos especializados MC Spine: implantes, sistemas de fijación, cajas intersomáticas, placas, tornillos e instrumental médico.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="description" content="Catálogo de productos MC Spine: implantes para columna, sistemas de fijación, cajas intersomáticas, placas y tornillos para cirugía de alta precisión." />
+    <link rel="icon" href="/assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" }, fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] } } } };
+    </script>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
-  <body>
-    <div class="preloader" aria-hidden="true"><div class="preloader__mark"><span class="preloader__ring"></span><img class="preloader__logo" src="/logo/imgi_1_logox2.png" alt=""></div></div>
+  <body data-page="catalogo">
+    <div class="page-aura"></div>
+    <canvas id="bg-canvas"></canvas>
+
     <header class="site-header">
-      <nav class="nav" aria-label="Navegacion principal">
-        <a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><span>MC Spine<small>Medical solutions</small></span></a>
-        <div class="nav__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a class="is-active" href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div>
-        <div class="nav__actions"><a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a><button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button></div>
+      <nav class="nav container" aria-label="Navegación principal">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /><span>MC Spine<small>Medical Solutions</small></span></a>
+        <div class="nav__links">
+          <a href="/">Inicio</a>
+          <a href="/nosotros">Nosotros</a>
+          <a class="is-active" href="/catalogo">Catálogo</a>
+          <a href="/contacto">Contacto</a>
+        </div>
+        <div class="nav__actions">
+          <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
+          <button class="icon-button menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button>
+        </div>
       </nav>
     </header>
+
     <div class="offcanvas-backdrop" data-backdrop></div>
-    <aside class="offcanvas" data-offcanvas aria-label="Menu movil">
-      <div class="offcanvas__top"><a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"></a><button class="icon-button" type="button" aria-label="Cerrar menu" data-menu-close><span data-icon="close"></span></button></div>
-      <div class="offcanvas__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div>
+    <aside class="offcanvas" data-offcanvas aria-label="Menú móvil">
+      <div class="offcanvas__top">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /></a>
+        <button class="icon-button" type="button" aria-label="Cerrar menú" data-menu-close><span data-icon="close"></span></button>
+      </div>
+      <div class="offcanvas__links">
+        <a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a>
+      </div>
       <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
     </aside>
 
     <main>
-      <section class="page-hero">
+      <section class="section hero" style="padding-bottom:0">
         <div class="container">
-          <p class="eyebrow">Productos y soluciones</p>
-          <h1 class="display">Catálogo de productos especializados</h1>
-          <p class="lead">Contamos con una amplia gama de productos para cirugía de columna, orientados a procedimientos quirúrgicos de alta precisión.</p>
-          <div class="catalog-toolbar" aria-label="Filtros de catálogo">
+          <p class="eyebrow" data-sr="left">Productos y soluciones</p>
+          <h1 class="display" data-sr="bottom" data-sr-delay="120" style="max-width:18ch">Catálogo de productos especializados</h1>
+          <p class="lead" data-sr="bottom" data-sr-delay="220" style="margin-top:1.2rem">Una amplia gama de productos para cirugía de columna, orientados a procedimientos quirúrgicos de alta precisión.</p>
+          <div class="catalog-toolbar" data-sr="bottom" data-sr-delay="300" aria-label="Filtros de catálogo">
             <button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
-            <button class="filter-btn" type="button" data-filter="implantes">Implantes</button>
-            <button class="filter-btn" type="button" data-filter="fijacion">Fijación</button>
-            <button class="filter-btn" type="button" data-filter="cajas">Cajas</button>
-            <button class="filter-btn" type="button" data-filter="instrumental">Instrumental</button>
+            <button class="filter-btn" type="button" data-filter="implantes">Implantes para columna</button>
+            <button class="filter-btn" type="button" data-filter="fijacion">Sistemas de fijación</button>
+            <button class="filter-btn" type="button" data-filter="cajas">Cajas intersomáticas</button>
+            <button class="filter-btn" type="button" data-filter="placas">Placas y tornillos</button>
           </div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:2.5rem">
+        <div class="container">
+          <div class="product-grid" data-product-grid></div>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <div class="product-grid">
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_3_mobi-c2.png" alt="Mod-C+"></div><div class="product-card__body"><small>Implantes</small><h3>Mod-C+</h3><p>Solución especializada para procedimientos quirúrgicos de columna.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_4_mc.png" alt="MC+"></div><div class="product-card__body"><small>Implantes</small><h3>MC+</h3><p>Producto orientado a soporte y estabilidad en procedimientos especializados.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_5_roi-c.png" alt="ROI-C+"></div><div class="product-card__body"><small>Implantes</small><h3>ROI-C+</h3><p>Linea de implantes para necesidades quirúrgicas de alta precisión.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_6_c-plate.png" alt="C-Plite"></div><div class="product-card__body"><small>Fijación</small><h3>C-Plite</h3><p>Componente especializado para fijación y estabilización quirúrgica.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_7_mobidisc.png" alt="Multiflex"></div><div class="product-card__body"><small>Implantes</small><h3>Multiflex</h3><p>Solución para tratamiento especializado de condiciones de columna.</p></div></article>
-            <article class="product-card" data-category="instrumental"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_9_spinetune-l.png" alt="SpineTune TL"></div><div class="product-card__body"><small>Instrumental</small><h3>SpineTune TL</h3><p>Equipo de apoyo para procedimientos quirúrgicos de columna.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_10_roi-a.png" alt="RCI-A+"></div><div class="product-card__body"><small>Implantes</small><h3>RCI-A+</h3><p>Implante especializado enfocado en estabilidad y soporte estructural.</p></div></article>
-            <article class="product-card" data-category="cajas"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_11_interbridge.png" alt="Interbridge"></div><div class="product-card__body"><small>Cajas intersomáticas</small><h3>Interbridge</h3><p>Solución para procedimientos de fusión y soporte entre cuerpos vertebrales.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_13_dallos.png" alt="Dola+"></div><div class="product-card__body"><small>Fijación</small><h3>Dola+</h3><p>Producto médico para fijación especializada en cirugía de columna.</p></div></article>
-            <article class="product-card" data-category="cajas"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_14_carlif.png" alt="CakLIF"></div><div class="product-card__body"><small>Cajas intersomáticas</small><h3>CakLIF</h3><p>Implante orientado a soporte y recuperación estructural.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_12_roi-t.png" alt="ROI-T"></div><div class="product-card__body"><small>Implantes</small><h3>ROI-T</h3><p>Linea especializada para procedimientos quirúrgicos de columna.</p></div></article>
-            <article class="product-card" data-category="cajas"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_17_adonisplif.png" alt="ADONIS-PLIF"></div><div class="product-card__body"><small>Cajas intersomáticas</small><h3>ADONIS-PLIF</h3><p>Producto para procedimientos de fusión vertebral y soporte intersomático.</p></div></article>
-            <article class="product-card" data-category="instrumental"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_15_inswing.png" alt="InSwing"></div><div class="product-card__body"><small>Instrumental</small><h3>InSwing</h3><p>Herramienta de apoyo para procedimientos especializados de columna.</p></div></article>
-            <article class="product-card" data-category="implantes"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_18_hero.png" alt="Hero"></div><div class="product-card__body"><small>Implantes</small><h3>Hero</h3><p>Producto especializado para soluciones ortopédicas de columna.</p></div></article>
-            <article class="product-card" data-category="cajas"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_16_adonistlif.png" alt="ADONIS-TLIF"></div><div class="product-card__body"><small>Cajas intersomáticas</small><h3>ADONIS-TLIF</h3><p>Implante diseñado para soporte entre cuerpos vertebrales.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_19_tristan.png" alt="TRISTAN"></div><div class="product-card__body"><small>Fijación</small><h3>TRISTAN</h3><p>Sistema orientado a estabilidad durante procedimientos especializados.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_21_venus6t.png" alt="VENUS 6T"></div><div class="product-card__body"><small>Fijación</small><h3>VENUS 6T</h3><p>Componente para fijación y estabilización quirúrgica.</p></div></article>
-            <article class="product-card" data-category="cajas"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_22_cajabloqueada.png" alt="Caja bloqueada"></div><div class="product-card__body"><small>Cajas</small><h3>Caja bloqueada</h3><p>Implante especializado para soporte estructural en cirugía de columna.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_23_placacervicalanterior.png" alt="Placa cervical anterior"></div><div class="product-card__body"><small>Placas y tornillos</small><h3>Placa cervical anterior</h3><p>Componente especializado para fijación cervical.</p></div></article>
-            <article class="product-card" data-category="fijacion"><div class="product-card__media"><img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_28_tornillotran.png" alt="Tornillo transpedicular poliaxial"></div><div class="product-card__body"><small>Placas y tornillos</small><h3>Tornillo transpedicular poliaxial</h3><p>Producto para estabilización quirúrgica especializada.</p></div></article>
+          <div class="cta-band" data-sr="bottom">
+            <div>
+              <h2>Solicita información sobre disponibilidad o cotizaciones</h2>
+              <span class="phone-big">+52 55 4367 6490</span>
+              <p>Nuestro equipo puede ayudarte a encontrar la solución adecuada para tu institución o procedimiento.</p>
+            </div>
+            <div class="cta-band__actions">
+              <a class="btn" href="/contacto">Contactar equipo<span data-icon="arrow"></span></a>
+              <a class="btn btn--ghost" href="tel:+525543676490" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="phone"></span>Llamar</a>
+            </div>
           </div>
         </div>
-      </section>
-
-      <section class="section section--deep">
-        <div class="container grid grid--3">
-          <article class="card"><h3>Implantes para columna</h3><p>Soluciones diseñadas para procedimientos quirúrgicos de columna vertebral, enfocadas en estabilidad, soporte y recuperación estructural.</p></article>
-          <article class="card"><h3>Sistemas de fijación</h3><p>Dispositivos médicos utilizados para brindar soporte, alineacion y estabilidad durante procedimientos especializados.</p></article>
-          <article class="card"><h3>Cajas intersomáticas</h3><p>Implantes diseñados para procedimientos de fusión vertebral y soporte entre cuerpos vertebrales.</p></article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container"><div class="cta-band"><h2>Solicita información sobre disponibilidad o cotizaciones.</h2><p>Nuestro equipo puede ayudarte a encontrar la solución adecuada para tu institución o procedimiento.</p><div class="cta-band__actions"><a class="btn" href="/contacto">Contactar equipo<span data-icon="arrow"></span></a><a class="btn btn--ghost" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a></div></div></div>
       </section>
     </main>
 
+    <!-- Product modal -->
+    <div class="modal-backdrop" data-modal aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal__media"><img data-modal-img src="" alt="" /></div>
+        <div class="modal__body">
+          <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close><span data-icon="close"></span></button>
+          <small data-modal-cat></small>
+          <h3 data-modal-title></h3>
+          <p data-modal-desc></p>
+          <div style="margin-top:1.6rem"><a class="btn" href="/contacto">Solicitar información<span data-icon="arrow"></span></a></div>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <div class="footer__grid">
-        <div class="footer__brand"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><p>Comercializadora de implantes y equipos médicos para cirugías de columna.</p></div>
-        <div><h3>Navegacion</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
-        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr">Facebook</a></div></div>
+        <div class="footer__brand"><img src="/assets/img/logo.png" alt="MC Spine" /><p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p></div>
+        <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
+        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
         <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
       </div>
-      <div class="footer__bottom"><span>© 2026 MC Spine. Todos los derechos reservados.</span><span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span></div>
+      <div class="footer__bottom">
+        <span>© 2026 MC Spine. Todos los derechos reservados.</span>
+        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+      </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-    <script type="module" src="/assets/js/app.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/catalogo.js"></script>
   </body>
 </html>

@@ -1,94 +1,128 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nosotros | MC Spine</title>
-    <meta name="description" content="Conoce la misión, visión y valores de MC Spine, empresa mexicana especializada en soluciones para cirugía de columna.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="description" content="Somos una empresa mexicana dedicada a la comercialización de implantes y equipos médicos para cirugía de columna. Conoce nuestra misión, visión y valores." />
+    <link rel="icon" href="/assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" }, fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] } } } };
+    </script>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
-  <body>
-    <div class="preloader" aria-hidden="true"><div class="preloader__mark"><span class="preloader__ring"></span><img class="preloader__logo" src="/logo/imgi_1_logox2.png" alt=""></div></div>
+  <body data-page="nosotros">
+    <div class="page-aura"></div>
+    <canvas id="bg-canvas"></canvas>
+
     <header class="site-header">
-      <nav class="nav" aria-label="Navegacion principal">
-        <a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><span>MC Spine<small>Medical solutions</small></span></a>
-        <div class="nav__links"><a href="/">Inicio</a><a class="is-active" href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div>
-        <div class="nav__actions"><a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a><button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button></div>
+      <nav class="nav container" aria-label="Navegación principal">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /><span>MC Spine<small>Medical Solutions</small></span></a>
+        <div class="nav__links">
+          <a href="/">Inicio</a>
+          <a class="is-active" href="/nosotros">Nosotros</a>
+          <a href="/catalogo">Catálogo</a>
+          <a href="/contacto">Contacto</a>
+        </div>
+        <div class="nav__actions">
+          <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
+          <button class="icon-button menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button>
+        </div>
       </nav>
     </header>
+
     <div class="offcanvas-backdrop" data-backdrop></div>
-    <aside class="offcanvas" data-offcanvas aria-label="Menu movil">
-      <div class="offcanvas__top"><a class="brand" href="/"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"></a><button class="icon-button" type="button" aria-label="Cerrar menu" data-menu-close><span data-icon="close"></span></button></div>
-      <div class="offcanvas__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div>
+    <aside class="offcanvas" data-offcanvas aria-label="Menú móvil">
+      <div class="offcanvas__top">
+        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /></a>
+        <button class="icon-button" type="button" aria-label="Cerrar menú" data-menu-close><span data-icon="close"></span></button>
+      </div>
+      <div class="offcanvas__links">
+        <a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a>
+      </div>
       <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
     </aside>
 
     <main>
-      <section class="page-hero">
+      <!-- Page hero -->
+      <section class="section hero" style="padding-bottom:0">
         <div class="container">
-          <p class="eyebrow">Nosotros</p>
-          <h1 class="display">Una empresa mexicana enfocada en soluciones confiables para cirugía de columna</h1>
-          <p class="lead">Nuestro compromiso es ofrecer productos médicos especializados al sector salud, manteniendo una atención cercana, profesional y enfocada en la calidad.</p>
+          <p class="eyebrow" data-sr="left">Quiénes somos</p>
+          <h1 class="display" data-sr="bottom" data-sr-delay="120" style="max-width:16ch">Nosotros</h1>
         </div>
       </section>
 
+      <!-- Asymmetric split -->
       <section class="section">
-        <div class="container split split--reverse">
-          <div class="image-panel image-panel--contain" data-reveal="left">
-            <img src="/Cat%C3%A1logo%20%E2%80%93%20MC%20SPINE/imgi_18_hero.png" alt="Implante especializado para columna">
+        <div class="container hero__grid">
+          <div data-sr="left">
+            <p class="lead">En MC Spine estamos en busca de convertirnos en el líder del mercado, como la plataforma más eficiente en el tratamiento quirúrgico, contribuyendo con la labor del cirujano y adaptando tecnología adicional al cuerpo humano que mejore la calidad de vida de las personas.</p>
+            <p class="lead" style="margin-top:1.2rem">Nuestra política de calidad refleja la dedicación de nuestra empresa con el fin de garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz.</p>
           </div>
-          <div class="text-stack" data-reveal="right">
-            <p class="eyebrow">MC Spine</p>
-            <h2>Experiencia comercial para un entorno quirúrgico exigente</h2>
-            <p>En MC Spine buscamos consolidarnos como una empresa líder en el mercado de soluciones para cirugía de columna, ofreciendo productos médicos especializados que contribuyan a mejorar la calidad de vida de las personas.</p>
-            <p>Nuestra experiencia en la distribución y comercialización de productos ortopédicos nos permite brindar atención profesional a médicos, hospitales y clínicas que requieren soluciones confiables, eficientes y de alta calidad.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--tight">
-        <div class="container grid grid--3">
-          <article class="card">
-            <div class="card__icon"><span data-icon="spark"></span></div>
-            <h3>Mision</h3>
-            <p>Brindar soluciones médicas especializadas para cirugía de columna mediante la distribución de implantes y equipos de alta calidad, contribuyendo al trabajo de los profesionales de la salud y al bienestar de los pacientes.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon"><span data-icon="shield"></span></div>
-            <h3>Vision</h3>
-            <p>Ser una empresa referente en la comercialización de productos ortopédicos y soluciones para columna, reconocida por su calidad, confiabilidad, atención profesional y compromiso con la innovación médica.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon"><span data-icon="boxes"></span></div>
-            <h3>Compromiso</h3>
-            <p>Trabajamos con responsabilidad, ética y compromiso para apoyar a especialistas, instituciones médicas y pacientes mediante productos diseñados para responder al entorno quirúrgico actual.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section section--deep">
-        <div class="container">
-          <p class="eyebrow">Valores</p>
-          <div class="grid grid--3 values">
-            <article class="card value-card"><h3>Excelencia</h3><p>Buscamos ofrecer productos y atención con altos estándares de calidad.</p></article>
-            <article class="card value-card"><h3>Compromiso</h3><p>Trabajamos con responsabilidad para responder a las necesidades de nuestros clientes.</p></article>
-            <article class="card value-card"><h3>Calidad</h3><p>Seleccionamos soluciones médicas confiables y eficientes.</p></article>
-            <article class="card value-card"><h3>Responsabilidad</h3><p>Actuamos con seriedad en cada proceso comercial y operativo.</p></article>
-            <article class="card value-card"><h3>Confianza</h3><p>Construimos relaciones sólidas con médicos, clínicas, hospitales y aliados estratégicos.</p></article>
-            <article class="card value-card"><h3>Innovación</h3><p>Mantenemos una visión actualizada ante los retos del entorno médico especializado.</p></article>
+          <div class="hero__media" data-sr="right" data-sr-delay="150">
+            <span class="hero__ring"></span>
+            <span class="blob blob--glow" style="width:150px;height:150px;right:-10px;top:-10px;opacity:.45"></span>
+            <img src="/assets/img/nosotros-hero.jpg" alt="Equipo de MC Spine" style="border-radius:50% 50% 48% 52% / 55% 52% 48% 45%;aspect-ratio:1/1;max-width:420px" />
           </div>
         </div>
       </section>
 
+      <!-- Misión / Visión / Valores nodes -->
       <section class="section">
         <div class="container">
-          <div class="cta-band" data-reveal="up">
-            <h2>Soluciones confiables para médicos, clínicas y hospitales.</h2>
-            <p>Conoce nuestro catálogo o solicita información sobre disponibilidad y cotizaciones.</p>
-            <div class="cta-band__actions"><a class="btn" href="/catálogo">Ver catálogo<span data-icon="arrow"></span></a><a class="btn btn--ghost" href="/contacto">Contáctanos</a></div>
+          <div class="section-head" data-sr="bottom">
+            <p class="eyebrow">Lo que nos mueve</p>
+            <h2>Misión, Visión y Valores</h2>
+            <p>Toca cada nodo para explorar los principios que guían nuestro trabajo.</p>
+          </div>
+          <div class="nodes" data-sr="bottom" data-sr-delay="120">
+            <div class="node">
+              <button class="node__head" type="button">
+                <span class="node__dot" data-icon="target"></span>
+                <span class="node__title">Misión</span>
+                <span class="node__chevron" data-icon="chevron"></span>
+              </button>
+              <div class="node__panel"><div class="node__panel-inner">Traer motivación e innovación a nuestros clientes, ofreciendo soluciones especializadas que respondan a las necesidades quirúrgicas más exigentes.</div></div>
+            </div>
+            <div class="node">
+              <button class="node__head" type="button">
+                <span class="node__dot" data-icon="eye"></span>
+                <span class="node__title">Visión</span>
+                <span class="node__chevron" data-icon="chevron"></span>
+              </button>
+              <div class="node__panel"><div class="node__panel-inner">Liderar la comercialización de la industria ortopédica, siendo la plataforma más eficiente y confiable en el tratamiento quirúrgico de la columna vertebral.</div></div>
+            </div>
+            <div class="node">
+              <button class="node__head" type="button">
+                <span class="node__dot" data-icon="gem"></span>
+                <span class="node__title">Valores</span>
+                <span class="node__chevron" data-icon="chevron"></span>
+              </button>
+              <div class="node__panel"><div class="node__panel-inner">Los principios que definen cada decisión de nuestro equipo:
+                <div class="values-list"><span>Excelencia</span><span>Fortaleza</span><span>Calidad</span><span>Compromiso</span><span>Responsabilidad</span><span>Confianza</span></div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Emergency CTA band -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-band" data-sr="bottom">
+            <div>
+              <h2>¿Necesitas ayuda de emergencia? ¡Llámanos!</h2>
+              <span class="phone-big">+52 55 4367 6490</span>
+              <p>Nuestro equipo está listo para ayudarte a encontrar la solución adecuada.</p>
+            </div>
+            <div class="cta-band__actions">
+              <a class="btn" href="/contacto">Contáctanos<span data-icon="arrow"></span></a>
+              <a class="btn btn--ghost" href="tel:+525543676490" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="phone"></span>Llamar</a>
+            </div>
           </div>
         </div>
       </section>
@@ -96,16 +130,21 @@
 
     <footer class="site-footer">
       <div class="footer__grid">
-        <div class="footer__brand"><img src="/logo/imgi_1_logox2.png" alt="MC Spine"><p>Comercializadora de implantes y equipos médicos para cirugías de columna.</p></div>
-        <div><h3>Navegacion</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catálogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
-        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr">Facebook</a></div></div>
+        <div class="footer__brand"><img src="/assets/img/logo.png" alt="MC Spine" /><p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p></div>
+        <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
+        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
         <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
       </div>
-      <div class="footer__bottom"><span>© 2026 MC Spine. Todos los derechos reservados.</span><span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span></div>
+      <div class="footer__bottom">
+        <span>© 2026 MC Spine. Todos los derechos reservados.</span>
+        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+      </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-    <script type="module" src="/assets/js/app.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
   </body>
 </html>
