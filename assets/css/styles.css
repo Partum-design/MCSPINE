@@ -34,6 +34,19 @@ body {
   overflow-x: hidden;
 }
 
+main p:not(.eyebrow):not(.stat-label):not(.contact-privacy):not(.form-success) {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+.section-head--center p,
+.stat-label,
+.contact-form-card-new > p,
+.footer__bottom p {
+  text-align: center;
+}
+
 h1,h2,h3,h4,.display {
   font-family: "Plus Jakarta Sans","Inter",sans-serif;
   letter-spacing: -0.02em;
@@ -1029,52 +1042,65 @@ html.cursor--hover .cursor__ring {
    Contact page redesign
    ============================================================ */
 .contact-hero-full {
-  padding: clamp(3.5rem,8vw,6rem) 0 clamp(2.5rem,5vw,4rem);
-  background: linear-gradient(135deg, var(--navy) 0%, #01336a 55%, var(--glow) 130%);
+  padding: clamp(2.2rem,5vw,3.8rem) 0 clamp(1.2rem,3vw,2rem);
+  background: transparent;
   position: relative; overflow: hidden;
 }
 .contact-hero-full::before {
   content: '';
   position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 55% 70% at 85% 50%, rgba(1,138,190,.35), transparent),
-    radial-gradient(ellipse 40% 55% at 10% 80%, rgba(151,202,219,.15), transparent);
+  background: radial-gradient(ellipse 50% 80% at 90% 25%, rgba(151,202,219,.2), transparent 68%);
 }
 .contact-hero-full::after {
-  content: '';
-  position: absolute; bottom: -1px; left: 0; right: 0;
-  height: 80px;
-  background: var(--white);
-  clip-path: ellipse(55% 100% at 50% 100%);
-  pointer-events: none;
+  display: none;
 }
-.contact-hero-full .eyebrow  { color: var(--hielo); }
-.contact-hero-full .display  { color: #fff; max-width: 14ch; }
-.contact-hero-full .lead     { color: rgba(214,232,238,.88); max-width: 52ch; margin-top: .8rem; }
+.contact-hero-full .eyebrow  { color: var(--glow); }
+.contact-hero-full .display  { color: var(--navy); max-width: 14ch; }
+.contact-hero-full .lead     { color: var(--real); max-width: 52ch; margin-top: .8rem; }
 
 .contact-quick-row {
   display: flex; flex-wrap: wrap; gap: 1rem;
-  margin-top: 2rem; position: relative; z-index: 1;
+  margin-top: 1.8rem; position: relative; z-index: 1;
 }
 .contact-quick-pill {
   display: inline-flex; align-items: center; gap: .6rem;
-  padding: .6rem 1.2rem;
-  border-radius: var(--r-full);
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.22);
-  color: #fff; text-decoration: none; font-weight: 600; font-size: .9rem;
-  backdrop-filter: blur(8px);
-  transition: background .3s, transform .3s;
+  min-height: 46px;
+  padding: .68rem 1.15rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,.88);
+  border: 1px solid rgba(151,202,219,.55);
+  color: var(--navy); text-decoration: none; font-weight: 750; font-size: .9rem;
+  box-shadow: 0 12px 28px -20px rgba(2,69,122,.52);
+  backdrop-filter: blur(12px);
+  transition: background .3s, transform .3s, border-color .3s, box-shadow .3s, color .3s;
 }
-.contact-quick-pill:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
-.contact-quick-pill svg { width: 17px; height: 17px; color: var(--hielo); }
+.contact-quick-pill:hover {
+  transform: translateY(-3px);
+  border-color: rgba(1,138,190,.45);
+  box-shadow: 0 20px 38px -22px rgba(1,138,190,.7);
+}
+.contact-quick-pill:first-child {
+  background: linear-gradient(135deg, var(--navy), var(--real));
+  border-color: transparent;
+  color: #fff;
+}
+.contact-quick-pill:nth-child(3) {
+  background: #25d366;
+  border-color: transparent;
+  color: #fff;
+}
+.contact-quick-pill svg { width: 17px; height: 17px; color: currentColor; opacity: .82; }
 
 .contact-split-new {
   display: grid;
   grid-template-columns: 1fr 1.55fr;
   gap: 2.5rem;
   align-items: start;
-  margin-top: -1rem;
+  margin-top: 0;
+}
+
+body[data-page="contacto"] main > .section {
+  padding-top: clamp(1.2rem,3vw,2rem) !important;
 }
 
 /* Info card (dark) */
@@ -1199,6 +1225,15 @@ html.cursor--hover .cursor__ring {
   display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
   margin-top: .5rem;
 }
+.contact-form-card-new .btn {
+  border-radius: 16px;
+  padding: .9rem 1.4rem !important;
+  background: var(--navy);
+  box-shadow: 0 14px 28px -18px rgba(0,27,72,.85);
+}
+.contact-form-card-new .btn:hover {
+  background: var(--real);
+}
 .contact-privacy {
   font-size: .8rem; color: var(--real); line-height: 1.4;
 }
@@ -1213,7 +1248,7 @@ html.cursor--hover .cursor__ring {
 }
 @media (max-width: 560px) {
   .contact-quick-row { flex-direction: column; }
-  .contact-quick-pill { justify-content: center; }
+  .contact-quick-pill { justify-content: center; width: 100%; }
   .cin-wab { max-width: 100%; justify-content: center; }
 }
 
