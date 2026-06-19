@@ -96,9 +96,20 @@ function initLogoPulse() {
 
 /* ---------- Navbar on scroll ---------- */
 function initNavbarScroll() {
-  const nav = document.querySelector(".nav");
+  const nav    = document.querySelector(".nav");
+  const header = document.querySelector(".site-header");
   if (!nav) return;
-  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 30);
+  let lastY = 0;
+  const onScroll = () => {
+    const y = window.scrollY;
+    nav.classList.toggle("scrolled", y > 40);
+    if (header) {
+      header.classList.toggle("header--scrolled", y > 40);
+      if (y > 120 && y > lastY + 8) header.classList.add("header--hide");
+      else if (y < lastY - 4 || y < 80)  header.classList.remove("header--hide");
+    }
+    lastY = y;
+  };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 }
@@ -221,6 +232,30 @@ function initThreeBackground() {
   let mouseX = 0, mouseY = 0, scrollY = 0;
   window.addEventListener("mousemove", e => { mouseX = e.clientX/window.innerWidth-.5; mouseY = e.clientY/window.innerHeight-.5; }, { passive: true });
   window.addEventListener("scroll", () => { scrollY = window.scrollY; }, { passive: true });
+
+  /* Vary Three.js visuals per visible section */
+  const sectionConfigs = [
+    { sec: null,      color: 0x9fcfe0, accent: 0x018abe, pColor: 0x018abe, opacity: .45 },
+    { sec: "features",color: 0xa8d8e8, accent: 0x018abe, pColor: 0x97cadb, opacity: .38 },
+    { sec: "categories",color:0x7bbdd4,accent:0x02457a,  pColor: 0x018abe, opacity: .42 },
+    { sec: "cert",    color: 0xb5d9e8, accent: 0x018abe, pColor: 0xd6e8ee, opacity: .35 },
+    { sec: "products",color: 0x88c5dc, accent: 0x013a6e, pColor: 0x018abe, opacity: .40 },
+  ];
+  let activeCfg = sectionConfigs[0];
+  const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const sec = e.target.dataset.sec;
+      const cfg = sectionConfigs.find(c => c.sec === sec) || sectionConfigs[0];
+      if (cfg === activeCfg) return;
+      activeCfg = cfg;
+      discMat.color.setHex(cfg.color);
+      accentMat.color.setHex(cfg.accent);
+      particles.material.color.setHex(cfg.pColor);
+      particles.material.opacity = cfg.opacity;
+    });
+  }, { threshold: .3 });
+  document.querySelectorAll("[data-sec]").forEach(el => sectionObs.observe(el));
   window.addEventListener("resize", () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
   let frames = 0, fpsStart = performance.now(), checked = false;
   const clock = () => (performance.now() - fpsStart) / 1000;
@@ -383,7 +418,9 @@ function initContactForm() {
     const nombre = encodeURIComponent(data.get("nombre") || "");
     const asunto = encodeURIComponent(data.get("asunto") || "Contacto desde el sitio web");
     const correo = data.get("correo") || "";
-    const mensaje = encodeURIComponent(`${data.get("mensaje") || ""}\n\n— ${data.get("nombre") || ""} (${correo})`);
+    const tel    = data.get("telefono") || "";
+    const telLine = tel ? `\nTeléfono: ${tel}` : "";
+    const mensaje = encodeURIComponent(`${data.get("mensaje") || ""}${telLine}\n\n— ${data.get("nombre") || ""} (${correo})`);
     const btn = form.querySelector("[data-submit]");
     const r = btn.getBoundingClientRect();
     window.mcBurst && window.mcBurst(r.left + r.width / 2, r.top + r.height / 2, { radius: 80, count: 16 });
