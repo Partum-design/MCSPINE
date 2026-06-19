@@ -264,7 +264,12 @@ function initHeroReveal() {
   if (!target) return;
   const text = target.textContent.trim();
   target.setAttribute("aria-label", text);
-  target.innerHTML = text.split("").map(ch => ch === " " ? " " : `<span class="reveal-letter">${ch}</span>`).join("");
+  // Wrap each word in a no-break container so letters animate together but words don't split
+  target.innerHTML = text.split(" ").map(word =>
+    `<span style="white-space:nowrap;display:inline-block">${
+      word.split("").map(ch => `<span class="reveal-letter">${ch}</span>`).join("")
+    }</span>`
+  ).join(" ");
   if (reduceMotion || !window.anime) {
     target.querySelectorAll(".reveal-letter").forEach(s => { s.style.opacity = 1; s.style.transform = "none"; });
     return;

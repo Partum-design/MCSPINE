@@ -355,7 +355,7 @@ html.cursor--hover .cursor__ring {
 
 .hero-tag {
   display: inline-flex; align-items: center; gap: .55rem;
-  padding: .38rem 1rem .38rem .5rem;
+  padding: .3rem 1.1rem .3rem .35rem;
   background: rgba(255,255,255,.92);
   border: 1px solid rgba(1,138,190,.22);
   border-radius: var(--r-full);
@@ -364,7 +364,7 @@ html.cursor--hover .cursor__ring {
   margin-bottom: 1.4rem; backdrop-filter: blur(12px);
   opacity: 0; transform: translateY(18px);
 }
-.hero-tag img { height: 24px; width: auto; }
+.hero-tag img { height: 40px; width: auto; }
 .hero-tag .tag-dot {
   width: 7px; height: 7px; background: #10b981;
   border-radius: 50%; flex-shrink: 0;
