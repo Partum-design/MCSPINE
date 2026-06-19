@@ -58,10 +58,24 @@ function initCursor() {
   document.documentElement.classList.add("has-custom-cursor");
 
   let mx = 0, my = 0, rx = 0, ry = 0;
+  const darkCursorTargets = [
+    ".contact-info-card-new",
+    ".stats-section",
+    ".site-footer",
+    ".cta-band",
+    ".contact-quick-pill:first-child",
+    ".contact-quick-pill:nth-child(3)",
+    ".btn:not(.btn--ghost)",
+    ".cin-wab",
+    ".whatsapp-fab",
+    ".modal__close",
+    ".offcanvas-backdrop",
+  ].join(",");
 
   document.addEventListener("mousemove", (e) => {
     mx = e.clientX; my = e.clientY;
     dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
+    document.documentElement.classList.toggle("cursor--light", Boolean(e.target.closest(darkCursorTargets)));
   }, { passive: true });
 
   (function lerp() {
@@ -82,7 +96,11 @@ function initCursor() {
     }
   });
 
-  document.addEventListener("mouseleave", () => { dot.style.opacity = "0"; ring.style.opacity = "0"; });
+  document.addEventListener("mouseleave", () => {
+    dot.style.opacity = "0";
+    ring.style.opacity = "0";
+    document.documentElement.classList.remove("cursor--light");
+  });
   document.addEventListener("mouseenter", () => { dot.style.opacity = "1"; ring.style.opacity = "1"; });
 }
 

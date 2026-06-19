@@ -99,6 +99,23 @@ html.cursor--hover .cursor__ring {
   background: rgba(1,138,190,0.07);
 }
 
+html.cursor--light .cursor__dot {
+  background: #fff;
+  mix-blend-mode: normal;
+  box-shadow: 0 0 0 1px rgba(0,27,72,.2), 0 0 18px rgba(255,255,255,.75);
+}
+
+html.cursor--light .cursor__ring {
+  border-color: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.12);
+  box-shadow: 0 0 26px rgba(151,202,219,.35);
+}
+
+html.cursor--light.cursor--hover .cursor__ring {
+  border-color: #fff;
+  background: rgba(255,255,255,.18);
+}
+
 /* ============================================================
    Background layers
    ============================================================ */
@@ -1101,6 +1118,24 @@ html.cursor--hover .cursor__ring {
 
 body[data-page="contacto"] main > .section {
   padding-top: clamp(1.2rem,3vw,2rem) !important;
+}
+
+body[data-page="contacto"] main {
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(246,250,253,.62) 38%,
+      rgba(231,244,249,.8) 100%);
+}
+
+body[data-page="contacto"] [data-sec="cert"]::before {
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(214,232,238,.18) 28%,
+      rgba(214,232,238,.28) 100%),
+    radial-gradient(ellipse 70% 90% at 95% 58%, rgba(151,202,219,.18), transparent 72%),
+    radial-gradient(ellipse 55% 76% at 5% 46%, rgba(214,232,238,.22), transparent 70%);
 }
 
 /* Info card (dark) */
