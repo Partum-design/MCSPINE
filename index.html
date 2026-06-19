@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MC Spine | Soluciones especializadas para columna vertebral</title>
-    <meta name="description" content="MC Spine: comercializadora mexicana de implantes, equipos médicos y soluciones ortopédicas para cirugía de columna vertebral. Cuidamos tu salud con precisión." />
+    <meta name="description" content="MC Spine: comercializadora mexicana certificada ISO 9001 de implantes, equipos médicos y soluciones ortopédicas para cirugía de columna vertebral." />
     <link rel="icon" href="/assets/img/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,17 +12,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
-        theme: {
-          extend: {
-            colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" },
-            fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] },
-          },
-        },
+        theme: { extend: { colors: { gelido:"#D6E8EE", navy:"#001B48", real:"#02457A", glow:"#018ABE", hielo:"#97CADB" }, fontFamily: { sans:["Inter","sans-serif"], display:["Plus Jakarta Sans","sans-serif"] } } }
       };
     </script>
     <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
   <body data-page="inicio">
+
+    <!-- Custom Cursor -->
+    <div class="cursor__dot"  id="cursor-dot"  aria-hidden="true"></div>
+    <div class="cursor__ring" id="cursor-ring" aria-hidden="true"></div>
+
     <div class="page-aura"></div>
     <canvas id="bg-canvas"></canvas>
 
@@ -43,7 +43,7 @@
       </nav>
     </header>
 
-    <!-- Mobile curtain -->
+    <!-- Mobile menu -->
     <div class="offcanvas-backdrop" data-backdrop></div>
     <aside class="offcanvas" data-offcanvas aria-label="Menú móvil">
       <div class="offcanvas__top">
@@ -60,29 +60,103 @@
     </aside>
 
     <main>
-      <!-- Hero -->
-      <section class="section hero">
-        <div class="container hero__grid">
-          <div class="hero__copy">
-            <p class="eyebrow" data-sr="left">En MC Spine</p>
-            <h1 class="display" data-letters>Cuidamos tu salud con soluciones especializadas para columna vertebral</h1>
-            <p class="lead" data-sr="bottom" data-sr-delay="200" style="margin-top:1.5rem">Ofrecemos implantes, equipos médicos y soluciones ortopédicas de alta precisión para hacer frente a los problemas más complejos de la columna vertebral.</p>
-            <div class="hero__cta" data-sr="bottom" data-sr-delay="320">
-              <a class="btn" href="/catalogo">Conoce nuestro catálogo<span data-icon="arrow"></span></a>
-              <a class="btn btn--ghost" href="/contacto">Contáctanos</a>
+
+      <!-- ===== Hero v2 ===== -->
+      <section class="hero-v2">
+        <div class="container">
+          <div class="hero-v2__grid">
+
+            <!-- Content -->
+            <div class="hero-v2__content">
+              <div class="hero-tag">
+                <span class="tag-dot"></span>
+                <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
+                <span>Certificados ISO 9001</span>
+              </div>
+
+              <h1 class="display" data-letters>Cuidamos tu columna con precisión médica</h1>
+
+              <p class="lead" style="margin-top:0">
+                Comercializadora mexicana de implantes y equipos ortopédicos para cirugía de columna vertebral. Más de 10 años respaldando a cirujanos y pacientes.
+              </p>
+
+              <div class="hero-v2__cta">
+                <a class="btn" href="/catalogo">Ver catálogo<span data-icon="arrow"></span></a>
+                <a class="btn btn--ghost" href="/contacto">Contáctanos</a>
+              </div>
+
+              <div class="hero-chip">
+                <div>
+                  <div class="hero-chip__num">+10</div>
+                  <div class="hero-chip__label">Años de<br>experiencia</div>
+                </div>
+                <div style="width:1px;height:44px;background:rgba(151,202,219,.5)"></div>
+                <div>
+                  <div class="hero-chip__num">+20</div>
+                  <div class="hero-chip__label">Productos<br>especializados</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="hero__media" data-sr="right" data-sr-delay="150">
-            <span class="hero__ring"></span>
-            <span class="blob blob--glow" style="width:160px;height:160px;left:-20px;top:0;opacity:.5"></span>
-            <span class="blob blob--ice" style="width:120px;height:120px;right:-10px;bottom:10px;opacity:.6"></span>
-            <img src="/assets/img/hero-doctor.png" alt="Profesional médico de MC Spine" />
+
+            <!-- Visual -->
+            <div class="hero-v2__visual">
+              <div class="hero-v2__img-wrap">
+                <span class="hero__ring"></span>
+                <span class="blob blob--glow" style="width:180px;height:180px;right:-20px;top:40px;opacity:.45;z-index:1"></span>
+                <span class="blob blob--ice"  style="width:140px;height:140px;left:-10px;bottom:60px;opacity:.5;z-index:1"></span>
+                <img src="/assets/img/hero-doctor.png" alt="Profesional médico de MC Spine" />
+
+                <!-- Floating: ISO cert card -->
+                <div class="hero-float hero-float--cert">
+                  <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
+                  <div>
+                    <strong>ISO 9001</strong>
+                    <span>Certificados</span>
+                  </div>
+                </div>
+
+                <!-- Floating: Status card -->
+                <div class="hero-float hero-float--status">
+                  <span class="status-dot"></span>
+                  <span>Servicio disponible</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      <!-- Featured cards -->
-      <section class="section" style="padding-top:0">
+      <!-- ===== Stats ===== -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item" data-sr="bottom" data-sr-delay="0">
+              <div class="stat-item__icon"><span data-icon="years"></span></div>
+              <div class="stat-num-wrap"><span class="stat-num" data-count="10"></span><span class="stat-suffix">+</span></div>
+              <p class="stat-label">Años de experiencia</p>
+            </div>
+            <div class="stat-item" data-sr="bottom" data-sr-delay="100">
+              <div class="stat-item__icon"><span data-icon="products"></span></div>
+              <div class="stat-num-wrap"><span class="stat-num" data-count="20"></span><span class="stat-suffix">+</span></div>
+              <p class="stat-label">Productos especializados</p>
+            </div>
+            <div class="stat-item" data-sr="bottom" data-sr-delay="200">
+              <div class="stat-item__icon"><span data-icon="doctors"></span></div>
+              <div class="stat-num-wrap"><span class="stat-num" data-count="100"></span><span class="stat-suffix">+</span></div>
+              <p class="stat-label">Procedimientos apoyados</p>
+            </div>
+            <div class="stat-item" data-sr="bottom" data-sr-delay="300">
+              <div class="stat-item__icon"><span data-icon="quality"></span></div>
+              <div class="stat-num-wrap"><span class="stat-num" data-count="100"></span><span class="stat-suffix">%</span></div>
+              <p class="stat-label">Compromiso con la calidad</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Feature Cards ===== -->
+      <section class="section" style="padding-bottom:0">
         <div class="container">
           <div class="grid grid--4">
             <article class="card feature-card" data-sr="bottom" data-sr-delay="0">
@@ -109,23 +183,70 @@
         </div>
       </section>
 
-      <!-- Nosotros teaser -->
+      <!-- ===== Category Cards ===== -->
       <section class="section">
-        <div class="container hero__grid">
-          <div class="hero__media" data-sr="left">
-            <span class="blob blob--ice" style="width:140px;height:140px;left:-10px;bottom:-10px;opacity:.5"></span>
-            <img src="/assets/img/about-team.jpg" alt="Equipo MC Spine" style="border-radius:28px;aspect-ratio:4/3;max-width:520px" />
+        <div class="container">
+          <div class="section-head section-head--center" data-sr="bottom">
+            <p class="eyebrow" style="justify-content:center">Nuestros productos</p>
+            <h2>Explora nuestras soluciones especializadas</h2>
+            <p>Trabajamos con las tecnologías más avanzadas para la cirugía de columna vertebral.</p>
           </div>
-          <div data-sr="right" data-sr-delay="150">
-            <p class="eyebrow">Quiénes somos</p>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--navy);line-height:1.1">Una empresa mexicana comprometida con la salud</h2>
-            <p class="lead" style="margin-top:1.2rem">Contamos con más de 10 años de experiencia en la distribución y comercialización de productos ortopédicos que exigen los más altos niveles de estándares en calidad.</p>
-            <div style="margin-top:1.8rem"><a class="btn btn--ghost" href="/nosotros">Conoce más sobre nosotros<span data-icon="arrow"></span></a></div>
+          <div class="cat-grid">
+            <a class="cat-card" href="/catalogo" data-sr="bottom" data-sr-delay="0">
+              <div class="cat-card__icon"><span data-icon="implant"></span></div>
+              <h3>Implantes para columna</h3>
+              <p>Discos artificiales y jaulas intersomáticas de última generación.</p>
+              <div class="cat-card__arrow"><span data-icon="arrow"></span></div>
+            </a>
+            <a class="cat-card" href="/catalogo" data-sr="bottom" data-sr-delay="100">
+              <div class="cat-card__icon"><span data-icon="fix"></span></div>
+              <h3>Sistemas de fijación</h3>
+              <p>Tornillos, barras y sistemas de estabilización espinal.</p>
+              <div class="cat-card__arrow"><span data-icon="arrow"></span></div>
+            </a>
+            <a class="cat-card" href="/catalogo" data-sr="bottom" data-sr-delay="200">
+              <div class="cat-card__icon"><span data-icon="box"></span></div>
+              <h3>Cajas intersomáticas</h3>
+              <p>Dispositivos para fusión intervertebral lumbar y cervical.</p>
+              <div class="cat-card__arrow"><span data-icon="arrow"></span></div>
+            </a>
+            <a class="cat-card" href="/catalogo" data-sr="bottom" data-sr-delay="300">
+              <div class="cat-card__icon"><span data-icon="plate"></span></div>
+              <h3>Placas y tornillos</h3>
+              <p>Sistemas de placa cervical anterior y tornillos transpediculares.</p>
+              <div class="cat-card__arrow"><span data-icon="arrow"></span></div>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Emergency CTA band -->
+      <!-- ===== ISO 9001 / Nosotros ===== -->
+      <section class="section">
+        <div class="container">
+          <div class="cert-grid">
+            <div data-sr="left">
+              <p class="eyebrow">Calidad certificada</p>
+              <h2 style="font-size:clamp(1.9rem,4vw,3rem);font-weight:800;color:var(--navy);line-height:1.1">Una empresa mexicana comprometida con los más altos estándares</h2>
+              <p class="lead" style="margin-top:1.2rem">Contamos con más de 10 años de experiencia y un Sistema de Gestión de Calidad que garantiza la excelencia en cada producto y servicio que ofrecemos.</p>
+
+              <div class="cert-badge" data-sr="bottom" data-sr-delay="200">
+                <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="Certificado ISO 9001" />
+                <div class="cert-badge-text">
+                  <strong>ISO 9001:2015</strong>
+                  <span>Sistema de Gestión de Calidad</span>
+                </div>
+              </div>
+
+              <a class="btn btn--ghost" href="/nosotros" data-sr="bottom" data-sr-delay="300">Conoce más sobre nosotros<span data-icon="arrow"></span></a>
+            </div>
+            <div class="cert-media" data-sr="right" data-sr-delay="150">
+              <img src="/assets/img/about-team.jpg" alt="Equipo MC Spine" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Emergency CTA ===== -->
       <section class="section">
         <div class="container">
           <div class="cta-band" data-sr="bottom">
@@ -136,11 +257,12 @@
             </div>
             <div class="cta-band__actions">
               <a class="btn" href="/contacto">Contáctanos<span data-icon="arrow"></span></a>
-              <a class="btn btn--ghost" href="tel:+525543676490" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="phone"></span>Llamar</a>
+              <a class="btn btn--light" href="tel:+525543676490"><span data-icon="phone"></span>Llamar</a>
             </div>
           </div>
         </div>
       </section>
+
     </main>
 
     <!-- Footer -->
@@ -149,14 +271,27 @@
         <div class="footer__brand">
           <img src="/assets/img/logo.png" alt="MC Spine" />
           <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
+          <div class="footer__iso">
+            <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
+            <span>ISO 9001:2015<br>Certificados</span>
+          </div>
         </div>
         <div>
           <h3>Navegación</h3>
-          <div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div>
+          <div class="footer__links">
+            <a href="/">Inicio</a>
+            <a href="/nosotros">Nosotros</a>
+            <a href="/catalogo">Catálogo</a>
+            <a href="/contacto">Contacto</a>
+          </div>
         </div>
         <div>
           <h3>Contacto</h3>
-          <div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div>
+          <div class="footer__links">
+            <a href="tel:+525543676490">+52 55 4367 6490</a>
+            <a href="mailto:info@mcspine.mx">info@mcspine.mx</a>
+            <a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
+          </div>
         </div>
         <div>
           <h3>Ubicación</h3>
@@ -165,7 +300,11 @@
       </div>
       <div class="footer__bottom">
         <span>© 2026 MC Spine. Todos los derechos reservados.</span>
-        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+        <div class="footer__legal">
+          <a href="/aviso-privacidad">Aviso de Privacidad</a>
+          <a href="/terminos">Términos y Condiciones</a>
+        </div>
+        <span>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
       </div>
     </footer>
 

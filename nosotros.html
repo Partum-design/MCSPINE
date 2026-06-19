@@ -4,18 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nosotros | MC Spine</title>
-    <meta name="description" content="Somos una empresa mexicana dedicada a la comercialización de implantes y equipos médicos para cirugía de columna. Conoce nuestra misión, visión y valores." />
+    <meta name="description" content="Somos una empresa mexicana certificada ISO 9001 dedicada a la comercialización de implantes y equipos médicos para cirugía de columna. Conoce nuestra misión, visión y valores." />
     <link rel="icon" href="/assets/img/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = { theme: { extend: { colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" }, fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] } } } };
+      tailwind.config = { theme: { extend: { colors: { gelido:"#D6E8EE", navy:"#001B48", real:"#02457A", glow:"#018ABE", hielo:"#97CADB" }, fontFamily: { sans:["Inter","sans-serif"], display:["Plus Jakarta Sans","sans-serif"] } } } };
     </script>
     <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
   <body data-page="nosotros">
+
+    <div class="cursor__dot"  id="cursor-dot"  aria-hidden="true"></div>
+    <div class="cursor__ring" id="cursor-ring" aria-hidden="true"></div>
+
     <div class="page-aura"></div>
     <canvas id="bg-canvas"></canvas>
 
@@ -48,7 +52,8 @@
     </aside>
 
     <main>
-      <!-- Page hero -->
+
+      <!-- Hero -->
       <section class="section hero" style="padding-bottom:0">
         <div class="container">
           <p class="eyebrow" data-sr="left">Quiénes somos</p>
@@ -56,23 +61,52 @@
         </div>
       </section>
 
-      <!-- Asymmetric split -->
+      <!-- Intro split -->
       <section class="section">
         <div class="container hero__grid">
           <div data-sr="left">
             <p class="lead">En MC Spine estamos en busca de convertirnos en el líder del mercado, como la plataforma más eficiente en el tratamiento quirúrgico, contribuyendo con la labor del cirujano y adaptando tecnología adicional al cuerpo humano que mejore la calidad de vida de las personas.</p>
             <p class="lead" style="margin-top:1.2rem">Nuestra política de calidad refleja la dedicación de nuestra empresa con el fin de garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz.</p>
+            <div style="margin-top:2rem">
+              <a class="btn" href="/catalogo">Ver catálogo<span data-icon="arrow"></span></a>
+            </div>
           </div>
           <div class="hero__media" data-sr="right" data-sr-delay="150">
             <span class="hero__ring"></span>
-            <span class="blob blob--glow" style="width:150px;height:150px;right:-10px;top:-10px;opacity:.45"></span>
+            <span class="blob blob--glow" style="width:150px;height:150px;right:-10px;top:-10px;opacity:.42"></span>
             <img src="/assets/img/nosotros-hero.jpg" alt="Equipo de MC Spine" style="border-radius:50% 50% 48% 52% / 55% 52% 48% 45%;aspect-ratio:1/1;max-width:420px" />
           </div>
         </div>
       </section>
 
-      <!-- Misión / Visión / Valores nodes -->
-      <section class="section">
+      <!-- ISO 9001 certification -->
+      <section class="section" style="padding-top:0">
+        <div class="container">
+          <div class="cert-grid">
+            <div class="cert-media" data-sr="left">
+              <img src="/assets/img/about-team.jpg" alt="Equipo MC Spine" />
+            </div>
+            <div data-sr="right" data-sr-delay="150">
+              <p class="eyebrow">Calidad certificada</p>
+              <h2 style="font-size:clamp(1.9rem,4vw,3rem);font-weight:800;color:var(--navy);line-height:1.1">Certificados con los más altos estándares internacionales</h2>
+              <p class="lead" style="margin-top:1.1rem">Nuestro Sistema de Gestión de Calidad nos permite garantizar que cada producto y servicio que ofrecemos cumple con los requisitos más estrictos del sector médico.</p>
+
+              <div class="cert-badge" style="margin-top:1.8rem">
+                <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="Certificado ISO 9001" />
+                <div class="cert-badge-text">
+                  <strong>ISO 9001:2015</strong>
+                  <span>Sistema de Gestión de Calidad</span>
+                </div>
+              </div>
+
+              <p style="color:var(--real);line-height:1.7;font-size:.95rem">Esta certificación avala nuestro compromiso con la mejora continua, la satisfacción del cliente y la estandarización de todos nuestros procesos operativos y comerciales.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Misión / Visión / Valores -->
+      <section class="section" style="padding-top:0">
         <div class="container">
           <div class="section-head" data-sr="bottom">
             <p class="eyebrow">Lo que nos mueve</p>
@@ -103,14 +137,25 @@
                 <span class="node__chevron" data-icon="chevron"></span>
               </button>
               <div class="node__panel"><div class="node__panel-inner">Los principios que definen cada decisión de nuestro equipo:
-                <div class="values-list"><span>Excelencia</span><span>Fortaleza</span><span>Calidad</span><span>Compromiso</span><span>Responsabilidad</span><span>Confianza</span></div>
+                <div class="values-list" style="margin-top:.8rem">
+                  <span>Excelencia</span><span>Fortaleza</span><span>Calidad</span>
+                  <span>Compromiso</span><span>Responsabilidad</span><span>Confianza</span>
+                </div>
               </div></div>
+            </div>
+            <div class="node">
+              <button class="node__head" type="button">
+                <span class="node__dot" data-icon="shield"></span>
+                <span class="node__title">Política de Calidad</span>
+                <span class="node__chevron" data-icon="chevron"></span>
+              </button>
+              <div class="node__panel"><div class="node__panel-inner">Nuestra política de calidad refleja la dedicación de la empresa para garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz, certificado bajo la norma ISO 9001:2015.</div></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Emergency CTA band -->
+      <!-- Emergency CTA -->
       <section class="section">
         <div class="container">
           <div class="cta-band" data-sr="bottom">
@@ -121,23 +166,50 @@
             </div>
             <div class="cta-band__actions">
               <a class="btn" href="/contacto">Contáctanos<span data-icon="arrow"></span></a>
-              <a class="btn btn--ghost" href="tel:+525543676490" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="phone"></span>Llamar</a>
+              <a class="btn btn--light" href="tel:+525543676490"><span data-icon="phone"></span>Llamar</a>
             </div>
           </div>
         </div>
       </section>
+
     </main>
 
     <footer class="site-footer">
       <div class="footer__grid">
-        <div class="footer__brand"><img src="/assets/img/logo.png" alt="MC Spine" /><p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p></div>
-        <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
-        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
-        <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
+        <div class="footer__brand">
+          <img src="/assets/img/logo.png" alt="MC Spine" />
+          <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
+          <div class="footer__iso">
+            <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
+            <span>ISO 9001:2015<br>Certificados</span>
+          </div>
+        </div>
+        <div>
+          <h3>Navegación</h3>
+          <div class="footer__links">
+            <a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a>
+          </div>
+        </div>
+        <div>
+          <h3>Contacto</h3>
+          <div class="footer__links">
+            <a href="tel:+525543676490">+52 55 4367 6490</a>
+            <a href="mailto:info@mcspine.mx">info@mcspine.mx</a>
+            <a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+        <div>
+          <h3>Ubicación</h3>
+          <p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p>
+        </div>
       </div>
       <div class="footer__bottom">
         <span>© 2026 MC Spine. Todos los derechos reservados.</span>
-        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+        <div class="footer__legal">
+          <a href="/aviso-privacidad">Aviso de Privacidad</a>
+          <a href="/terminos">Términos y Condiciones</a>
+        </div>
+        <span>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
       </div>
     </footer>
 

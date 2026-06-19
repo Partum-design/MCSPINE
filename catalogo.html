@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
   <body data-page="catalogo">
+
+    <div class="cursor__dot"  id="cursor-dot"  aria-hidden="true"></div>
+    <div class="cursor__ring" id="cursor-ring" aria-hidden="true"></div>
+
     <div class="page-aura"></div>
     <canvas id="bg-canvas"></canvas>
 
@@ -102,14 +106,25 @@
 
     <footer class="site-footer">
       <div class="footer__grid">
-        <div class="footer__brand"><img src="/assets/img/logo.png" alt="MC Spine" /><p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p></div>
+        <div class="footer__brand">
+          <img src="/assets/img/logo.png" alt="MC Spine" />
+          <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
+          <div class="footer__iso">
+            <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
+            <span>ISO 9001:2015<br>Certificados</span>
+          </div>
+        </div>
         <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
         <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
         <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
       </div>
       <div class="footer__bottom">
         <span>© 2026 MC Spine. Todos los derechos reservados.</span>
-        <span>Desarrollado y diseñado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
+        <div class="footer__legal">
+          <a href="/aviso-privacidad">Aviso de Privacidad</a>
+          <a href="/terminos">Términos y Condiciones</a>
+        </div>
+        <span>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
       </div>
     </footer>
 
