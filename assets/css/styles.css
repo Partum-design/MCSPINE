@@ -195,7 +195,7 @@ html.cursor--light.cursor--hover .cursor__ring {
   padding: .45rem 1.1rem;
 }
 .nav.scrolled .brand img {
-  height: 44px;
+  height: 54px;
 }
 .site-header {
   position: sticky; top: 0; z-index: 60;
@@ -209,7 +209,7 @@ html.cursor--light.cursor--hover .cursor__ring {
 }
 
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-.brand img { height: 52px; width: auto; transition: transform .45s var(--ease-spring), height .4s var(--ease-liquid); }
+.brand img { height: 68px; width: auto; transition: transform .45s var(--ease-spring), height .4s var(--ease-liquid); }
 .brand:hover img { transform: scale(1.09) rotate(-4deg); }
 .brand span { display: flex; flex-direction: column; line-height: 1; color: var(--navy); font-weight: 800; }
 .brand small { font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--glow); margin-top: 2px; }
@@ -851,7 +851,7 @@ html.cursor--light.cursor--hover .cursor__ring {
   max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 2.5rem;
 }
-.footer__brand img { height: 38px; filter: brightness(0) invert(1); margin-bottom: 1rem; }
+.footer__brand img { height: 58px; filter: brightness(0) invert(1); margin-bottom: 1rem; }
 .footer__brand p { line-height: 1.65; font-size: .9rem; max-width: 32ch; }
 .footer__iso { margin-top: 1.2rem; display: flex; align-items: center; gap: .65rem; }
 .footer__iso img { height: 54px; filter: brightness(0) invert(1); opacity: .75; }
@@ -1118,6 +1118,7 @@ html.cursor--light.cursor--hover .cursor__ring {
 
 body[data-page="contacto"] main > .section {
   padding-top: clamp(1.2rem,3vw,2rem) !important;
+  padding-bottom: clamp(1.2rem,3vw,2rem) !important;
 }
 
 body[data-page="contacto"] main {
@@ -1136,6 +1137,20 @@ body[data-page="contacto"] [data-sec="cert"]::before {
       rgba(214,232,238,.28) 100%),
     radial-gradient(ellipse 70% 90% at 95% 58%, rgba(151,202,219,.18), transparent 72%),
     radial-gradient(ellipse 55% 76% at 5% 46%, rgba(214,232,238,.22), transparent 70%);
+}
+
+body[data-page="contacto"] .site-footer {
+  margin-top: 0;
+  position: relative;
+}
+
+body[data-page="contacto"] .site-footer::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -42px;
+  height: 42px;
+  background: linear-gradient(180deg, rgba(0,27,72,0), var(--navy));
+  pointer-events: none;
 }
 
 /* Info card (dark) */
@@ -1300,8 +1315,8 @@ body[data-page="contacto"] [data-sec="cert"]::before {
   .hero-float { font-size: .76rem; padding: .5rem .7rem; }
   .hero-float--cert img { height: 40px; }
   .hero-tag img { height: 44px; }
-  .brand img { height: 42px; }
-  .nav.scrolled .brand img { height: 36px; }
+  .brand img { height: 54px; }
+  .nav.scrolled .brand img { height: 46px; }
   .whatsapp-fab { bottom: 1.2rem; right: 1.2rem; width: 54px; height: 54px; }
   .whatsapp-fab svg { width: 28px; height: 28px; }
 }
