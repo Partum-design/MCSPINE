@@ -1,469 +1,367 @@
-/* ============================================================
-   MC Spine — shared interactions v2
-   Globals (CDN): THREE, anime, ScrollReveal, mojs
-   ============================================================ */
+/* MC Spine · interacciones compartidas (sin dependencias) */
+import { PRODUCTS, CATEGORY_LABEL, ZONE_LABEL } from "../data/products.js";
+import { quote, initQuoteUI, toast, openQuote, waLink, mailLink, quoteMessage } from "./quote.js";
 
-const PALETTE = {
-  gelido: "#d6e8ee", navy: "#001b48",
-  real: "#02457a", glow: "#018abe", hielo: "#97cadb",
-};
+export const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isTouch = window.matchMedia("(pointer: coarse)").matches;
+/* ---------- Header: estado al hacer scroll (IntersectionObserver, sin listener de scroll) ---------- */
+function initHeader() {
+  const sentinel = document.createElement("div");
+  sentinel.style.cssText = "position:absolute;top:0;left:0;height:40px;width:1px;pointer-events:none";
+  document.body.prepend(sentinel);
+  new IntersectionObserver(([e]) => document.documentElement.classList.toggle("is-scrolled", !e.isIntersecting)).observe(sentinel);
+}
 
-/* ---------- SVG icons ---------- */
-const ICONS = {
-  menu:    '<path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  close:   '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  phone:   '<path d="M3 5c0 8.3 6.7 15 15 15a2 2 0 0 0 2-2v-2.6a1 1 0 0 0-.8-1l-3.3-.7a1 1 0 0 0-1 .3l-1.1 1.3a12 12 0 0 1-5.4-5.4l1.3-1.1a1 1 0 0 0 .3-1L8.6 4.8a1 1 0 0 0-1-.8H5a2 2 0 0 0-2 2z" fill="currentColor"/>',
-  arrow:   '<path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  mail:    '<path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2"/>',
-  pin:     '<path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>',
-  clock:   '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  shield:  '<path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  spark:   '<path d="M12 3v6m0 6v6m9-9h-6M9 12H3m12.5-6.5-4 4m-3 3-4 4m11 0-4-4m-3-3-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  boxes:   '<path d="M3 8l9-5 9 5-9 5-9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 8v8l9 5 9-5V8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 13v8" stroke="currentColor" stroke-width="2"/>',
-  pulse:   '<path d="M3 12h4l2-6 4 12 2-6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  target:  '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>',
-  eye:     '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>',
-  gem:     '<path d="M6 3h12l3 6-9 12L3 9l3-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 9h18M9 3l3 6 3-6M12 9 9 21m3-12 3 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
-  chevron: '<path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  cert:    '<path d="M12 15l-2 5 2-1 2 1-2-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="6" stroke="currentColor" stroke-width="2"/><path d="m9.5 10 1.5 1.5 3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  years:   '<rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  products:'<path d="M3 8l9-5 9 5-9 5-9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 8v8l9 5 9-5V8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
-  doctors: '<circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="2"/><path d="M3 21v-1a6 6 0 0 1 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="16" r="4" stroke="currentColor" stroke-width="2"/><path d="M17 14v4M15 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  quality: '<path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
-  implant: '<path d="M12 4 C8 4 5 7 5 12 S8 20 12 20 S19 17 19 12 S16 4 12 4Z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-  fix:     '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  box:     '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3.3 7 12 12l8.7-5M12 22V12" stroke="currentColor" stroke-width="2"/>',
-  plate:   '<rect x="4" y="7" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="16" cy="12" r="1.5" fill="currentColor"/>',
-};
-
-function injectIcons(root = document) {
-  root.querySelectorAll("[data-icon]").forEach((el) => {
-    const key = el.getAttribute("data-icon");
-    if (!ICONS[key] || el.dataset.iconDone) return;
-    el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${ICONS[key]}</svg>`;
-    el.dataset.iconDone = "1";
+/* ---------- Menú móvil ---------- */
+function initMenu() {
+  const menu = document.querySelector("[data-menu]");
+  const openBtn = document.querySelector("[data-menu-open]");
+  if (!menu || !openBtn) return;
+  openBtn.addEventListener("click", () => { menu.showModal(); openBtn.setAttribute("aria-expanded", "true"); });
+  menu.addEventListener("close", () => openBtn.setAttribute("aria-expanded", "false"));
+  menu.addEventListener("click", (e) => {
+    if (e.target.closest("[data-menu-close]") || e.target === menu) menu.close();
+    if (e.target.closest("[data-quote-open]")) menu.close();
   });
 }
 
-/* ---------- Custom Cursor ---------- */
-function initCursor() {
-  if (isTouch || reduceMotion) return;
-  const dot  = document.getElementById("cursor-dot");
-  const ring = document.getElementById("cursor-ring");
-  if (!dot || !ring) return;
-
-  document.documentElement.classList.add("has-custom-cursor");
-
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  const darkCursorTargets = [
-    ".contact-info-card-new",
-    ".stats-section",
-    ".site-footer",
-    ".cta-band",
-    ".contact-quick-pill:first-child",
-    ".contact-quick-pill:nth-child(3)",
-    ".btn:not(.btn--ghost)",
-    ".cin-wab",
-    ".whatsapp-fab",
-    ".modal__close",
-    ".offcanvas-backdrop",
-  ].join(",");
-
-  document.addEventListener("mousemove", (e) => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
-    document.documentElement.classList.toggle("cursor--light", Boolean(e.target.closest(darkCursorTargets)));
-  }, { passive: true });
-
-  (function lerp() {
-    rx += (mx - rx) * 0.13;
-    ry += (my - ry) * 0.13;
-    ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-    requestAnimationFrame(lerp);
-  })();
-
-  document.addEventListener("mouseover", (e) => {
-    if (e.target.closest("a,button,.cat-card,.product-card,.node__head,.filter-btn,.card,.cert-badge,.hero-float")) {
-      document.documentElement.classList.add("cursor--hover");
-    }
-  });
-  document.addEventListener("mouseout", (e) => {
-    if (e.target.closest("a,button,.cat-card,.product-card,.node__head,.filter-btn,.card,.cert-badge,.hero-float")) {
-      document.documentElement.classList.remove("cursor--hover");
-    }
-  });
-
-  document.addEventListener("mouseleave", () => {
-    dot.style.opacity = "0";
-    ring.style.opacity = "0";
-    document.documentElement.classList.remove("cursor--light");
-  });
-  document.addEventListener("mouseenter", () => { dot.style.opacity = "1"; ring.style.opacity = "1"; });
+/* ---------- Aparición al entrar en pantalla ---------- */
+export function initReveal(root = document) {
+  const els = root.querySelectorAll("[data-reveal]:not(.is-in)");
+  if (!("IntersectionObserver" in window) || reduceMotion) { els.forEach((el) => el.classList.add("is-in")); return; }
+  const pending = new Set(els);
+  const show = (el) => { el.classList.add("is-in"); io.unobserve(el); pending.delete(el); };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.isIntersecting && show(e.target));
+    // Si el usuario saltó la sección (ancla, salto rápido), también se revela
+    pending.forEach((el) => { if (el.getBoundingClientRect().bottom < 0) show(el); });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  els.forEach((el) => io.observe(el));
 }
 
-/* ---------- Logo pulse ---------- */
-function initLogoPulse() {
-  if (reduceMotion) return;
-  const logo = document.querySelector(".brand img");
-  if (!logo || !window.anime) return;
-  anime({ targets: logo, scale: [1, 1.08, 1], duration: 2800, easing: "easeInOutSine", loop: true });
-}
-
-/* ---------- Navbar on scroll ---------- */
-function initNavbarScroll() {
-  const nav    = document.querySelector(".nav");
-  const header = document.querySelector(".site-header");
-  if (!nav) return;
-  let lastY = 0;
-  const onScroll = () => {
-    const y = window.scrollY;
-    nav.classList.toggle("scrolled", y > 40);
-    if (header) {
-      header.classList.toggle("header--scrolled", y > 40);
-      if (y > 120 && y > lastY + 8) header.classList.add("header--hide");
-      else if (y < lastY - 4 || y < 80)  header.classList.remove("header--hide");
-    }
-    lastY = y;
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-}
-
-/* ---------- Mobile menu ---------- */
-function initMobileMenu() {
-  const openBtn  = document.querySelector("[data-menu-open]");
-  const closeBtn = document.querySelector("[data-menu-close]");
-  const backdrop = document.querySelector("[data-backdrop]");
-  const panel    = document.querySelector("[data-offcanvas]");
-  if (!openBtn || !panel) return;
-  const links = panel.querySelectorAll(".offcanvas__links a");
-
-  const open = () => {
-    backdrop.classList.add("is-open");
-    openBtn.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-    if (window.anime && !reduceMotion) {
-      anime.remove([panel, links]);
-      anime({ targets: panel, translateX: ["100%","0%"], duration: 620, easing: "easeOutExpo" });
-      anime({ targets: links, opacity: [0,1], translateX: [40,0], delay: anime.stagger(70,{start:180}), duration: 600, easing: "easeOutExpo" });
-    } else {
-      panel.style.transform = "translateX(0)";
-      links.forEach(l => l.style.opacity = 1);
-    }
-  };
-  const close = () => {
-    backdrop.classList.remove("is-open");
-    openBtn.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-    if (window.anime && !reduceMotion) {
-      anime.remove([panel, links]);
-      anime({ targets: panel, translateX: ["0%","100%"], duration: 480, easing: "easeInExpo" });
-    } else {
-      panel.style.transform = "translateX(100%)";
-    }
-  };
-
-  openBtn.addEventListener("click", open);
-  closeBtn && closeBtn.addEventListener("click", close);
-  backdrop && backdrop.addEventListener("click", close);
-  links.forEach(l => l.addEventListener("click", close));
-  window.addEventListener("keydown", e => e.key === "Escape" && close());
-}
-
-/* ---------- Mo.js nav bursts ---------- */
-function initHoverBursts() {
-  if (reduceMotion || isTouch || !window.mojs) return;
-  const targets = document.querySelectorAll(".nav__links a, .filter-btn");
-  targets.forEach(el => {
-    let last = 0;
-    el.addEventListener("mouseenter", () => {
-      const now = performance.now();
-      if (now - last < 450) return;
-      last = now;
-      const r = el.getBoundingClientRect();
-      new mojs.Burst({
-        left: r.left + r.width / 2, top: r.top + r.height / 2,
-        radius: { 0: 26 }, count: 6,
-        children: { fill: [PALETTE.glow, PALETTE.hielo], radius: { 4: 0 }, duration: 600, easing: "cubic.out" },
-      }).play();
-    });
-  });
-}
-
-window.mcBurst = function (x, y, opts = {}) {
-  if (reduceMotion || !window.mojs) return;
-  new mojs.Burst({
-    left: x, top: y,
-    radius: { 0: opts.radius || 50 }, count: opts.count || 12,
-    children: { fill: opts.colors || [PALETTE.glow, PALETTE.hielo, "#ffffff"], radius: { 7: 0 }, duration: opts.duration || 900, easing: "cubic.out" },
-  }).play();
-};
-
-/* ---------- Three.js spine background ---------- */
-function enableFallback() {
-  const c = document.getElementById("bg-canvas");
-  if (c) c.style.display = "none";
-  if (!document.querySelector(".aura-fallback")) {
-    const f = document.createElement("div");
-    f.className = "aura-fallback";
-    document.body.appendChild(f);
-  }
-}
-
-function initThreeBackground() {
-  const canvas = document.getElementById("bg-canvas");
-  if (!canvas) return;
-  if (reduceMotion || isTouch || window.innerWidth < 900 || !window.THREE) { enableFallback(); return; }
-  let renderer, scene, camera, group, raf;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  } catch (e) { enableFallback(); return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 0, 16);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-  const key = new THREE.PointLight(0x018abe, 1.2, 100); key.position.set(10, 12, 14); scene.add(key);
-  const fill = new THREE.PointLight(0x97cadb, 0.8, 100); fill.position.set(-12, -8, 8); scene.add(fill);
-  group = new THREE.Group(); scene.add(group);
-  const SEGMENTS = 26;
-  const discMat   = new THREE.MeshStandardMaterial({ color: 0x9fcfe0, metalness: .35, roughness: .35, transparent: true, opacity: .9 });
-  const accentMat = new THREE.MeshStandardMaterial({ color: 0x018abe, metalness: .4,  roughness: .3,  transparent: true, opacity: .95 });
-  for (let i = 0; i < SEGMENTS; i++) {
-    const t = i / (SEGMENTS - 1);
-    const disc = new THREE.Mesh(new THREE.TorusGeometry(.9 - t * .28, .26, 14, 32), i % 4 === 0 ? accentMat : discMat);
-    disc.position.set(Math.sin(t * Math.PI * 2.2) * 1.6, (t - .5) * 16, Math.cos(t * Math.PI * 2.2) * 1.6);
-    disc.rotation.x = Math.PI / 2; disc.rotation.z = t * Math.PI * 2.2;
-    group.add(disc);
-  }
-  const pGeo = new THREE.BufferGeometry();
-  const N = 140; const pos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { pos[i*3] = (Math.random()-.5)*24; pos[i*3+1] = (Math.random()-.5)*24; pos[i*3+2] = (Math.random()-.5)*18; }
-  pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x018abe, size: .09, transparent: true, opacity: .45 }));
-  scene.add(particles);
-  group.rotation.z = .25;
-  let mouseX = 0, mouseY = 0, scrollY = 0;
-  window.addEventListener("mousemove", e => { mouseX = e.clientX/window.innerWidth-.5; mouseY = e.clientY/window.innerHeight-.5; }, { passive: true });
-  window.addEventListener("scroll", () => { scrollY = window.scrollY; }, { passive: true });
-
-  /* Vary Three.js visuals per visible section */
-  const sectionConfigs = [
-    { sec: null,      color: 0x9fcfe0, accent: 0x018abe, pColor: 0x018abe, opacity: .45 },
-    { sec: "features",color: 0xa8d8e8, accent: 0x018abe, pColor: 0x97cadb, opacity: .38 },
-    { sec: "categories",color:0x7bbdd4,accent:0x02457a,  pColor: 0x018abe, opacity: .42 },
-    { sec: "cert",    color: 0xb5d9e8, accent: 0x018abe, pColor: 0xd6e8ee, opacity: .35 },
-    { sec: "products",color: 0x88c5dc, accent: 0x013a6e, pColor: 0x018abe, opacity: .40 },
-  ];
-  let activeCfg = sectionConfigs[0];
-  const sectionObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const sec = e.target.dataset.sec;
-      const cfg = sectionConfigs.find(c => c.sec === sec) || sectionConfigs[0];
-      if (cfg === activeCfg) return;
-      activeCfg = cfg;
-      discMat.color.setHex(cfg.color);
-      accentMat.color.setHex(cfg.accent);
-      particles.material.color.setHex(cfg.pColor);
-      particles.material.opacity = cfg.opacity;
-    });
-  }, { threshold: .3 });
-  document.querySelectorAll("[data-sec]").forEach(el => sectionObs.observe(el));
-  window.addEventListener("resize", () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
-  let frames = 0, fpsStart = performance.now(), checked = false;
-  const clock = () => (performance.now() - fpsStart) / 1000;
-  function render() {
-    raf = requestAnimationFrame(render);
-    const t = clock();
-    group.rotation.y = t * .12 + mouseX * .6;
-    group.rotation.x = mouseY * .4 + scrollY * .0006;
-    group.position.y = -scrollY * .004;
-    particles.rotation.y = t * .04;
-    camera.position.x += (mouseX * 2 - camera.position.x) * .04;
-    camera.position.y += (-mouseY * 2 - camera.position.y) * .04;
-    camera.lookAt(0, 0, 0);
-    renderer.render(scene, camera);
-    frames++;
-    if (!checked && t > 2.2) {
-      checked = true;
-      if (frames / t < 38) { cancelAnimationFrame(raf); renderer.dispose(); enableFallback(); }
-    }
-  }
-  render();
-  document.addEventListener("visibilitychange", () => { if (document.hidden) cancelAnimationFrame(raf); else render(); });
-}
-
-/* ---------- ScrollReveal ---------- */
-function initScrollReveal() {
-  document.querySelectorAll("[data-sr]").forEach(el => el.style.visibility = "visible");
-  if (reduceMotion || !window.ScrollReveal) return;
-  const sr = ScrollReveal({ distance: "36px", duration: 900, easing: "cubic-bezier(0.22,1,0.36,1)", opacity: 0, cleanup: true, reset: false });
-  document.querySelectorAll("[data-sr]").forEach(el => {
-    el.style.visibility = "hidden";
-    const origin = el.dataset.sr || "bottom";
-    const delay  = parseInt(el.dataset.srDelay || "0", 10);
-    sr.reveal(el, { origin, delay });
-  });
-}
-
-/* ---------- Hero letter-by-letter reveal ---------- */
-function initHeroReveal() {
-  const target = document.querySelector("[data-letters]");
-  if (!target) return;
-  const text = target.textContent.trim();
-  target.setAttribute("aria-label", text);
-  // Wrap each word in a no-break container so letters animate together but words don't split
-  target.innerHTML = text.split(" ").map(word =>
-    `<span style="white-space:nowrap;display:inline-block">${
-      word.split("").map(ch => `<span class="reveal-letter">${ch}</span>`).join("")
-    }</span>`
-  ).join(" ");
-  if (reduceMotion || !window.anime) {
-    target.querySelectorAll(".reveal-letter").forEach(s => { s.style.opacity = 1; s.style.transform = "none"; });
-    return;
-  }
-  anime({
-    targets: target.querySelectorAll(".reveal-letter"),
-    opacity: [0, 1], translateY: ["0.55em", "0em"], rotateZ: [6, 0],
-    duration: 740, delay: anime.stagger(26, { start: 350 }), easing: "easeOutExpo",
-  });
-}
-
-/* ---------- Hero entrance (tag, lead, cta, chip, visual, floats) ---------- */
-function initHeroEntrance() {
-  if (reduceMotion || !window.anime) return;
-  const tag    = document.querySelector(".hero-tag");
-  const lead   = document.querySelector(".hero-v2__content .lead");
-  const cta    = document.querySelector(".hero-v2__cta");
-  const chip   = document.querySelector(".hero-chip");
-  const visual = document.querySelector(".hero-v2__visual");
-  const floats = document.querySelectorAll(".hero-float");
-
-  const anim = (el, delay, props = {}) => {
-    if (!el) return;
-    anime({ targets: el, opacity: [0,1], translateY: [20,0], duration: 700, easing: "easeOutExpo", delay, ...props });
-  };
-
-  anim(tag,    200);
-  anim(lead,   560);
-  anim(cta,    720);
-  anim(chip,   920);
-  if (visual) anime({ targets: visual, opacity: [0,1], translateX: [44,0], duration: 900, easing: "easeOutExpo", delay: 280 });
-  if (floats.length) anime({ targets: floats, opacity: [0,1], scale: [.82,1], duration: 620, delay: anime.stagger(220, { start: 1000 }), easing: "easeOutBack" });
-}
-
-/* ---------- Stats counters ---------- */
+/* ---------- Contadores ---------- */
 function initCounters() {
-  const counters = document.querySelectorAll("[data-count]");
-  if (!counters.length) return;
-  if (reduceMotion) { counters.forEach(c => c.textContent = c.dataset.count); return; }
-
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const target = parseInt(el.dataset.count, 10);
-      const start  = performance.now();
-      const dur    = 1700;
-      const tick = (now) => {
-        const t = Math.min((now - start) / dur, 1);
-        el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
-        if (t < 1) requestAnimationFrame(tick);
-        else el.textContent = target;
-      };
-      requestAnimationFrame(tick);
-      obs.unobserve(el);
-    });
-  }, { threshold: .5 });
-
-  counters.forEach(c => { c.textContent = "0"; obs.observe(c); });
+  const els = document.querySelectorAll("[data-count]");
+  if (!els.length) return;
+  const run = (el) => {
+    const target = +el.dataset.count;
+    if (reduceMotion) { el.textContent = target; return; }
+    const start = performance.now(), dur = 1600;
+    const tick = (now) => {
+      const t = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round((1 - Math.pow(1 - t, 4)) * target);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+  }), { threshold: 0.6 });
+  els.forEach((el) => io.observe(el));
 }
 
-/* ---------- Nosotros nodes ---------- */
-function initNodes() {
-  const nodes = document.querySelectorAll(".node");
-  if (!nodes.length) return;
-  nodes.forEach(node => {
-    const head  = node.querySelector(".node__head");
-    const panel = node.querySelector(".node__panel");
-    const inner = node.querySelector(".node__panel-inner");
-    head.addEventListener("click", () => {
-      const isOpen = node.classList.contains("is-open");
-      nodes.forEach(n => {
-        if (n !== node && n.classList.contains("is-open")) {
-          n.classList.remove("is-open");
-          collapse(n.querySelector(".node__panel"));
-        }
-      });
-      if (isOpen) { node.classList.remove("is-open"); collapse(panel); }
-      else { node.classList.add("is-open"); expand(panel, inner); }
-    });
+/* ---------- Botones "Cotizar" (delegado, cualquier página) ---------- */
+export function paintAddButtons(root = document) {
+  root.querySelectorAll("[data-add]").forEach((b) => {
+    const on = quote.has(b.dataset.add);
+    b.setAttribute("aria-pressed", String(on));
+    const label = b.querySelector("[data-add-label]");
+    const icon = b.querySelector("i");
+    if (label) label.textContent = on ? (b.dataset.onLabel || "En lista") : (b.dataset.offLabel || "Cotizar");
+    if (icon) icon.className = on ? "ph ph-check" : "ph ph-plus";
+  });
+}
+function initAddButtons() {
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-add]");
+    if (!b) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const p = PRODUCTS.find((x) => x.slug === b.dataset.add);
+    const added = quote.toggle(b.dataset.add);
+    toast(added ? `${p.name} agregado a tu cotización` : `${p.name} quitado de tu cotización`,
+      added ? { label: "Ver lista", onClick: openQuote } : { label: "Deshacer", onClick: () => quote.add(p.slug) });
+  });
+  paintAddButtons();
+  quote.subscribe(() => paintAddButtons());
+}
+
+/* ---------- Tarjeta de producto reutilizable ---------- */
+export function productCard(p, i = 0, highlight = (s) => s) {
+  const zone = p.zone ? `<span>${ZONE_LABEL[p.zone]}</span>` : "";
+  return `
+  <article class="p-card" style="--i:${i}">
+    <div class="p-card__media"><img src="${p.img}" alt="${p.name}" width="250" height="250" loading="lazy"></div>
+    <div class="p-card__body">
+      <div class="p-card__meta"><span>${CATEGORY_LABEL[p.category]}</span>${zone}</div>
+      <h3><a class="p-card__open" href="/catalogo?p=${p.slug}" data-open="${p.slug}">${highlight(p.name)}</a></h3>
+      <p>${highlight(p.desc)}</p>
+      <div class="p-card__actions">
+        <span class="p-card__more">Ver ficha<i class="ph ph-arrow-up-right"></i></span>
+        <button class="add-btn" type="button" data-add="${p.slug}" aria-pressed="false"><i class="ph ph-plus"></i><span data-add-label>Cotizar</span></button>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ============================================================
+   INICIO
+   ============================================================ */
+const ZONE_COPY = {
+  cervical: { title: "Columna cervical", text: "Placas, sistemas occipito-cervicales, mallas y sistemas intercorporales para la región cervical." },
+  toracolumbar: { title: "Columna toracolumbar", text: "Sistemas de tornillos poliaxiales para estabilización de la región torácica y lumbar." },
+  lumbar: { title: "Columna lumbar", text: "Cajas para fusión PLIF, TLIF, ALIF y lateral, disco artificial y espaciadores interespinosos." },
+};
+
+function initSpineExplorer() {
+  const root = document.querySelector("[data-explorer]");
+  if (!root) return;
+  const svg = root.querySelector("[data-spine]");
+  const panel = root.querySelector("[data-zone-panel]");
+  const btns = root.querySelectorAll("[data-zone]");
+
+  // Columna dibujada con el mismo motivo de vértebras del logotipo
+  const groups = [
+    { id: "cervical", n: 7, w: [20, 30], h: 10, gap: 5 },
+    { id: "toracolumbar", n: 12, w: [32, 44], h: 13, gap: 5 },
+    { id: "lumbar", n: 5, w: [48, 58], h: 19, gap: 6 },
+  ];
+  let y = 4, idx = 0, out = "";
+  const total = 24;
+  groups.forEach((g) => {
+    out += `<g class="zone" data-zone-svg="${g.id}" role="presentation">`;
+    for (let i = 0; i < g.n; i++) {
+      const w = g.w[0] + ((g.w[1] - g.w[0]) * i) / Math.max(g.n - 1, 1);
+      const x = 80 + Math.sin((idx / total) * Math.PI * 2 - 0.6) * 14 - w / 2;
+      out += `<rect class="v" style="--i:${i}" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="${g.h}" rx="${g.h / 2}"/>`;
+      y += g.h + g.gap; idx++;
+    }
+    out += "</g>";
+    y += 6;
+  });
+  out += `<path class="v" d="M58 ${y} q22 6 44 0 l-8 34 q-14 12 -28 0z" style="fill:#d5dddf"/>`;
+  svg.setAttribute("viewBox", `0 0 160 ${y + 40}`);
+  svg.innerHTML = out;
+
+  const select = (zone) => {
+    btns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.zone === zone)));
+    svg.querySelectorAll(".zone").forEach((g) => g.classList.toggle("is-active", g.dataset.zoneSvg === zone));
+    const items = PRODUCTS.filter((p) => p.zone === zone);
+    const c = ZONE_COPY[zone];
+    panel.innerHTML = `
+      <div class="zone-panel__head">
+        <div><h3 class="h3">${c.title}</h3><p>${c.text}</p></div>
+        <a class="btn btn--ghost btn--sm" href="/catalogo?zona=${zone}">Ver ${items.length} en catálogo<i class="ph ph-arrow-up-right"></i></a>
+      </div>
+      <div class="zone-products">
+        ${items.slice(0, 6).map((p, i) => `
+          <a class="mini-card" style="--i:${i}" href="/catalogo?p=${p.slug}">
+            <span class="mini-card__img"><img src="${p.img}" alt="" width="250" height="250" loading="lazy"></span>
+            <span><strong>${p.name}</strong><small>${CATEGORY_LABEL[p.category]}</small></span>
+          </a>`).join("")}
+      </div>`;
+  };
+  btns.forEach((b) => b.addEventListener("click", () => select(b.dataset.zone)));
+  svg.addEventListener("click", (e) => { const g = e.target.closest("[data-zone-svg]"); if (g) select(g.dataset.zoneSvg); });
+  // Navegación con flechas entre pestañas
+  root.querySelector("[role=tablist]").addEventListener("keydown", (e) => {
+    if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"].includes(e.key)) return;
+    e.preventDefault();
+    const arr = [...btns];
+    const cur = arr.findIndex((b) => b.getAttribute("aria-selected") === "true");
+    const next = arr[(cur + (e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1) + arr.length) % arr.length];
+    next.focus(); select(next.dataset.zone);
+  });
+  select("cervical");
+}
+
+// Anotaciones tomadas de la descripción de cada producto (sin datos inventados)
+const TECH = [
+  {
+    slug: "tornillo-transpedicular", word: "PRECISIÓN",
+    left: [["Autorroscante", "Pensado para una inserción rápida."], ["Cabeza poliaxial", "Diseño especial en la cabeza del tornillo."]],
+    right: [["Estabilidad angular", "Una fijación angular más firme."]],
+  },
+  {
+    slug: "roi-a", word: "ANCLAJE",
+    left: [["Perfil cero", "Ningún componente sobresale por delante de los cuerpos vertebrales."], ["Sin placa anterior", "Su anclaje evita el uso de placa o tornillo."]],
+    right: [["Jaula ALIF", "Con un sistema de anclaje innovador."]],
+  },
+  {
+    slug: "mobi-c2", word: "MOVILIDAD",
+    left: [["Segunda generación", "Disco artificial de diseño avanzado."], ["Diseñado por cirujanos", "Creado por especialistas en ortopedia espinal."]],
+    right: [["Implantación patentada", "Un sistema único y fiable."]],
+  },
+];
+
+function initTech() {
+  const root = document.querySelector("[data-tech]");
+  if (!root) return;
+  const img = root.querySelector("[data-tech-img]");
+  const word = root.querySelector("[data-tech-word]");
+  const name = root.querySelector("[data-tech-name]");
+  const left = root.querySelector("[data-tech-left]");
+  const right = root.querySelector("[data-tech-right]");
+  const link = root.querySelector("[data-tech-link]");
+  const tabs = root.querySelectorAll("[data-tech-tab]");
+  const co = (arr) => arr.map(([t, d]) => `<div class="callout"><b>${t}</b><p>${d}</p></div>`).join("");
+  let current = -1, timer;
+
+  const show = (i, user) => {
+    if (i === current) return;
+    current = i;
+    const t = TECH[i];
+    const p = PRODUCTS.find((x) => x.slug === t.slug);
+    tabs.forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
+    const swapping = [img, ...left.children, ...right.children];
+    swapping.forEach((el) => el.classList.add("is-swapping"));
+    setTimeout(() => {
+      img.src = p.img; img.alt = p.name;
+      word.textContent = t.word;
+      name.textContent = p.name;
+      link.href = `/catalogo?p=${p.slug}`;
+      left.innerHTML = co(t.left); right.innerHTML = co(t.right);
+      [...left.children, ...right.children].forEach((el) => el.classList.add("is-swapping"));
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        img.classList.remove("is-swapping");
+        [...left.children, ...right.children].forEach((el, k) => { el.style.transitionDelay = `${k * 70}ms`; el.classList.remove("is-swapping"); });
+      }));
+    }, current === -1 || reduceMotion ? 0 : 380);
+    if (user) clearInterval(timer);
+  };
+  tabs.forEach((b, i) => b.addEventListener("click", () => show(i, true)));
+  show(0);
+  // Rota solo mientras está visible y el usuario no ha elegido
+  if (!reduceMotion) {
+    let auto = true;
+    tabs.forEach((b) => b.addEventListener("click", () => { auto = false; }));
+    new IntersectionObserver(([e]) => {
+      clearInterval(timer);
+      if (e.isIntersecting && auto) timer = setInterval(() => show((current + 1) % TECH.length), 6000);
+    }, { threshold: 0.4 }).observe(root);
+  }
+}
+
+function initRail() {
+  const rail = document.querySelector("[data-rail]");
+  if (!rail) return;
+  const featured = ["mobi-c2", "roi-a", "tornillo-transpedicular", "avenue-l", "c-plate", "adonis-tlif", "venus6t", "inswing", "placa-cervical-anterior"];
+  rail.innerHTML = featured.map((s, i) => productCard(PRODUCTS.find((p) => p.slug === s), i)).join("");
+  paintAddButtons(rail);
+  document.querySelectorAll("[data-rail-dir]").forEach((b) => b.addEventListener("click", () => {
+    rail.scrollBy({ left: +b.dataset.railDir * (rail.clientWidth * 0.8), behavior: reduceMotion ? "auto" : "smooth" });
+  }));
+}
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+function initContact() {
+  const form = document.querySelector("[data-contact]");
+  if (!form) return;
+  const box = form.querySelector("[data-form-products]");
+  const paintProducts = () => {
+    const ps = quote.products;
+    box.classList.toggle("is-visible", ps.length > 0);
+    box.innerHTML = ps.length ? `<b>Productos de tu cotización</b>${ps.map((p) => `<span>${p.name}</span>`).join("")}` : "";
+  };
+  paintProducts();
+  quote.subscribe(paintProducts);
+
+  const params = new URLSearchParams(location.search);
+  if (params.has("cotizacion") && quote.items.length) form.asunto.value = "Solicitud de cotización";
+  if (params.get("producto")) {
+    const p = PRODUCTS.find((x) => x.slug === params.get("producto"));
+    if (p) form.asunto.value = `Información sobre ${p.name}`;
+  }
+
+  const validate = (field) => {
+    const wrap = field.closest(".field");
+    const ok = field.checkValidity();
+    wrap.classList.toggle("is-invalid", !ok);
+    field.setAttribute("aria-invalid", String(!ok));
+    return ok;
+  };
+  form.querySelectorAll("input[required], textarea[required], input[type=email]").forEach((f) => {
+    f.addEventListener("blur", () => f.value && validate(f));
+    f.addEventListener("input", () => f.closest(".field").classList.contains("is-invalid") && validate(f));
   });
 
-  function expand(panel, inner) {
-    const h = inner.offsetHeight;
-    if (window.anime && !reduceMotion) {
-      anime.remove(panel);
-      anime({ targets: panel, height: [0, h], duration: 560, easing: "easeOutExpo", complete: () => panel.style.height = "auto" });
-    } else panel.style.height = "auto";
-  }
-  function collapse(panel) {
-    if (window.anime && !reduceMotion) {
-      anime.remove(panel);
-      anime({ targets: panel, height: [panel.offsetHeight, 0], duration: 420, easing: "easeInExpo" });
-    } else panel.style.height = "0px";
-  }
-
-  const first = nodes[0];
-  first.classList.add("is-open");
-  requestAnimationFrame(() => first.querySelector(".node__panel").style.height = "auto");
-}
-
-/* ---------- Contact form ---------- */
-function initContactForm() {
-  const form = document.querySelector("[data-contact-form]");
-  if (!form) return;
-  const success = form.querySelector("[data-form-success]");
+  const build = () => {
+    const d = new FormData(form);
+    const lines = [
+      d.get("mensaje"),
+      "",
+      `Nombre: ${d.get("nombre")}`,
+      d.get("institucion") ? `Institución: ${d.get("institucion")}` : "",
+      `Correo: ${d.get("correo")}`,
+      d.get("telefono") ? `Teléfono: ${d.get("telefono")}` : "",
+    ].filter((l) => l !== "");
+    if (quote.items.length) lines.push("", "Productos de interés:", ...quote.products.map((p) => `• ${p.name}`));
+    return { subject: d.get("asunto") || "Contacto desde el sitio web", body: lines.join("\n") };
+  };
+  const check = () => {
+    const fields = [...form.querySelectorAll("input, textarea")].filter((f) => f.required || f.type === "email");
+    const bad = fields.filter((f) => !validate(f));
+    if (bad.length) { bad[0].focus(); return false; }
+    return true;
+  };
+  const done = () => {
+    const s = form.querySelector("[data-form-status]");
+    s.classList.add("is-visible");
+  };
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    const data   = new FormData(form);
-    const nombre = encodeURIComponent(data.get("nombre") || "");
-    const asunto = encodeURIComponent(data.get("asunto") || "Contacto desde el sitio web");
-    const correo = data.get("correo") || "";
-    const tel    = data.get("telefono") || "";
-    const telLine = tel ? `\nTeléfono: ${tel}` : "";
-    const mensaje = encodeURIComponent(`${data.get("mensaje") || ""}${telLine}\n\n— ${data.get("nombre") || ""} (${correo})`);
-    const btn = form.querySelector("[data-submit]");
-    const r = btn.getBoundingClientRect();
-    window.mcBurst && window.mcBurst(r.left + r.width / 2, r.top + r.height / 2, { radius: 80, count: 16 });
-    if (success) {
-      success.classList.add("is-visible");
-      if (window.anime && !reduceMotion) anime({ targets: success, opacity: [0,1], translateY: [10,0], duration: 500, easing: "easeOutExpo" });
-    }
-    setTimeout(() => { window.location.href = `mailto:info@mcspine.mx?subject=${asunto}%20-%20${nombre}&body=${mensaje}`; }, 700);
-    form.reset();
+    if (!check()) return;
+    const { subject, body } = build();
+    location.href = mailLink(subject, body);
+    done();
+  });
+  form.querySelector("[data-send-wa]").addEventListener("click", () => {
+    if (!check()) return;
+    const { subject, body } = build();
+    window.open(waLink(`${subject}\n\n${body}`), "_blank", "noopener");
+    done();
   });
 }
 
-/* ---------- Boot ---------- */
-function safe(fn) { try { fn(); } catch (e) { console.warn("[MC Spine]", fn.name, e); } }
-
-function boot() {
-  document.querySelectorAll("[data-sr]").forEach(el => el.style.visibility = "visible");
-  [
-    injectIcons, initCursor, initLogoPulse, initNavbarScroll, initMobileMenu,
-    initHoverBursts, initThreeBackground, initHeroReveal, initHeroEntrance,
-    initCounters, initNodes, initContactForm, initScrollReveal,
-  ].forEach(safe);
+/* ============================================================
+   LEGAL: índice lateral
+   ============================================================ */
+function initLegalToc() {
+  const toc = document.querySelector("[data-toc]");
+  const article = document.querySelector(".legal-content");
+  if (!toc || !article) return;
+  const heads = [...article.querySelectorAll("h2")];
+  heads.forEach((h, i) => { h.id = h.id || `s${i + 1}`; });
+  toc.insertAdjacentHTML("beforeend", heads.map((h) => `<a href="#${h.id}">${h.textContent.replace(/^[IVXLC]+\.\s*/, "")}</a>`).join(""));
+  const links = toc.querySelectorAll("a");
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) links.forEach((a) => a.classList.toggle("is-current", a.hash === `#${e.target.id}`));
+  }), { rootMargin: "-20% 0px -70% 0px" });
+  heads.forEach((h) => io.observe(h));
 }
 
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-else boot();
+/* ---------- Preloader (una vez por sesión) ---------- */
+function runPreloader() {
+  const el = document.querySelector("[data-preloader]");
+  const root = document.documentElement;
+  if (!el || root.classList.contains("pl-seen")) { el?.remove(); return Promise.resolve(); }
+  const minTime = reduceMotion ? 300 : 1700;
+  const loaded = new Promise((r) => (document.readyState === "complete" ? r() : window.addEventListener("load", r, { once: true })));
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  return Promise.race([Promise.all([loaded, wait(minTime)]), wait(4000)]).then(() => {
+    el.classList.add("is-done");
+    try { sessionStorage.setItem("mc-pl", "1"); } catch { /* sin almacenamiento */ }
+    setTimeout(() => el.remove(), 1100);
+    return wait(reduceMotion ? 0 : 350);
+  });
+}
 
-export { PALETTE, injectIcons, reduceMotion };
+/* ---------- Arranque ---------- */
+function safe(fn) { try { fn(); } catch (err) { console.warn("[MC Spine]", fn.name, err); } }
+[initHeader, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
+// Las animaciones de entrada arrancan cuando el preloader se retira
+runPreloader().then(() => [initReveal, initCounters].forEach(safe));
+
+export { quoteMessage };

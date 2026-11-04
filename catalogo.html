@@ -1,143 +1,177 @@
 <!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Catálogo | MC Spine</title>
-    <meta name="description" content="Catálogo de productos MC Spine: implantes para columna, sistemas de fijación, cajas intersomáticas, placas y tornillos para cirugía de alta precisión." />
-    <link rel="icon" href="/assets/img/logo.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = { theme: { extend: { colors: { gelido: "#D6E8EE", navy: "#001B48", real: "#02457A", glow: "#018ABE", hielo: "#97CADB" }, fontFamily: { sans: ["Inter", "sans-serif"], display: ["Plus Jakarta Sans", "sans-serif"] } } } };
-    </script>
-    <link rel="stylesheet" href="/assets/css/styles.css" />
-  </head>
-  <body data-page="catalogo">
-
-    <div class="cursor__dot"  id="cursor-dot"  aria-hidden="true"></div>
-    <div class="cursor__ring" id="cursor-ring" aria-hidden="true"></div>
-
-    <div class="page-aura"></div>
-    <canvas id="bg-canvas"></canvas>
-
-    <header class="site-header">
-      <nav class="nav container" aria-label="Navegación principal">
-        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /><span>MC Spine<small>Medical Solutions</small></span></a>
-        <div class="nav__links">
-          <a href="/">Inicio</a>
-          <a href="/nosotros">Nosotros</a>
-          <a class="is-active" href="/catalogo">Catálogo</a>
-          <a href="/contacto">Contacto</a>
-        </div>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Catálogo de productos | MC Spine</title>
+  <meta name="description" content="Catálogo MC Spine: implantes para columna, sistemas de fijación, cajas intersomáticas, placas y tornillos. Busca, filtra por zona y solicita tu cotización.">
+  <link rel="canonical" href="https://mcspine.vercel.app/catalogo">
+  <meta name="theme-color" content="#0a1b33">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  <meta property="og:site_name" content="MC Spine">
+  <meta property="og:title" content="Catálogo de productos | MC Spine">
+  <meta property="og:description" content="Catálogo MC Spine: implantes para columna, sistemas de fijación, cajas intersomáticas, placas y tornillos. Busca, filtra por zona y solicita tu cotización.">
+  <meta property="og:url" content="https://mcspine.vercel.app/catalogo">
+  <meta property="og:image" content="https://mcspine.vercel.app/assets/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("mc-pl"))document.documentElement.classList.add("pl-seen")}catch(e){}</script>
+</head>
+<body>
+  <div class="preloader" data-preloader aria-hidden="true">
+    <svg viewBox="0 0 302 164" role="presentation">
+      <text class="pl-t pl-mc" x="0" y="90">MC</text>
+      <g><ellipse class="pl-v" style="--i:0" cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse class="pl-v" style="--i:1" cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse class="pl-v" style="--i:2" cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse class="pl-v" style="--i:3" cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse class="pl-v" style="--i:4" cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse class="pl-v" style="--i:5" cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse class="pl-v" style="--i:6" cx="100.5" cy="158.5" rx="8" ry="5"/></g>
+      <text class="pl-t pl-spine" x="146" y="90">SPINE</text>
+    </svg>
+    <div class="preloader__bar"><span></span></div>
+    <p class="preloader__label">Medical Solutions</p>
+  </div>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Principal">
+        <a class="brand" href="/" aria-label="MC Spine, inicio"><img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164"></a>
+        <div class="nav__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo" aria-current="page">Catálogo</a><a href="/contacto">Contacto</a></div>
         <div class="nav__actions">
-          <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
-          <button class="icon-button menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-open><span data-icon="menu"></span></button>
+          <button class="btn btn--ghost btn--icon quote-btn" type="button" data-quote-open aria-label="Abrir lista de cotización"><i class="ph ph-clipboard-text"></i><span class="quote-btn__badge" data-quote-count>0</span></button>
+          <a class="btn btn--call" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar</a>
+          <button class="btn btn--icon menu-toggle" type="button" data-menu-open aria-expanded="false" aria-label="Abrir menú"><i class="ph ph-list"></i></button>
         </div>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <div class="offcanvas-backdrop" data-backdrop></div>
-    <aside class="offcanvas" data-offcanvas aria-label="Menú móvil">
-      <div class="offcanvas__top">
-        <a class="brand" href="/"><img src="/assets/img/logo.png" alt="MC Spine" /></a>
-        <button class="icon-button" type="button" aria-label="Cerrar menú" data-menu-close><span data-icon="close"></span></button>
+  <dialog class="mobile-menu" data-menu aria-label="Menú">
+    <div class="mobile-menu__panel">
+      <div class="mobile-menu__top">
+        <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164">
+        <button class="btn btn--glass btn--icon" type="button" data-menu-close aria-label="Cerrar menú"><i class="ph ph-x"></i></button>
       </div>
-      <div class="offcanvas__links">
-        <a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a>
-      </div>
-      <a class="btn" href="tel:+525543676490"><span data-icon="phone"></span>Llamar ahora</a>
-    </aside>
-
-    <main>
-      <section class="section hero" style="padding-bottom:0">
-        <div class="container">
-          <p class="eyebrow" data-sr="left">Productos y soluciones</p>
-          <h1 class="display" data-sr="bottom" data-sr-delay="120" style="max-width:18ch">Catálogo de productos especializados</h1>
-          <p class="lead" data-sr="bottom" data-sr-delay="220" style="margin-top:1.2rem">Una amplia gama de productos para cirugía de columna, orientados a procedimientos quirúrgicos de alta precisión.</p>
-          <div class="catalog-toolbar" data-sr="bottom" data-sr-delay="300" aria-label="Filtros de catálogo">
-            <button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
-            <button class="filter-btn" type="button" data-filter="implantes">Implantes para columna</button>
-            <button class="filter-btn" type="button" data-filter="fijacion">Sistemas de fijación</button>
-            <button class="filter-btn" type="button" data-filter="cajas">Cajas intersomáticas</button>
-            <button class="filter-btn" type="button" data-filter="placas">Placas y tornillos</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" data-sec="products" style="padding-top:2.5rem">
-        <div class="container">
-          <div class="product-grid" data-product-grid></div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="cta-band" data-sr="bottom">
-            <div>
-              <h2>Solicita información sobre disponibilidad o cotizaciones</h2>
-              <span class="phone-big">+52 55 4367 6490</span>
-              <p>Nuestro equipo puede ayudarte a encontrar la solución adecuada para tu institución o procedimiento.</p>
-            </div>
-            <div class="cta-band__actions">
-              <a class="btn" href="/contacto">Contactar equipo<span data-icon="arrow"></span></a>
-              <a class="btn btn--ghost" href="tel:+525543676490" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)"><span data-icon="phone"></span>Llamar</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Product modal -->
-    <div class="modal-backdrop" data-modal aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true">
-        <div class="modal__media"><img data-modal-img src="" alt="" /></div>
-        <div class="modal__body">
-          <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close><span data-icon="close"></span></button>
-          <small data-modal-cat></small>
-          <h3 data-modal-title></h3>
-          <p data-modal-desc></p>
-          <div style="margin-top:1.6rem"><a class="btn" href="/contacto">Solicitar información<span data-icon="arrow"></span></a></div>
-        </div>
+      <nav class="mobile-menu__links" aria-label="Móvil"><a href="/">Inicio<i class="ph ph-arrow-up-right"></i></a><a href="/nosotros">Nosotros<i class="ph ph-arrow-up-right"></i></a><a href="/catalogo" aria-current="page">Catálogo<i class="ph ph-arrow-up-right"></i></a><a href="/contacto">Contacto<i class="ph ph-arrow-up-right"></i></a></nav>
+      <div class="mobile-menu__foot">
+        <button class="btn btn--glass" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
+        <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar +52 55 4367 6490</a>
       </div>
     </div>
+  </dialog>
 
-    <footer class="site-footer">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <img src="/assets/img/logo.png" alt="MC Spine" />
-          <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
-          <div class="footer__iso">
-            <img src="/iso%209001%20logo/ISO%209001_Mesa%20de%20trabajo%201.png" alt="ISO 9001" />
-            <span>ISO 9001:2015<br>Certificados</span>
+  <main id="main">
+
+    <section class="page-hero">
+      <span class="ghost-word" aria-hidden="true">CATÁLOGO</span>
+      <div class="container page-hero__inner">
+        <nav class="breadcrumb" aria-label="Ruta"><a href="/">Inicio</a><span>/</span><span>Catálogo</span></nav>
+        <h1 class="h1" data-reveal>Catálogo de productos</h1>
+        <p class="lead" data-reveal style="--d:100ms">Implantes y sistemas para cirugía de columna de alta precisión. Marca los que te interesan y solicita tu cotización en un solo mensaje.</p>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:2rem">
+      <div class="catalog-bar">
+        <div class="catalog-bar__row">
+          <label class="search">
+            <span class="sr-only">Buscar productos</span>
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="search" data-search placeholder="Buscar producto (ej. lumbar, placa)" autocomplete="off">
+            <kbd aria-hidden="true">/</kbd>
+            <button class="search__clear" type="button" aria-label="Borrar búsqueda"><i class="ph ph-x"></i></button>
+          </label>
+          <label><span class="sr-only">Zona de la columna</span><select class="select" data-zone-select></select></label>
+          <label><span class="sr-only">Orden</span><select class="select" data-sort><option value="default">Recomendados</option><option value="az">Nombre A-Z</option></select></label>
+          <button class="btn" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
+        </div>
+        <div class="chips" data-chips role="group" aria-label="Categorías"></div>
+      </div>
+      <div class="catalog-status" data-status aria-live="polite"></div>
+      <div class="product-grid" data-grid></div>
+    </section>
+
+    <section class="section" style="padding-bottom:0">
+      <div class="container">
+        <div class="cta" data-reveal="scale">
+          <img src="/assets/img/equipo-medico.webp" alt="" width="1600" height="862" loading="lazy">
+          <h2 class="h2">¿No encuentras lo que buscas?</h2>
+          <p>Nuestro equipo puede ayudarte con disponibilidad, cotizaciones y la solución adecuada para tu procedimiento.</p>
+          <div class="cta__row">
+            <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar ahora</a>
+            <a class="btn btn--glass" href="/contacto">Contactar<i class="ph ph-arrow-up-right"></i></a>
+            <span class="cta__phone">+52 55 4367 6490</span>
           </div>
         </div>
-        <div><h3>Navegación</h3><div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div></div>
-        <div><h3>Contacto</h3><div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div></div>
-        <div><h3>Ubicación</h3><p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p></div>
+      </div>
+    </section>
+
+    <dialog class="p-modal" data-modal aria-labelledby="m-title">
+      <div class="p-modal__grid">
+        <div class="p-modal__media">
+          <span class="ghost-word ghost-word--ink" data-m-word aria-hidden="true"></span>
+          <img data-m-img src="" alt="" width="250" height="250">
+          <div class="p-modal__nav">
+            <button type="button" data-step="-1" aria-label="Producto anterior"><i class="ph ph-arrow-left"></i></button>
+            <button type="button" data-step="1" aria-label="Producto siguiente"><i class="ph ph-arrow-right"></i></button>
+          </div>
+          <span class="p-modal__counter" data-m-counter></span>
+        </div>
+        <div class="p-modal__body">
+          <button class="p-modal__close" type="button" data-m-close aria-label="Cerrar"><i class="ph ph-x"></i></button>
+          <div class="p-modal__tags" data-m-tags></div>
+          <h2 id="m-title" data-m-title></h2>
+          <p class="p-modal__desc" data-m-desc></p>
+          <div class="p-modal__actions">
+            <button class="btn btn--accent btn--block" type="button" data-m-add data-add="" data-on-label="En tu cotización" data-off-label="Agregar a cotización"><i class="ph ph-plus"></i><span data-add-label>Agregar a cotización</span></button>
+            <div class="row">
+              <a class="btn btn--ghost btn--sm" data-m-wa href="#" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>WhatsApp</a>
+              <a class="btn btn--ghost btn--sm" data-m-info href="/contacto"><i class="ph ph-envelope-simple"></i>Más información</a>
+            </div>
+          </div>
+          <p class="p-modal__note"><i class="ph ph-info"></i><span>Producto de uso exclusivo para profesionales de la salud. Consulta disponibilidad, medidas e instrumental con nuestro equipo.</span></p>
+          <div class="related"><h3>Productos relacionados</h3><div class="related__list" data-m-related></div></div>
+        </div>
+      </div>
+    </dialog>
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="ghost-word" aria-hidden="true">MC SPINE</span>
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164" loading="lazy">
+          <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
+          <div class="footer__iso"><img src="/assets/img/iso-9001.png" alt="Certificado ISO 9001:2015" width="48" height="48" loading="lazy"><span>ISO 9001:2015<br>Sistema de Gestión de Calidad</span></div>
+        </div>
+        <div>
+          <h3>Navegación</h3>
+          <div class="footer__links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div>
+        </div>
+        <div>
+          <h3>Contacto</h3>
+          <div class="footer__links"><a href="tel:+525543676490">+52 55 4367 6490</a><a href="mailto:info@mcspine.mx">info@mcspine.mx</a><a href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></div>
+        </div>
+        <div>
+          <h3>Ubicación</h3>
+          <p>Indianápolis 20, Col. Nápoles, Benito Juárez, Ciudad de México, C.P. 03810.</p>
+        </div>
       </div>
       <div class="footer__bottom">
         <span>© 2026 MC Spine. Todos los derechos reservados.</span>
-        <div class="footer__legal">
-          <a href="/aviso-privacidad">Aviso de Privacidad</a>
-          <a href="/terminos">Términos y Condiciones</a>
-        </div>
+        <nav aria-label="Legal"><a href="/aviso-privacidad">Aviso de Privacidad</a><a href="/terminos">Términos y Condiciones</a></nav>
         <span>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener">Partum Design</a></span>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-    <!-- WhatsApp FAB -->
-    <a class="whatsapp-fab" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-    </a>
+  <a class="wa-fab" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><i class="ph ph-whatsapp-logo"></i></a>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-    <script type="module" src="/assets/js/main.js"></script>
-    <script type="module" src="/assets/js/catalogo.js"></script>
-  </body>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/catalogo.js"></script>
+</body>
 </html>

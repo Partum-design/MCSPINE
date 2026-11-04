@@ -1,12 +1,26 @@
 {
-  "rewrites": [
-    { "source": "/inicio",            "destination": "/index.html" },
-    { "source": "/nosotros",          "destination": "/nosotros.html" },
-    { "source": "/catalogo",          "destination": "/catalogo.html" },
-    { "source": "/contacto",          "destination": "/contacto.html" },
-    { "source": "/aviso-privacidad",  "destination": "/aviso-privacidad.html" },
-    { "source": "/terminos",          "destination": "/terminos.html" }
-  ],
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/inicio", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/assets/(img|catalogo)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/assets/(css|js|data)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }]
+    }
+  ]
 }

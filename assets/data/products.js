@@ -1,5 +1,7 @@
 // MC Spine — catálogo de productos.
-// Cada producto: { slug, name, category, img, desc }
+// Cada producto: { slug, name, category, zone?, img, desc }
+// zone (cervical | toracolumbar | lumbar) solo se asigna cuando el nombre o la
+// descripción del producto lo indica. Productos sin zona aparecen en "Todas".
 // Categorías: implantes | fijacion | cajas | placas
 
 export const CATEGORIES = [
@@ -16,6 +18,14 @@ export const CATEGORY_LABEL = {
   cajas: "Cajas intersomáticas",
   placas: "Placas y tornillos",
 };
+
+export const ZONES = [
+  { id: "cervical", label: "Cervical" },
+  { id: "toracolumbar", label: "Toracolumbar" },
+  { id: "lumbar", label: "Lumbar" },
+];
+
+export const ZONE_LABEL = { cervical: "Cervical", toracolumbar: "Toracolumbar", lumbar: "Lumbar" };
 
 export const PRODUCTS = [
   {
@@ -41,6 +51,7 @@ export const PRODUCTS = [
   },
   {
     slug: "mobidisc",
+    zone: "lumbar",
     name: "Mobidisc⁺",
     category: "implantes",
     img: "/assets/catalogo/mobidisc.png",
@@ -48,6 +59,7 @@ export const PRODUCTS = [
   },
   {
     slug: "roi-a",
+    zone: "lumbar",
     name: "ROI-A⁺",
     category: "implantes",
     img: "/assets/catalogo/roi-a.png",
@@ -69,6 +81,7 @@ export const PRODUCTS = [
   },
   {
     slug: "hero",
+    zone: "cervical",
     name: "HERO⁺",
     category: "implantes",
     img: "/assets/catalogo/hero.png",
@@ -84,6 +97,7 @@ export const PRODUCTS = [
   },
   {
     slug: "spinetune-l",
+    zone: "toracolumbar",
     name: "SpineTune® TL",
     category: "fijacion",
     img: "/assets/catalogo/spinetune-l.png",
@@ -98,6 +112,7 @@ export const PRODUCTS = [
   },
   {
     slug: "tristan-s",
+    zone: "cervical",
     name: "TRISTAN® S",
     category: "fijacion",
     img: "/assets/catalogo/tristan-s.png",
@@ -112,6 +127,7 @@ export const PRODUCTS = [
   },
   {
     slug: "barras-fusion",
+    zone: "cervical",
     name: "Barras Fusión Occipito-cervical",
     category: "fijacion",
     img: "/assets/catalogo/barras-fusion.png",
@@ -120,6 +136,7 @@ export const PRODUCTS = [
 
   {
     slug: "avenue-l",
+    zone: "lumbar",
     name: "Avenue® L",
     category: "cajas",
     img: "/assets/catalogo/avenue-l.png",
@@ -127,6 +144,7 @@ export const PRODUCTS = [
   },
   {
     slug: "interbridge",
+    zone: "lumbar",
     name: "InterBRIDGE®",
     category: "cajas",
     img: "/assets/catalogo/interbridge.png",
@@ -141,6 +159,7 @@ export const PRODUCTS = [
   },
   {
     slug: "adonis-plif",
+    zone: "lumbar",
     name: "ADONIS® PLIF",
     category: "cajas",
     img: "/assets/catalogo/adonis-plif.png",
@@ -148,6 +167,7 @@ export const PRODUCTS = [
   },
   {
     slug: "adonis-tlif",
+    zone: "lumbar",
     name: "ADONIS® TLIF",
     category: "cajas",
     img: "/assets/catalogo/adonis-tlif.png",
@@ -162,6 +182,7 @@ export const PRODUCTS = [
   },
   {
     slug: "caja-lumbar",
+    zone: "lumbar",
     name: "Caja Lumbar Tipo Banana",
     category: "cajas",
     img: "/assets/catalogo/caja-lumbar.png",
@@ -170,6 +191,7 @@ export const PRODUCTS = [
 
   {
     slug: "inswing",
+    zone: "lumbar",
     name: "InSwing™",
     category: "placas",
     img: "/assets/catalogo/inswing.png",
@@ -177,6 +199,7 @@ export const PRODUCTS = [
   },
   {
     slug: "placa-cervical-anterior",
+    zone: "cervical",
     name: "Placa Cervical Anterior",
     category: "placas",
     img: "/assets/catalogo/placa-cervical-anterior.png",
@@ -184,6 +207,7 @@ export const PRODUCTS = [
   },
   {
     slug: "placa-occipito-cervical",
+    zone: "cervical",
     name: "Placa Para Fusión Occipito-cervical",
     category: "placas",
     img: "/assets/catalogo/placa-occipito-cervical.png",
@@ -191,6 +215,7 @@ export const PRODUCTS = [
   },
   {
     slug: "malla-cervical",
+    zone: "cervical",
     name: "Malla Cervical",
     category: "placas",
     img: "/assets/catalogo/malla-cervical.png",
@@ -198,6 +223,7 @@ export const PRODUCTS = [
   },
   {
     slug: "tornillo-occipito",
+    zone: "cervical",
     name: "Tornillo Occipito-cervical",
     category: "placas",
     img: "/assets/catalogo/tornillo-occipito.png",
