@@ -345,6 +345,15 @@ export const EN = {
   "Página no encontrada": "Page not found",
   "La página que buscas no existe o cambió de dirección.": "The page you're looking for doesn't exist or has moved.",
   "Ir al inicio": "Go home",
+  // ISO 9001
+  "Sello de certificación ISO 9001:2015": "ISO 9001:2015 certification seal",
+  "Sello ISO 9001:2015 de OLA Certificación Internacional": "ISO 9001:2015 seal by OLA Certificación Internacional",
+  "Empresa certificada": "Certified company",
+  "Nuestro Sistema de Gestión de Calidad está certificado bajo la norma ISO 9001:2015 por OLA Certificación Internacional.": "Our Quality Management System is certified to the ISO 9001:2015 standard by OLA Certificación Internacional.",
+  "Mejora continua en cada proceso.": "Continuous improvement in every process.",
+  "Procesos operativos y comerciales estandarizados.": "Standardized operational and commercial processes.",
+  "Conoce nuestra política de calidad": "See our quality policy",
+  "Certificados": "Certified",
 };
 
 // Textos con números o nombres variables

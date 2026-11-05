@@ -1,4 +1,5 @@
 /* MC Spine · interacciones compartidas (sin dependencias) */
+window.__mcBoot = true;
 import { PRODUCTS, CATEGORY_LABEL, ZONE_LABEL } from "../data/products.js";
 import { quote, initQuoteUI, toast, openQuote, waLink, mailLink, quoteMessage } from "./quote.js";
 import { initPrefs } from "./prefs.js";

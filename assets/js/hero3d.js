@@ -14,7 +14,8 @@ const canvas = hero?.querySelector("canvas");
 if (hero && canvas) init();
 
 function init() {
-  let raf = 0, last = performance.now(), time = 0;
+  let raf = 0, last = performance.now(), time = 0, lowQ = false, stopped = false;
+  const perf = { n: 0, sum: 0, start: performance.now() };
   const isMobile = window.matchMedia("(max-width: 760px)").matches;
   const motionOff = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
@@ -27,7 +28,19 @@ function init() {
     hero.classList.add("no-webgl");
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.75));
+  // Sin aceleración gráfica real (SwiftShader, llvmpipe...) el 3D congela la página: se usa la imagen fija
+  const force = new URLSearchParams(location.search).has("force3d");
+  try {
+    const gl = renderer.getContext();
+    const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+    const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
+    if (!force && /swiftshader|llvmpipe|softpipe|software|basic render|mesa offscreen/i.test(gpu)) {
+      renderer.dispose();
+      hero.classList.add("no-webgl");
+      return;
+    }
+  } catch { /* sin información del GPU: se intenta y se mide el rendimiento */ }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.setClearColor(0x06132a, 1);
@@ -340,10 +353,11 @@ function init() {
   const tmpQ = new THREE.Quaternion();
 
   /* ---------- Bucle ---------- */
-  function requestFrame() { if (!raf) raf = requestAnimationFrame(frame); }
+  function requestFrame() { if (!raf && !stopped) raf = requestAnimationFrame(frame); }
   function frame(now) {
     raf = 0;
-    const dt = Math.min((now - last) / 1000, 0.05);
+    const raw = (now - last) / 1000;
+    const dt = Math.min(raw, 0.05);
     last = now;
     const still = motionOff();
     if (!still) time += dt;
@@ -414,7 +428,16 @@ function init() {
       hotspot.style.transform = `translate3d(${x}px, ${y}px, 0)${flip ? " translateX(-100%)" : ""}`;
     }
 
-    composer.render();
+    if (lowQ) renderer.render(scene, camera); else composer.render();
+    // Medición de rendimiento durante los primeros segundos
+    if (!force && perf.n < 90 && now - perf.start > 400) {
+      perf.n++; perf.sum += raw;
+      if (perf.n === 45 || perf.n === 90) {
+        const avg = perf.sum / perf.n;
+        if (avg > 0.06 && lowQ) { stopped = true; hero.classList.remove("is-live"); hero.classList.add("no-webgl"); return; }
+        if (avg > 0.034 && !lowQ) { lowQ = true; renderer.setPixelRatio(1); resize(); perf.n = 0; perf.sum = 0; }
+      }
+    }
     const moving = !still || assembling || Math.abs(ptr.x - ptr.sx) > 0.001;
     if (visible && !document.hidden && moving) requestFrame();
   }

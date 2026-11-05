@@ -1039,7 +1039,7 @@ body { background-color: var(--paper); background-image: linear-gradient(rgba(13
 }
 .hero3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 0; transition: opacity 1.2s var(--ease); }
 .hero3d.is-live .hero3d__canvas { opacity: 1; }
-.hero3d.no-webgl { background: radial-gradient(45% 60% at 50% 50%, rgba(47,123,255,.45), transparent 70%), #06132a; }
+
 .hero3d::after { /* viñeta y transición al contenido */
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
@@ -1243,3 +1243,74 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 .mobile-menu__top .logo-svg { height: 44px; width: auto; }
 .hero3d__hotspot.is-flip { flex-direction: row-reverse; }
 .hero3d__hotspot.is-flip .dot { margin: -13px -13px 0 0; }
+
+/* ---------- Red de seguridad: si el JavaScript no arranca, el contenido se muestra igual ---------- */
+.js .preloader { animation: plFailsafe .6s ease 7s forwards; }
+@keyframes plFailsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+.no-boot .preloader { display: none !important; }
+.no-boot [data-reveal] { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; }
+.no-boot [data-reveal] img { transform: none !important; }
+
+/* Imagen fija de la columna: aparece al instante y queda si el 3D no es viable */
+.hero3d { background: #06132a url("/assets/img/hero-spine.webp") center / cover no-repeat; }
+@media (max-width: 760px) { .hero3d { background-image: url("/assets/img/hero-spine-m.webp"); } }
+.hero3d.no-webgl .hero3d__canvas { display: none; }
+/* Las palabras ya no dependen del 3D */
+.hero3d__word { animation: wordIn 1.4s var(--ease) .3s both; opacity: 1; transform: none; transition: none; }
+.hero3d__word--r { animation-name: wordInR; }
+@keyframes wordIn { from { opacity: 0; transform: translateX(-40px); } }
+@keyframes wordInR { from { opacity: 0; transform: translateX(40px); } }
+
+/* ============================================================
+   ISO 9001:2015 destacado
+   ============================================================ */
+/* Sello grande en el hero */
+.iso-badge {
+  display: inline-flex; align-items: center; gap: .85rem;
+  padding: .45rem 1.1rem .45rem .45rem; border-radius: var(--r-pill);
+  background: linear-gradient(120deg, rgba(255,255,255,.16), rgba(255,255,255,.05));
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 16px 40px -18px rgba(47,123,255,.8);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  color: #fff; transition: transform .4s var(--ease), border-color .3s;
+}
+.iso-badge:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.5); }
+.iso-badge__seal { position: relative; width: 64px; height: 64px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 4px rgba(106,168,255,.35), 0 0 28px rgba(106,168,255,.7); flex-shrink: 0; }
+.iso-badge__seal img { width: 58px; height: 58px; }
+.iso-badge b { display: block; font-size: 1.02rem; font-weight: 700; letter-spacing: .01em; }
+.iso-badge small { display: block; font-size: .8rem; color: rgba(255,255,255,.72); margin-top: .1rem; }
+@media (max-width: 560px) { .iso-badge__seal { width: 52px; height: 52px; } .iso-badge__seal img { width: 46px; height: 46px; } .iso-badge b { font-size: .92rem; } }
+
+/* Sello en la navegación */
+.nav-iso { display: none; align-items: center; gap: .45rem; padding: .25rem .7rem .25rem .25rem; border-radius: var(--r-pill); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: #fff; font-size: .68rem; font-weight: 700; line-height: 1.1; letter-spacing: .03em; flex-shrink: 0; }
+.nav-iso img { width: 36px; height: 36px; border-radius: 50%; background: #fff; padding: 1px; }
+.nav-iso:hover { background: rgba(255,255,255,.14); }
+@media (min-width: 1180px) { .nav-iso { display: inline-flex; } }
+
+/* Sello en encabezados internos */
+.page-iso { position: absolute; z-index: 2; right: max(var(--gutter), calc((100% - var(--container)) / 2)); bottom: clamp(2rem, 5vw, 3.5rem); display: flex; align-items: center; gap: .9rem; padding: .5rem 1.2rem .5rem .5rem; border-radius: var(--r-pill); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); font-size: .82rem; line-height: 1.25; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.page-iso img { width: 84px; height: 84px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgba(106,168,255,.3), 0 0 34px rgba(106,168,255,.6); }
+.page-iso b { color: #fff; font-size: 1.05rem; }
+@media (max-width: 900px) { .page-iso { position: relative; right: auto; bottom: auto; margin: 0 var(--gutter) 1.5rem; width: fit-content; } .page-iso img { width: 56px; height: 56px; } }
+.catalogo-page .page-iso { bottom: 4.5rem; }
+
+/* Sección de certificación */
+.iso-band { position: relative; overflow: hidden; background: linear-gradient(180deg, #fff, var(--paper)); }
+.iso-band__grid { display: grid; grid-template-columns: minmax(260px, .8fr) 1.2fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+.iso-seal { position: relative; width: min(100%, 360px); aspect-ratio: 1; margin-inline: auto; display: grid; place-items: center; }
+.iso-seal::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(31,111,229,.28), transparent 70%); filter: blur(20px); }
+.iso-seal img { position: relative; width: 74%; height: auto; border-radius: 50%; background: #fff; padding: 4%; box-shadow: 0 30px 60px -25px rgba(13,37,70,.45), 0 0 0 10px rgba(255,255,255,.9), 0 0 0 11px rgba(31,111,229,.18); }
+.iso-seal__ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(31,111,229,.35); }
+.iso-seal__ring--2 { inset: 7%; border-style: solid; border-color: rgba(31,111,229,.12); }
+.iso-seal__ring::after { content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(31,111,229,.8); }
+.iso-seal__ring--2::after { display: none; }
+@media (prefers-reduced-motion: no-preference) { .iso-seal__ring { animation: spin 22s linear infinite; } }
+.iso-band__kicker { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .85rem; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent-ink); font-size: .84rem; font-weight: 700; margin-bottom: 1rem; }
+.iso-band__kicker i { font-size: 1.1rem; }
+.iso-band__list { list-style: none; display: grid; gap: .7rem; margin-top: 1.5rem; }
+.iso-band__list li { display: flex; gap: .7rem; align-items: center; font-weight: 500; }
+.iso-band__list i { font-size: 1.35rem; color: var(--accent); }
+@media (max-width: 860px) { .iso-band__grid { grid-template-columns: 1fr; } .iso-seal { width: min(78%, 300px); } }
+
+.preloader__label { display: inline-flex; align-items: center; gap: .55rem; }
+.preloader__label img { width: 22px; height: 22px; border-radius: 50%; background: #fff; }

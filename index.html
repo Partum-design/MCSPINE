@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Michroma&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <script>document.documentElement.classList.add("js");var h=document.documentElement;try{if(sessionStorage.getItem("mc-pl"))h.classList.add("pl-seen");var p=JSON.parse(localStorage.getItem("mc-prefs")||"{}");if(p.text)h.classList.add("a11y-text-"+p.text);if(p.contrast)h.classList.add("a11y-contrast");if(p.motion)h.classList.add("a11y-motion","pl-seen");if(p.links)h.classList.add("a11y-links");if(p.font)h.classList.add("a11y-font");if(p.lang==="en")h.classList.add("lang-en")}catch(e){}</script>
+  <script>document.documentElement.classList.add("js");var h=document.documentElement;try{if(sessionStorage.getItem("mc-pl"))h.classList.add("pl-seen");var p=JSON.parse(localStorage.getItem("mc-prefs")||"{}");if(p.text)h.classList.add("a11y-text-"+p.text);if(p.contrast)h.classList.add("a11y-contrast");if(p.motion)h.classList.add("a11y-motion","pl-seen");if(p.links)h.classList.add("a11y-links");if(p.font)h.classList.add("a11y-font");if(p.lang==="en")h.classList.add("lang-en")}catch(e){}setTimeout(function(){if(!window.__mcBoot)h.classList.add("no-boot")},3500)</script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "MC Spine", "description": "Comercializadora mexicana de implantes y equipos médicos para cirugía de columna vertebral, certificada ISO 9001:2015.", "url": "https://mcspine.vercel.app", "logo": "https://mcspine.vercel.app/assets/img/logo.png", "image": "https://mcspine.vercel.app/assets/img/og.jpg", "telephone": "+52-55-4367-6490", "email": "info@mcspine.mx", "address": {"@type": "PostalAddress", "streetAddress": "Baja California 245, 4to piso, Hipódromo Condesa", "addressLocality": "Cuauhtémoc", "addressRegion": "CDMX", "postalCode": "06170", "addressCountry": "MX"}, "openingHours": "Mo-Fr 09:00-18:00", "sameAs": ["https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr"]}</script>
@@ -34,13 +34,14 @@
       <text class="pl-t pl-spine" x="146" y="90">SPINE</text>
     </svg>
     <div class="preloader__bar"><span></span></div>
-    <p class="preloader__label">Medical Solutions</p>
+    <p class="preloader__label"><img src="/assets/img/iso-9001.png" alt="" width="22" height="22">Certificados ISO 9001:2015</p>
   </div>
   <a class="skip-link" href="#main">Saltar al contenido</a>
   <header class="site-header">
     <div class="container">
       <nav class="nav" aria-label="Principal">
         <a class="brand" href="/" aria-label="MC Spine, inicio"><svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg></a>
+        <a class="nav-iso" href="/nosotros#calidad" title="Certificados ISO 9001:2015"><img src="/assets/img/iso-9001.png" alt="" width="36" height="36"><span>ISO<br>9001:2015</span></a>
         <div class="nav__links"><a href="/" aria-current="page">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div>
         <div class="nav__actions">
           <button class="btn btn--ghost lang-btn" type="button" data-lang-toggle aria-label="Cambiar idioma"><i class="ph ph-globe-simple"></i><span data-lang-current>ES</span></button>
@@ -75,7 +76,7 @@
       <div class="hero3d__hotspot" data-hotspot aria-hidden="true"><span class="dot"></span><span class="hs-label" data-hotspot-label></span></div>
       <div class="container hero3d__ui">
         <div class="hero3d__copy">
-          <span class="hero3d__tag" data-reveal><img src="/assets/img/iso-9001.png" alt="" width="26" height="26">Certificados ISO 9001:2015</span>
+          <a class="iso-badge" href="/nosotros#calidad" data-reveal><span class="iso-badge__seal"><img src="/assets/img/iso-9001.png" alt="Sello de certificación ISO 9001:2015" width="64" height="64"></span><span><b>Certificados ISO 9001:2015</b><small>Sistema de Gestión de Calidad</small></span></a>
           <h1 data-reveal style="--d:100ms">Implantes y sistemas para cirugía de columna con precisión certificada.</h1>
           <div class="hero3d__cta" data-reveal style="--d:200ms">
             <a class="btn btn--accent btn--split" href="/catalogo">Ver catálogo<span class="btn__dot"><i class="ph ph-arrow-up-right"></i></span></a>
@@ -106,7 +107,28 @@
       </div>
     </div>
 
-    <section class="section">
+    <section class="section iso-band">
+      <div class="container iso-band__grid">
+        <div class="iso-seal" data-reveal="scale">
+          <span class="iso-seal__ring" aria-hidden="true"></span>
+          <span class="iso-seal__ring iso-seal__ring--2" aria-hidden="true"></span>
+          <img src="/assets/img/iso-9001.png" alt="Sello ISO 9001:2015 de OLA Certificación Internacional" width="260" height="260" loading="lazy">
+        </div>
+        <div>
+          <span class="iso-band__kicker" data-reveal><i class="ph ph-seal-check"></i>Calidad certificada</span>
+          <h2 class="h2" data-reveal="clip">Empresa certificada <span class="accent">ISO 9001:2015</span></h2>
+          <p class="lead" data-reveal style="--d:100ms;margin-top:1rem">Nuestro Sistema de Gestión de Calidad está certificado bajo la norma ISO 9001:2015 por OLA Certificación Internacional.</p>
+          <ul class="iso-band__list" data-stagger>
+            <li><i class="ph ph-check-circle"></i>Mejora continua en cada proceso.</li>
+            <li><i class="ph ph-check-circle"></i>Enfoque en la satisfacción del cliente.</li>
+            <li><i class="ph ph-check-circle"></i>Procesos operativos y comerciales estandarizados.</li>
+          </ul>
+          <a class="btn" href="/nosotros#calidad" data-reveal style="margin-top:1.8rem">Conoce nuestra política de calidad<i class="ph ph-arrow-up-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
       <div class="container">
         <div class="section-title" data-reveal>
           <h2 class="h2" data-reveal="clip">Respaldo completo para cada procedimiento</h2>
