@@ -18,10 +18,10 @@
   <link rel="icon" href="/assets/img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Michroma&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("mc-pl"))document.documentElement.classList.add("pl-seen")}catch(e){}</script>
+  <script>document.documentElement.classList.add("js");var h=document.documentElement;try{if(sessionStorage.getItem("mc-pl"))h.classList.add("pl-seen");var p=JSON.parse(localStorage.getItem("mc-prefs")||"{}");if(p.text)h.classList.add("a11y-text-"+p.text);if(p.contrast)h.classList.add("a11y-contrast");if(p.motion)h.classList.add("a11y-motion","pl-seen");if(p.links)h.classList.add("a11y-links");if(p.font)h.classList.add("a11y-font");if(p.lang==="en")h.classList.add("lang-en")}catch(e){}</script>
 </head>
 <body>
   <div class="preloader" data-preloader aria-hidden="true">
@@ -37,9 +37,10 @@
   <header class="site-header">
     <div class="container">
       <nav class="nav" aria-label="Principal">
-        <a class="brand" href="/" aria-label="MC Spine, inicio"><img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164"></a>
+        <a class="brand" href="/" aria-label="MC Spine, inicio"><svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg></a>
         <div class="nav__links"><a href="/">Inicio</a><a href="/nosotros" aria-current="page">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div>
         <div class="nav__actions">
+          <button class="btn btn--ghost lang-btn" type="button" data-lang-toggle aria-label="Cambiar idioma"><i class="ph ph-globe-simple"></i><span data-lang-current>ES</span></button>
           <button class="btn btn--ghost btn--icon quote-btn" type="button" data-quote-open aria-label="Abrir lista de cotización"><i class="ph ph-clipboard-text"></i><span class="quote-btn__badge" data-quote-count>0</span></button>
           <a class="btn btn--call" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar</a>
           <button class="btn btn--icon menu-toggle" type="button" data-menu-open aria-expanded="false" aria-label="Abrir menú"><i class="ph ph-list"></i></button>
@@ -51,12 +52,12 @@
   <dialog class="mobile-menu" data-menu aria-label="Menú">
     <div class="mobile-menu__panel">
       <div class="mobile-menu__top">
-        <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164">
+        <svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg>
         <button class="btn btn--glass btn--icon" type="button" data-menu-close aria-label="Cerrar menú"><i class="ph ph-x"></i></button>
       </div>
       <nav class="mobile-menu__links" aria-label="Móvil"><a href="/">Inicio<i class="ph ph-arrow-up-right"></i></a><a href="/nosotros" aria-current="page">Nosotros<i class="ph ph-arrow-up-right"></i></a><a href="/catalogo">Catálogo<i class="ph ph-arrow-up-right"></i></a><a href="/contacto">Contacto<i class="ph ph-arrow-up-right"></i></a></nav>
       <div class="mobile-menu__foot">
-        <button class="btn btn--glass" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem"><button class="btn btn--glass" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button><button class="btn btn--glass" type="button" data-prefs-open><i class="ph ph-person-arms-spread"></i>Preferencias</button></div>
         <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar +52 55 4367 6490</a>
       </div>
     </div>
@@ -76,7 +77,7 @@
     <section class="section">
       <div class="container about-intro">
         <span class="idx">01</span>
-        <div class="about-intro__photo" data-reveal><img src="/assets/img/asesoria.webp" alt="Equipo de MC Spine" width="780" height="586" loading="lazy"></div>
+        <div class="about-intro__photo" data-reveal="img"><img src="/assets/img/asesoria.webp" alt="Equipo de MC Spine" width="780" height="586" loading="lazy"></div>
         <div class="about-intro__text" data-reveal style="--d:100ms">
           <h2>Quiénes somos</h2>
           <p class="big">En MC Spine estamos en busca de convertirnos en el líder del mercado, como la plataforma más eficiente en el tratamiento quirúrgico, contribuyendo con la labor del cirujano y adaptando tecnología adicional al cuerpo humano que mejore la calidad de vida de las personas.</p>
@@ -88,13 +89,13 @@
 
     <section class="section" style="padding-top:0">
       <div class="container quality">
-        <div class="quality__media" data-reveal>
+        <div class="quality__media" data-reveal="img">
           <img src="/assets/img/calidad.webp" alt="Médico haciendo una señal de aprobación" width="1400" height="933" loading="lazy">
           <div class="glass-card"><img src="/assets/img/iso-9001.png" alt="" width="64" height="64"><div><strong>ISO 9001:2015</strong><span>Sistema de Gestión de Calidad</span></div></div>
         </div>
         <div data-reveal style="--d:100ms">
           <span class="idx">02</span>
-          <h2 class="h2" style="margin-top:1rem">Certificados con los más altos estándares</h2>
+          <h2 class="h2" data-reveal="clip" style="margin-top:1rem">Certificados con los más altos estándares</h2>
           <p class="lead" style="margin-top:1rem">Nuestro Sistema de Gestión de Calidad garantiza que cada producto y servicio cumple con los requisitos más estrictos del sector médico.</p>
           <ul>
             <li><i class="ph ph-seal-check"></i><span>Compromiso con la mejora continua.</span></li>
@@ -109,25 +110,25 @@
       <div class="container">
         <div class="section-title" data-reveal>
           <span class="idx">03</span>
-          <h2 class="h2" style="margin-top:1rem">Lo que nos mueve</h2>
+          <h2 class="h2" data-reveal="clip" style="margin-top:1rem">Lo que nos mueve</h2>
         </div>
-        <div class="pillars">
-          <article class="pillar" data-reveal><i class="ph ph-target"></i><h3>Misión</h3><p>Traer motivación e innovación a nuestros clientes, ofreciendo soluciones especializadas que respondan a las necesidades quirúrgicas más exigentes.</p></article>
-          <article class="pillar pillar--dark" data-reveal style="--d:80ms"><i class="ph ph-eye"></i><h3>Visión</h3><p>Liderar la comercialización de la industria ortopédica, siendo la plataforma más eficiente y confiable en el tratamiento quirúrgico de la columna vertebral.</p></article>
-          <article class="pillar pillar--wide" data-reveal>
+        <div class="pillars" data-stagger="blur">
+          <article class="pillar"><i class="ph ph-target"></i><h3>Misión</h3><p>Traer motivación e innovación a nuestros clientes, ofreciendo soluciones especializadas que respondan a las necesidades quirúrgicas más exigentes.</p></article>
+          <article class="pillar pillar--dark"><i class="ph ph-eye"></i><h3>Visión</h3><p>Liderar la comercialización de la industria ortopédica, siendo la plataforma más eficiente y confiable en el tratamiento quirúrgico de la columna vertebral.</p></article>
+          <article class="pillar pillar--wide">
             <div><i class="ph ph-diamond"></i><h3 style="margin-top:.8rem">Valores</h3><p style="margin-top:.6rem">Los principios que definen cada decisión de nuestro equipo.</p></div>
             <div class="values"><span>Excelencia</span><span>Fortaleza</span><span>Calidad</span><span>Compromiso</span><span>Responsabilidad</span><span>Confianza</span></div>
           </article>
-          <article class="pillar" data-reveal style="grid-column:1 / -1"><i class="ph ph-shield-check"></i><h3>Política de Calidad</h3><p style="max-width:70ch">Nuestra política de calidad refleja la dedicación de la empresa para garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz, certificado bajo la norma ISO 9001:2015.</p></article>
+          <article class="pillar" style="grid-column:1 / -1"><i class="ph ph-shield-check"></i><h3>Política de Calidad</h3><p style="max-width:70ch">Nuestra política de calidad refleja la dedicación de la empresa para garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz, certificado bajo la norma ISO 9001:2015.</p></article>
         </div>
       </div>
     </section>
 
     <section class="section" style="padding-bottom:0">
       <div class="container">
-        <div class="cta" data-reveal="scale">
+        <div class="cta" data-reveal="img">
           <img src="/assets/img/equipo-medico.webp" alt="" width="1600" height="862" loading="lazy">
-          <h2 class="h2">¿Necesitas apoyo urgente? Llámanos.</h2>
+          <h2 class="h2" data-reveal="clip">¿Necesitas apoyo urgente? Llámanos.</h2>
           <p>Nuestro equipo está listo para ayudarte a encontrar la solución adecuada.</p>
           <div class="cta__row">
             <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar ahora</a>
@@ -145,7 +146,7 @@
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
-          <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164" loading="lazy">
+          <svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg>
           <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
           <div class="footer__iso"><img src="/assets/img/iso-9001.png" alt="Certificado ISO 9001:2015" width="48" height="48" loading="lazy"><span>ISO 9001:2015<br>Sistema de Gestión de Calidad</span></div>
         </div>
@@ -170,6 +171,13 @@
     </div>
   </footer>
 
+  <button class="prefs-fab" type="button" data-prefs-open aria-label="Accesibilidad e idioma"><i class="ph ph-person-arms-spread"></i></button>
+  <nav class="dock" aria-label="Acciones rápidas">
+    <a href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar</a>
+    <a class="dock__wa" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>WhatsApp</a>
+    <button type="button" class="quote-btn" data-quote-open><i class="ph ph-clipboard-text"></i>Cotizar<span class="quote-btn__badge" data-quote-count>0</span></button>
+    <button type="button" data-prefs-open><i class="ph ph-person-arms-spread"></i>Accesible</button>
+  </nav>
   <a class="wa-fab" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><i class="ph ph-whatsapp-logo"></i></a>
 
   <script type="module" src="/assets/js/main.js"></script>

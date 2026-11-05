@@ -18,11 +18,12 @@
   <link rel="icon" href="/assets/img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Michroma&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("mc-pl"))document.documentElement.classList.add("pl-seen")}catch(e){}</script>
-  <link rel="preload" as="image" href="/assets/img/hero-especialista.webp">
+  <script>document.documentElement.classList.add("js");var h=document.documentElement;try{if(sessionStorage.getItem("mc-pl"))h.classList.add("pl-seen");var p=JSON.parse(localStorage.getItem("mc-prefs")||"{}");if(p.text)h.classList.add("a11y-text-"+p.text);if(p.contrast)h.classList.add("a11y-contrast");if(p.motion)h.classList.add("a11y-motion","pl-seen");if(p.links)h.classList.add("a11y-links");if(p.font)h.classList.add("a11y-font");if(p.lang==="en")h.classList.add("lang-en")}catch(e){}</script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "MC Spine", "description": "Comercializadora mexicana de implantes y equipos médicos para cirugía de columna vertebral, certificada ISO 9001:2015.", "url": "https://mcspine.vercel.app", "logo": "https://mcspine.vercel.app/assets/img/logo.png", "image": "https://mcspine.vercel.app/assets/img/og.jpg", "telephone": "+52-55-4367-6490", "email": "info@mcspine.mx", "address": {"@type": "PostalAddress", "streetAddress": "Baja California 245, 4to piso, Hipódromo Condesa", "addressLocality": "Cuauhtémoc", "addressRegion": "CDMX", "postalCode": "06170", "addressCountry": "MX"}, "openingHours": "Mo-Fr 09:00-18:00", "sameAs": ["https://www.facebook.com/share/1FgaNGEWuB/?mibextid=wwXIfr"]}</script>
 </head>
 <body>
@@ -39,9 +40,10 @@
   <header class="site-header">
     <div class="container">
       <nav class="nav" aria-label="Principal">
-        <a class="brand" href="/" aria-label="MC Spine, inicio"><img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164"></a>
+        <a class="brand" href="/" aria-label="MC Spine, inicio"><svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg></a>
         <div class="nav__links"><a href="/" aria-current="page">Inicio</a><a href="/nosotros">Nosotros</a><a href="/catalogo">Catálogo</a><a href="/contacto">Contacto</a></div>
         <div class="nav__actions">
+          <button class="btn btn--ghost lang-btn" type="button" data-lang-toggle aria-label="Cambiar idioma"><i class="ph ph-globe-simple"></i><span data-lang-current>ES</span></button>
           <button class="btn btn--ghost btn--icon quote-btn" type="button" data-quote-open aria-label="Abrir lista de cotización"><i class="ph ph-clipboard-text"></i><span class="quote-btn__badge" data-quote-count>0</span></button>
           <a class="btn btn--call" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar</a>
           <button class="btn btn--icon menu-toggle" type="button" data-menu-open aria-expanded="false" aria-label="Abrir menú"><i class="ph ph-list"></i></button>
@@ -53,12 +55,12 @@
   <dialog class="mobile-menu" data-menu aria-label="Menú">
     <div class="mobile-menu__panel">
       <div class="mobile-menu__top">
-        <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164">
+        <svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg>
         <button class="btn btn--glass btn--icon" type="button" data-menu-close aria-label="Cerrar menú"><i class="ph ph-x"></i></button>
       </div>
       <nav class="mobile-menu__links" aria-label="Móvil"><a href="/" aria-current="page">Inicio<i class="ph ph-arrow-up-right"></i></a><a href="/nosotros">Nosotros<i class="ph ph-arrow-up-right"></i></a><a href="/catalogo">Catálogo<i class="ph ph-arrow-up-right"></i></a><a href="/contacto">Contacto<i class="ph ph-arrow-up-right"></i></a></nav>
       <div class="mobile-menu__foot">
-        <button class="btn btn--glass" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem"><button class="btn btn--glass" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button><button class="btn btn--glass" type="button" data-prefs-open><i class="ph ph-person-arms-spread"></i>Preferencias</button></div>
         <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar +52 55 4367 6490</a>
       </div>
     </div>
@@ -66,51 +68,35 @@
 
   <main id="main">
 
-    <section class="hero">
-      <div class="container">
-        <div class="hero__frame">
-          <span class="hero__word" aria-hidden="true">MC SPINE</span>
-          <div class="hero__main">
-            <div class="hero__copy">
-              <span class="hero__badge" data-reveal><img src="/assets/img/iso-9001.png" alt="" width="30" height="30">Certificados ISO 9001:2015</span>
-              <h1 data-reveal style="--d:80ms">Precisión <b>en cada</b> <span class="accent">vértebra.</span></h1>
-              <p class="lead" data-reveal style="--d:160ms">Implantes y sistemas para cirugía de columna, con más de 10 años respaldando a cirujanos en México.</p>
-              <div class="hero__cta" data-reveal style="--d:240ms">
-                <a class="btn btn--accent btn--split" href="/catalogo">Ver catálogo<span class="btn__dot"><i class="ph ph-arrow-up-right"></i></span></a>
-                <a class="btn btn--light" href="/contacto">Contactar</a>
-              </div>
-            </div>
-            <div class="hero__arch" data-reveal="scale" style="--d:120ms">
-              <div class="hero__arch-img"><img src="/assets/img/hero-especialista.webp" alt="Especialista de MC Spine atendiendo a un cliente" width="1100" height="1650" fetchpriority="high"></div>
-              <span class="hero__arch-tag">Asesoría lunes a viernes</span>
-            </div>
-            <div class="hero__side">
-              <div class="stat-chips" data-reveal style="--d:220ms">
-                <div class="stat-chip"><span class="stat-chip__icon"><i class="ph ph-seal-check"></i></span><div><strong>ISO 9001</strong><span>Calidad certificada</span></div></div>
-                <div class="stat-chip"><span class="stat-chip__icon"><i class="ph ph-calendar-check"></i></span><div><strong>+<span data-count="10">10</span></strong><span>Años de experiencia</span></div></div>
-                <div class="stat-chip"><span class="stat-chip__icon"><i class="ph ph-cube"></i></span><div><strong><span data-count="27">27</span></strong><span>Productos</span></div></div>
-                <div class="stat-chip"><span class="stat-chip__icon"><i class="ph ph-first-aid-kit"></i></span><div><strong>+<span data-count="100">100</span></strong><span>Procedimientos</span></div></div>
-              </div>
-              <p class="hero__quote" data-reveal style="--d:300ms">Soluciones especializadas para las necesidades quirúrgicas más exigentes.</p>
-            </div>
-          </div>
-          <div class="hero__cards">
-            <a class="g-card" href="/catalogo?cat=implantes" data-reveal style="--d:300ms">
-              <span class="g-card__img"><img src="/assets/catalogo/mobi-c2.png" alt="" width="250" height="250"></span>
-              <span><small>Discos y jaulas</small><h3>Implantes para columna</h3></span>
-              <span class="g-card__go"><i class="ph ph-arrow-up-right"></i></span>
-            </a>
-            <a class="g-card" href="/catalogo?cat=cajas" data-reveal style="--d:380ms">
-              <span class="g-card__img"><img src="/assets/catalogo/roi-a.png" alt="" width="250" height="250"></span>
-              <span><small>Fusión intervertebral</small><h3>Cajas intersomáticas</h3></span>
-              <span class="g-card__go"><i class="ph ph-arrow-up-right"></i></span>
-            </a>
-            <a class="g-card g-card--blue" href="/nosotros" data-reveal style="--d:460ms">
-              <span><span class="g-card__num">+<span data-count="10">10</span></span><p>Años respaldando procedimientos de columna con calidad certificada.</p></span>
-              <span class="g-card__go"><i class="ph ph-arrow-up-right"></i></span>
-            </a>
+    <section class="hero3d" data-hero3d>
+      <canvas class="hero3d__canvas" aria-hidden="true"></canvas>
+      <span class="hero3d__word hero3d__word--l" aria-hidden="true">MC</span>
+      <span class="hero3d__word hero3d__word--r" aria-hidden="true">SPINE</span>
+      <div class="hero3d__hotspot" data-hotspot aria-hidden="true"><span class="dot"></span><span class="hs-label" data-hotspot-label></span></div>
+      <div class="container hero3d__ui">
+        <div class="hero3d__copy">
+          <span class="hero3d__tag" data-reveal><img src="/assets/img/iso-9001.png" alt="" width="26" height="26">Certificados ISO 9001:2015</span>
+          <h1 data-reveal style="--d:100ms">Implantes y sistemas para cirugía de columna con precisión certificada.</h1>
+          <div class="hero3d__cta" data-reveal style="--d:200ms">
+            <a class="btn btn--accent btn--split" href="/catalogo">Ver catálogo<span class="btn__dot"><i class="ph ph-arrow-up-right"></i></span></a>
+            <a class="btn btn--glass" href="/contacto">Contactar</a>
           </div>
         </div>
+        <div class="hero3d__zones" data-reveal style="--d:300ms" role="group" aria-label="Zonas de la columna">
+          <button class="zone-dot" type="button" data-hero-zone="0" data-label="Cervical, C1 a C7" aria-pressed="false">01<span class="zone-dot__tip">Cervical</span></button>
+          <button class="zone-dot" type="button" data-hero-zone="1" data-label="Torácica, T1 a T12" aria-pressed="false">02<span class="zone-dot__tip">Torácica</span></button>
+          <button class="zone-dot" type="button" data-hero-zone="2" data-label="Lumbar, L1 a L5" aria-pressed="false">03<span class="zone-dot__tip">Lumbar</span></button>
+          <span class="hero3d__zones-label">Explora cada zona de la columna</span>
+        </div>
+        <aside class="hero3d__card" data-reveal="blur" style="--d:400ms">
+          <div class="hero3d__card-head"><div><b>MC SPINE</b><small>Medical Solutions</small></div><a class="btn btn--glass btn--icon btn--sm" href="/nosotros" aria-label="Conoce MC Spine"><i class="ph ph-arrow-up-right"></i></a></div>
+          <p>Comercializadora mexicana que acompaña a cirujanos e instituciones con implantes especializados para columna vertebral.</p>
+          <div class="hero3d__stats">
+            <div><strong>+<span data-count="10">10</span></strong><span>Años</span></div>
+            <div><strong><span data-count="27">27</span></strong><span>Productos</span></div>
+            <div><strong>ISO</strong><span>9001:2015</span></div>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -123,11 +109,11 @@
     <section class="section">
       <div class="container">
         <div class="section-title" data-reveal>
-          <h2 class="h2">Respaldo completo para cada procedimiento</h2>
+          <h2 class="h2" data-reveal="clip">Respaldo completo para cada procedimiento</h2>
           <p>Producto, calidad certificada y atención cercana en un solo proveedor.</p>
         </div>
         <div class="bento">
-          <article class="tile tile--photo" data-reveal>
+          <article class="tile tile--photo" data-reveal="img">
             <img src="/assets/img/asesoria.webp" alt="Asesora de MC Spine revisando opciones con una clienta" width="780" height="586" loading="lazy">
             <div class="tile__body">
               <h3>Asesoría para cirujanos e instituciones</h3>
@@ -175,7 +161,7 @@
       <span class="ghost-word ghost-word--ink" aria-hidden="true">COLUMNA</span>
       <div class="container explorer__grid">
         <div data-reveal>
-          <h2 class="h2">Encuentra el sistema por zona</h2>
+          <h2 class="h2" data-reveal="clip">Encuentra el sistema por zona</h2>
           <p class="lead" style="margin:1rem 0 2rem">Selecciona una región de la columna para ver los productos indicados para ella.</p>
           <div class="spine-wrap">
             <svg class="spine-svg" data-spine aria-hidden="true"></svg>
@@ -194,7 +180,7 @@
       <span class="ghost-word ghost-word--ink" data-tech-word aria-hidden="true">PRECISIÓN</span>
       <div class="container">
         <div class="tech__head" data-reveal>
-          <h2 class="h2">Tecnología diseñada con <span class="accent">precisión.</span></h2>
+          <h2 class="h2" data-reveal="clip">Tecnología diseñada con <span class="accent">precisión.</span></h2>
           <div class="tech__tabs" aria-label="Producto destacado">
             <button class="chip" type="button" data-tech-tab aria-pressed="true">Tornillo poliaxial</button>
             <button class="chip" type="button" data-tech-tab aria-pressed="false">ROI-A⁺</button>
@@ -213,7 +199,7 @@
     <section class="section">
       <div class="container process__grid">
         <div class="process__intro" data-reveal>
-          <h2 class="h2">Cómo trabajamos contigo</h2>
+          <h2 class="h2" data-reveal="clip">Cómo trabajamos contigo</h2>
           <p class="lead" style="margin-top:1rem">Del primer contacto a la entrega, con un mismo equipo atendiendo tu solicitud.</p>
           <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2rem">
             <button class="btn" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
@@ -221,10 +207,10 @@
           </div>
         </div>
         <div class="steps">
-          <div class="step" data-reveal><span class="step__n">01</span><div><h3>Consulta</h3><p>Cuéntanos el procedimiento y las necesidades de tu institución.</p></div></div>
-          <div class="step" data-reveal style="--d:80ms"><span class="step__n">02</span><div><h3>Selección</h3><p>Te orientamos sobre el sistema e implantes adecuados de nuestro catálogo.</p></div></div>
-          <div class="step" data-reveal style="--d:160ms"><span class="step__n">03</span><div><h3>Cotización</h3><p>Recibes disponibilidad y una propuesta clara para tu solicitud.</p></div></div>
-          <div class="step" data-reveal style="--d:240ms"><span class="step__n">04</span><div><h3>Acompañamiento</h3><p>Damos seguimiento cercano a cada pedido hasta su entrega.</p></div></div>
+          <div class="step" data-reveal="blur"><span class="step__n">01</span><div><h3>Consulta</h3><p>Cuéntanos el procedimiento y las necesidades de tu institución.</p></div></div>
+          <div class="step" data-reveal="blur" style="--d:80ms"><span class="step__n">02</span><div><h3>Selección</h3><p>Te orientamos sobre el sistema e implantes adecuados de nuestro catálogo.</p></div></div>
+          <div class="step" data-reveal="blur" style="--d:160ms"><span class="step__n">03</span><div><h3>Cotización</h3><p>Recibes disponibilidad y una propuesta clara para tu solicitud.</p></div></div>
+          <div class="step" data-reveal="blur" style="--d:240ms"><span class="step__n">04</span><div><h3>Acompañamiento</h3><p>Damos seguimiento cercano a cada pedido hasta su entrega.</p></div></div>
         </div>
       </div>
     </section>
@@ -232,7 +218,7 @@
     <section class="section" style="padding-top:0">
       <div class="container">
         <div class="rail-head" data-reveal>
-          <h2 class="h2">Productos destacados</h2>
+          <h2 class="h2" data-reveal="clip">Productos destacados</h2>
           <div class="rail-controls">
             <button class="btn btn--ghost btn--icon" type="button" data-rail-dir="-1" aria-label="Anterior"><i class="ph ph-arrow-left"></i></button>
             <button class="btn btn--ghost btn--icon" type="button" data-rail-dir="1" aria-label="Siguiente"><i class="ph ph-arrow-right"></i></button>
@@ -245,9 +231,9 @@
 
     <section class="section" style="padding-bottom:0">
       <div class="container">
-        <div class="cta" data-reveal="scale">
+        <div class="cta" data-reveal="img">
           <img src="/assets/img/equipo-medico.webp" alt="" width="1600" height="862" loading="lazy">
-          <h2 class="h2">¿Necesitas apoyo urgente? Llámanos.</h2>
+          <h2 class="h2" data-reveal="clip">¿Necesitas apoyo urgente? Llámanos.</h2>
           <p>Nuestro equipo está listo para ayudarte a encontrar la solución adecuada para tu institución o procedimiento.</p>
           <div class="cta__row">
             <a class="btn btn--light" href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar ahora</a>
@@ -265,7 +251,7 @@
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
-          <img src="/assets/img/logo.png" alt="MC Spine" width="302" height="164" loading="lazy">
+          <svg class="logo-svg" viewBox="0 0 302 164" role="img" aria-label="MC Spine"><text class="lt lt-mc" x="0" y="90">MC</text><ellipse cx="106" cy="5" rx="7.5" ry="5.5"/><ellipse cx="102.5" cy="28" rx="8" ry="5.5"/><ellipse cx="100" cy="50.5" rx="8.5" ry="6"/><ellipse cx="102.5" cy="75.5" rx="10" ry="7"/><ellipse cx="105" cy="103.5" rx="11.5" ry="8"/><ellipse cx="110" cy="133" rx="13.5" ry="9.5"/><ellipse cx="100.5" cy="158.5" rx="8" ry="5"/><text class="lt lt-sp" x="146" y="90">SPINE</text></svg>
           <p>Comercializadora de implantes y equipos médicos para cirugía de columna vertebral.</p>
           <div class="footer__iso"><img src="/assets/img/iso-9001.png" alt="Certificado ISO 9001:2015" width="48" height="48" loading="lazy"><span>ISO 9001:2015<br>Sistema de Gestión de Calidad</span></div>
         </div>
@@ -290,8 +276,16 @@
     </div>
   </footer>
 
+  <button class="prefs-fab" type="button" data-prefs-open aria-label="Accesibilidad e idioma"><i class="ph ph-person-arms-spread"></i></button>
+  <nav class="dock" aria-label="Acciones rápidas">
+    <a href="tel:+525543676490"><i class="ph ph-phone"></i>Llamar</a>
+    <a class="dock__wa" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>WhatsApp</a>
+    <button type="button" class="quote-btn" data-quote-open><i class="ph ph-clipboard-text"></i>Cotizar<span class="quote-btn__badge" data-quote-count>0</span></button>
+    <button type="button" data-prefs-open><i class="ph ph-person-arms-spread"></i>Accesible</button>
+  </nav>
   <a class="wa-fab" href="https://wa.me/525543676490?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20MC%20Spine" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><i class="ph ph-whatsapp-logo"></i></a>
 
   <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/hero3d.js"></script>
 </body>
 </html>

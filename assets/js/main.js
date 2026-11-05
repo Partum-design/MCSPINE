@@ -1,6 +1,7 @@
 /* MC Spine · interacciones compartidas (sin dependencias) */
 import { PRODUCTS, CATEGORY_LABEL, ZONE_LABEL } from "../data/products.js";
 import { quote, initQuoteUI, toast, openQuote, waLink, mailLink, quoteMessage } from "./quote.js";
+import { initPrefs } from "./prefs.js";
 
 export const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -21,22 +22,28 @@ function initMenu() {
   menu.addEventListener("close", () => openBtn.setAttribute("aria-expanded", "false"));
   menu.addEventListener("click", (e) => {
     if (e.target.closest("[data-menu-close]") || e.target === menu) menu.close();
-    if (e.target.closest("[data-quote-open]")) menu.close();
+    if (e.target.closest("[data-quote-open], [data-prefs-open]")) menu.close();
   });
 }
 
 /* ---------- Aparición al entrar en pantalla ---------- */
 export function initReveal(root = document) {
+  root.querySelectorAll("[data-stagger]").forEach((g) => {
+    [...g.children].forEach((c, i) => { if (!c.hasAttribute("data-reveal")) c.setAttribute("data-reveal", g.dataset.stagger || ""); c.style.setProperty("--d", `${i * 90}ms`); });
+  });
   const els = root.querySelectorAll("[data-reveal]:not(.is-in)");
-  if (!("IntersectionObserver" in window) || reduceMotion) { els.forEach((el) => el.classList.add("is-in")); return; }
-  const pending = new Set(els);
-  const show = (el) => { el.classList.add("is-in"); io.unobserve(el); pending.delete(el); };
+  if (!("IntersectionObserver" in window) || reduceMotion || document.documentElement.classList.contains("a11y-motion")) { els.forEach((el) => el.classList.add("is-in")); return; }
+  // Los títulos con efecto "clip" no tienen área visible al inicio: se observa su contenedor
+  const targetOf = (el) => (el.dataset.reveal === "clip" || el.dataset.reveal === "img" ? el.parentElement : el);
+  const byTarget = new Map();
+  els.forEach((el) => { const t = targetOf(el); if (!byTarget.has(t)) byTarget.set(t, []); byTarget.get(t).push(el); });
+  const show = (t) => { (byTarget.get(t) || []).forEach((el) => el.classList.add("is-in")); io.unobserve(t); byTarget.delete(t); };
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => e.isIntersecting && show(e.target));
     // Si el usuario saltó la sección (ancla, salto rápido), también se revela
-    pending.forEach((el) => { if (el.getBoundingClientRect().bottom < 0) show(el); });
-  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-  els.forEach((el) => io.observe(el));
+    [...byTarget.keys()].forEach((t) => { if (t.getBoundingClientRect().bottom < 0) show(t); });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  byTarget.forEach((_, t) => io.observe(t));
 }
 
 /* ---------- Contadores ---------- */
@@ -360,8 +367,12 @@ function runPreloader() {
 
 /* ---------- Arranque ---------- */
 function safe(fn) { try { fn(); } catch (err) { console.warn("[MC Spine]", fn.name, err); } }
-[initHeader, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
+[initPrefs, initHeader, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
 // Las animaciones de entrada arrancan cuando el preloader se retira
-runPreloader().then(() => [initReveal, initCounters].forEach(safe));
+runPreloader().then(() => {
+  window.__mcReady = true;
+  window.dispatchEvent(new Event("mc:ready"));
+  [initReveal, initCounters].forEach(safe);
+});
 
 export { quoteMessage };

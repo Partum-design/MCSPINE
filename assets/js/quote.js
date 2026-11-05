@@ -135,7 +135,7 @@ function renderDrawer() {
   const foot = drawer.querySelector("[data-q-form]");
   const products = quote.products;
   drawer.querySelector("[data-q-summary]").textContent = products.length
-    ? `${products.length} ${products.length === 1 ? "producto" : "productos"} seleccionados`
+    ? (products.length === 1 ? "1 producto seleccionado" : `${products.length} productos seleccionados`)
     : "Agrega productos desde el catálogo";
   foot.hidden = products.length === 0;
   list.innerHTML = products.length

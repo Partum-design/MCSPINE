@@ -2,6 +2,7 @@
 import { PRODUCTS, CATEGORIES, CATEGORY_LABEL, ZONES, ZONE_LABEL } from "../data/products.js";
 import { productCard, paintAddButtons, reduceMotion } from "./main.js";
 import { quote, waLink } from "./quote.js";
+import { EN } from "../data/i18n-en.js";
 
 const grid = document.querySelector("[data-grid]");
 const chipsBox = document.querySelector("[data-chips]");
@@ -45,7 +46,9 @@ function filtered() {
     if (state.cat !== "all" && p.category !== state.cat) return false;
     if (state.zone !== "all" && p.zone !== state.zone) return false;
     if (!terms.length) return true;
-    const hay = norm(`${p.name} ${p.desc} ${CATEGORY_LABEL[p.category]} ${p.zone ? ZONE_LABEL[p.zone] : ""}`);
+    const es = `${p.name} ${p.desc} ${CATEGORY_LABEL[p.category]} ${p.zone ? ZONE_LABEL[p.zone] : ""}`;
+    const en = [p.name, p.desc, CATEGORY_LABEL[p.category], p.zone && ZONE_LABEL[p.zone]].map((x) => (x && EN[x]) || "").join(" ");
+    const hay = norm(`${es} ${en}`);
     return terms.every((t) => hay.includes(t));
   });
   if (state.sort === "az") list = [...list].sort((a, b) => a.name.localeCompare(b.name, "es"));
