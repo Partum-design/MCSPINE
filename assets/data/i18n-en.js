@@ -39,7 +39,7 @@ export const EN = {
   "Página no encontrada | MC Spine": "Page not found | MC Spine",
 
   // Hero 3D
-  "Certificados en ISO 9001:2015": "Certified in ISO 9001:2015",
+  "Certificados ISO 9001:2015": "ISO 9001:2015 certified",
   "Implantes y sistemas para cirugía de columna con precisión certificada.": "Implants and systems for spine surgery with certified precision.",
   "Ver catálogo": "View catalog",
   "Contactar": "Contact us",
@@ -164,7 +164,7 @@ export const EN = {
   "En MC Spine estamos en busca de convertirnos en el líder del mercado, como la plataforma más eficiente en el tratamiento quirúrgico, contribuyendo con la labor del cirujano y adaptando tecnología adicional al cuerpo humano que mejore la calidad de vida de las personas.": "At MC Spine we aim to become the market leader as the most efficient platform in surgical treatment, supporting the surgeon's work and adapting additional technology to the human body to improve people's quality of life.",
   "Nuestra política de calidad refleja la dedicación de nuestra empresa con el fin de garantizar el logro de la excelencia a través de un sistema de calidad integral y eficaz.": "Our quality policy reflects our company's dedication to achieving excellence through a comprehensive and effective quality system.",
   "Médico haciendo una señal de aprobación": "Doctor making an approval gesture",
-  "Certificados en ISO 9001, con los más altos estándares": "ISO 9001 certified, to the highest standards",
+  "Certificados con los más altos estándares": "Certified to the highest standards",
   "Nuestro Sistema de Gestión de Calidad garantiza que cada producto y servicio cumple con los requisitos más estrictos del sector médico.": "Our Quality Management System ensures that every product and service meets the strictest requirements of the medical sector.",
   "Compromiso con la mejora continua.": "Commitment to continuous improvement.",
   "Enfoque en la satisfacción del cliente.": "Focus on customer satisfaction.",
@@ -354,7 +354,6 @@ export const EN = {
   "Procesos operativos y comerciales estandarizados.": "Standardized operational and commercial processes.",
   "Conoce nuestra política de calidad": "See our quality policy",
   "Certificados": "Certified",
-  "Certificados en": "Certified in",
 };
 
 // Textos con números o nombres variables
