@@ -1021,13 +1021,17 @@ body { background-color: var(--paper); background-image: linear-gradient(rgba(13
 .nav .btn--call { --bg: var(--accent); }
 .nav .btn--call:hover { --bg: var(--accent-ink); }
 .nav .menu-toggle { --bg: #fff; --fg: var(--ink); }
-.brand svg { height: 56px; width: auto; display: block; }
-.logo-svg .lt { font-family: var(--font-display); fill: #fff; }
-.logo-svg .lt-mc { font-weight: 600; font-size: 40px; letter-spacing: 6px; }
-.logo-svg .lt-sp { font-weight: 400; font-size: 38px; letter-spacing: 13px; }
-.logo-svg ellipse { fill: #b9cfe6; }
-.logo-svg ellipse:nth-of-type(6) { fill: #6aa8ff; }
-@media (max-width: 640px) { .brand svg { height: 46px; } }
+/* Logotipo: "MC" + columna (3D en el header) + "SPINE" con las imágenes oficiales */
+.logo { --logo-h: 56px; display: inline-flex; align-items: center; gap: calc(var(--logo-h) * .2); height: var(--logo-h); flex-shrink: 0; }
+.logo__mc, .logo__sp { display: block; height: calc(var(--logo-h) * .3); width: auto; }
+.logo__col { position: relative; display: block; height: 100%; aspect-ratio: 40 / 168; flex-shrink: 0; }
+.logo__col svg { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .5s; }
+.logo__col ellipse { fill: #b9cfe6; }
+.logo__col ellipse:nth-of-type(6) { fill: #6aa8ff; }
+.logo__col canvas { position: absolute; top: 0; bottom: 0; left: -60%; width: 220%; height: 100%; opacity: 0; pointer-events: none; transition: opacity .6s; }
+.logo.is-3d .logo__col canvas { opacity: 1; }
+.logo.is-3d .logo__col svg { opacity: 0; }
+@media (max-width: 640px) { .brand .logo { --logo-h: 46px; } }
 .lang-btn { min-width: 48px; gap: .35rem; font-size: .82rem; letter-spacing: .04em; }
 @media (max-width: 960px) { .nav .lang-btn { display: none; } }
 
@@ -1239,8 +1243,8 @@ html.a11y-contrast .nav, html.a11y-contrast .glass-card, html.a11y-contrast .her
 html.a11y-contrast .hero3d__card p, html.a11y-contrast .hero3d__stats span, html.a11y-contrast .page-hero .lead { color: #fff; }
 html.a11y-contrast .tile, html.a11y-contrast .p-card, html.a11y-contrast .step, html.a11y-contrast .pillar { border: 2px solid #0a1b33; }
 html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 3px; }
-.footer__brand .logo-svg { height: 54px; width: auto; }
-.mobile-menu__top .logo-svg { height: 44px; width: auto; }
+.footer__brand .logo { --logo-h: 54px; }
+.mobile-menu__top .logo { --logo-h: 44px; }
 .hero3d__hotspot.is-flip { flex-direction: row-reverse; }
 .hero3d__hotspot.is-flip .dot { margin: -13px -13px 0 0; }
 
