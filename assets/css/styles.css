@@ -1281,7 +1281,7 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 .hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); translate: calc(var(--out) * 9vw - var(--shift) * (1 - var(--out))) -50%; scale: calc(1 - var(--out) * .25); transform-origin: left center; }
 @media (max-width: 960px) { .hero3d__word--l, .hero3d__word--r { top: 50%; } }
 @media (max-width: 560px) {
-  .hero3d__word { --word-h: clamp(1.1rem, 5.6vw, 2rem); --word-gap: clamp(1rem, 6vw, 2rem); }
+  .hero3d__word { --word-h: clamp(1.1rem, 8.6vw, 2.6rem); --word-gap: clamp(1rem, 6vw, 2rem); }
   .hero3d__word--l, .hero3d__word--r { top: 46%; left: auto; right: auto; }
   .hero3d__word--l { right: calc(50% + var(--word-gap)); }
   .hero3d__word--r { left: calc(50% + var(--word-gap)); }
@@ -1375,9 +1375,6 @@ html.a11y-motion .hero3d__word { translate: calc(var(--shift) * -1) -50% !import
 
 .preloader__label { display: inline-flex; align-items: center; gap: .55rem; }
 .preloader__label img { width: 22px; height: 22px; border-radius: 50%; background: #fff; }
-/* Imagen fija (sin 3D): mismo corrimiento a la izquierda que la columna 3D */
-.hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.25rem, 4.4vw, 5.2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.3), 1))) center; }
-@media (max-width: 560px) { .hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.1rem, 5.6vw, 2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.3), 1))) center; } }
 
 /* ============================================================
    Inicio · Quién está al frente (Director General)
@@ -1494,7 +1491,7 @@ html:not(.js) .hero3d__logo { display: none; }
   background: radial-gradient(circle, rgba(255,255,255,.9), rgba(95,170,255,.45) 22%, rgba(47,123,255,0) 62%);
   transform: scale(0); opacity: 0;
 }
-@media (max-width: 560px) { .hero3d__beam { --word-h: clamp(1.1rem, 5.6vw, 2rem); top: 46%; } }
+@media (max-width: 560px) { .hero3d__beam { --word-h: clamp(1.1rem, 8.6vw, 2.6rem); top: 46%; } }
 .hero3d.is-arming.is-live .hero3d__beam { animation: beamShot 1.6s cubic-bezier(.2,.8,.2,1) 1.35s; }
 .hero3d.is-arming.is-live .hero3d__beam::after { animation: beamFlare 1.4s ease-out 1.3s; }
 @keyframes beamShot { 0% { opacity: 0; transform: scaleX(0); } 15% { opacity: 1; } 55% { opacity: 1; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1.1) scaleY(.4); } }
@@ -1513,3 +1510,56 @@ html.a11y-motion .hero3d__word, html.a11y-motion .hero3d__beam, html.a11y-motion
 html.a11y-motion .hero3d .hero3d__word { clip-path: none !important; }
 html.a11y-motion .hero3d .hero3d__hint, .no-boot .hero3d__hint { visibility: visible !important; }
 .no-boot .hero3d .hero3d__word { clip-path: none !important; animation: none !important; }
+
+/* ============================================================
+   Hero en celular: todo cabe en una pantalla, por encima de la
+   barra inferior, sin encimarse ni cortarse
+   ============================================================ */
+@media (max-width: 760px) {
+  .js .hero-pin > .hero3d { min-height: 0; }
+  .js .hero-pin .hero3d__ui {
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr auto; align-content: end; gap: .9rem;
+    padding-top: calc(var(--header-h) + 28px);
+    padding-bottom: calc(var(--dock-h) + 34px + env(safe-area-inset-bottom));
+  }
+  /* el explorador de zonas ya existe más abajo ("Encuentra el sistema por zona") */
+  .hero-pin .hero3d__zones { display: none; }
+  .js .hero-pin .hero3d__copy { grid-column: 1; grid-row: 1; align-self: end; max-width: none; margin: 0; padding: 0; }
+  .hero-pin .hero3d__card { grid-column: 1; grid-row: 2; width: 100%; padding: .55rem; border-radius: 18px; }
+  .hero-pin .hero3d__card-head, .hero-pin .hero3d__card p { display: none; }
+  .hero-pin .hero3d__stats { margin-top: 0; gap: .4rem; }
+  .hero-pin .hero3d__stats div { padding: .55rem .3rem; }
+  .hero-pin .hero3d__stats strong { font-size: 1.15rem; }
+  .hero-pin .iso-badge { gap: .7rem; padding: .35rem 1rem .35rem .35rem; max-width: 100%; }
+  .hero-pin .iso-badge__seal { width: 46px; height: 46px; }
+  .hero-pin .iso-badge__seal img { width: 42px; height: 42px; }
+  .hero-pin .iso-badge b { font-size: .9rem; }
+  .hero-pin .iso-badge small { font-size: .74rem; }
+  .hero-pin .hero3d h1, .hero-pin.hero-pin h1 { margin: .9rem 0 1rem; font-size: .88rem; letter-spacing: .05em; }
+  .hero-pin .hero3d__cta { display: grid; grid-template-columns: 1fr auto; gap: .5rem; }
+  .hero-pin .hero3d__cta .btn { justify-content: center; }
+  /* velo oscuro detrás del contenido para que se lea sobre la columna */
+  .hero-pin .hero3d__ui::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(6,19,42,0) 20%, rgba(6,19,42,.55) 48%, rgba(6,19,42,.88) 100%);
+    opacity: clamp(0, calc((var(--hp, 0) - .4) * 3), 1);
+  }
+  /* logotipo e indicador centrados en el área visible (sobre la barra inferior) */
+  .hero-pin .hero3d__word--l, .hero-pin .hero3d__word--r { top: 44%; }
+  .hero-pin .hero3d__beam { top: 44%; }
+  .hero-pin .hero3d__hint { bottom: calc(var(--dock-h) + 26px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 380px) {
+  .hero-pin .hero3d__cta { grid-template-columns: 1fr; }
+}
+
+/* Celular: header más compacto y retrato del líder a escala */
+@media (max-width: 760px) {
+  :root { --header-h: 62px; }
+  .site-header { inset: 8px 0 auto; }
+  .nav { padding: 0 .4rem 0 1.1rem; }
+  .nav .btn--icon { width: 44px; height: 44px; }
+  .brand svg { height: 42px; }
+  .leader__photo { width: min(78vw, 340px); }
+  .leader__name { font-size: clamp(2rem, 11vw, 2.8rem); }
+}
