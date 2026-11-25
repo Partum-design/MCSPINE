@@ -1261,6 +1261,13 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 @keyframes wordIn { from { opacity: 0; transform: translateX(-40px); } }
 @keyframes wordInR { from { opacity: 0; transform: translateX(40px); } }
 
+/* Logotipo oficial en el hero: "MC" y "SPINE" a la misma altura, con la columna 3D al centro */
+.hero3d__word { --word-h: clamp(1.3rem, 6.5vw, 7rem); --word-gap: clamp(2.2rem, 8vw, 10rem); height: var(--word-h); width: auto; top: 30%; text-shadow: none; filter: drop-shadow(0 0 40px rgba(47,123,255,.4)); }
+.hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); }
+.hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); }
+@media (max-width: 960px) { .hero3d__word--l, .hero3d__word--r { top: 30%; } }
+@media (max-width: 560px) { .hero3d__word--l, .hero3d__word--r { top: 24%; left: auto; right: auto; } .hero3d__word--l { right: calc(50% + var(--word-gap)); } .hero3d__word--r { left: calc(50% + var(--word-gap)); } }
+
 /* ============================================================
    ISO 9001:2015 destacado
    ============================================================ */
