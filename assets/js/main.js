@@ -19,19 +19,26 @@ function initHeroPin() {
   const pin = document.querySelector("[data-hero-pin]");
   const stage = pin?.querySelector(".hero3d");
   if (!pin || !stage) return;
-  let ticking = false;
-  const update = () => {
-    ticking = false;
+  // El avance se interpola cuadro a cuadro: la transición se siente suave aunque el scroll sea brusco
+  let target = 0, cur = -1, raf = 0;
+  const still = () => reduceMotion || document.documentElement.classList.contains("a11y-motion");
+  const measure = () => {
     const r = pin.getBoundingClientRect();
     const range = Math.max(pin.offsetHeight - window.innerHeight, 1);
-    const p = Math.min(Math.max(-r.top / range, 0), 1);
-    stage.style.setProperty("--hp", p.toFixed(4));
-    stage.classList.toggle("is-open", p > 0.45);
+    target = Math.min(Math.max(-r.top / range, 0), 1);
   };
-  const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  const tick = () => {
+    raf = 0;
+    cur = cur < 0 || still() ? target : cur + (target - cur) * 0.1;
+    if (Math.abs(target - cur) < 0.0005) cur = target;
+    stage.style.setProperty("--hp", cur.toFixed(4));
+    stage.classList.toggle("is-open", cur > 0.55);
+    if (cur !== target) raf = requestAnimationFrame(tick);
+  };
+  const req = () => { measure(); if (!raf) raf = requestAnimationFrame(tick); };
   window.addEventListener("scroll", req, { passive: true });
   window.addEventListener("resize", req);
-  update();
+  req();
 }
 
 /* ---------- Menú móvil ---------- */
