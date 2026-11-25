@@ -1269,13 +1269,12 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
    ============================================================ */
 .hero3d__word {
   --word-h: clamp(1.25rem, 4.4vw, 5.2rem); --word-gap: clamp(1.4rem, 5.5vw, 6.5rem);
-  --out: min(calc(var(--hp, 0) * 1.7), 1);
+  --out: min(calc(var(--hp, 0) * 2.3), 1);
   /* el conjunto MC · columna · SPINE se centra: SPINE es más ancho, todo se recorre a la izquierda */
   --shift: calc(var(--word-h) * 1.68);
   height: var(--word-h); width: auto; top: 50%; text-shadow: none;
-  filter: drop-shadow(0 0 40px rgba(47,123,255,.45)) blur(calc(var(--out) * 1.5px));
-  /* no desaparecen: quedan tenues de fondo cuando entra el contenido */
-  opacity: calc(1 - var(--out) * (1 - var(--word-rest, .22)));
+  filter: drop-shadow(0 0 40px rgba(47,123,255,.45)) blur(calc(var(--out) * 6px));
+  opacity: 1; /* la opacidad la lleva el contenedor .hero3d__logo */
   will-change: opacity, translate, filter;
 }
 .hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); translate: calc(var(--out) * -9vw - var(--shift) * (1 - var(--out))) -50%; scale: calc(1 - var(--out) * .25); transform-origin: right center; }
@@ -1301,7 +1300,7 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 @keyframes mouseWheel { 0% { opacity: 0; translate: 0 -2px; } 30% { opacity: 1; } 70% { opacity: 0; translate: 0 8px; } 100% { opacity: 0; } }
 
 /* Contenido del hero: entra escalonado con el scroll */
-.hero-rv { --in: clamp(0, calc((var(--hp, 0) - .4 - var(--rv, 0) * .08) * 2.8), 1); opacity: var(--in); translate: 0 calc((1 - var(--in)) * 32px); }
+.hero-rv { --in: clamp(0, calc((var(--hp, 0) - .44 - var(--rv, 0) * .08) * 2.8), 1); opacity: var(--in); translate: 0 calc((1 - var(--in)) * 32px); }
 .hero3d:not(.is-open) .hero-rv { pointer-events: none; }
 .hero-pin .hero3d:not(.is-open) .hero3d__hotspot { opacity: 0; }
 .hero-rv:focus-within { opacity: 1; translate: none; } /* con teclado, siempre visible */
@@ -1377,8 +1376,8 @@ html.a11y-motion .hero3d__word { translate: calc(var(--shift) * -1) -50% !import
 .preloader__label { display: inline-flex; align-items: center; gap: .55rem; }
 .preloader__label img { width: 22px; height: 22px; border-radius: 50%; background: #fff; }
 /* Imagen fija (sin 3D): mismo corrimiento a la izquierda que la columna 3D */
-.hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.25rem, 4.4vw, 5.2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 1.7), 1))) center; }
-@media (max-width: 560px) { .hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.1rem, 5.6vw, 2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 1.7), 1))) center; } }
+.hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.25rem, 4.4vw, 5.2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.3), 1))) center; }
+@media (max-width: 560px) { .hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.1rem, 5.6vw, 2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.3), 1))) center; } }
 
 /* ============================================================
    Inicio · Quién está al frente (Director General)
@@ -1458,8 +1457,11 @@ html.a11y-motion .hero3d__word { translate: calc(var(--shift) * -1) -50% !import
 @media (max-width: 420px) { .leader__pillars li { grid-template-columns: 1fr; gap: .2rem; } }
 html.a11y-contrast .leader__text, html.a11y-contrast .leader__pillars span { color: #fff; }
 
-/* MC · SPINE en reposo (con el contenido visible): un poco más tenues en celular */
-@media (max-width: 960px) { .hero3d__word { --word-rest: .14; } }
+/* Contenedor de MC · SPINE: se desvanece con el scroll y se oculta del todo
+   antes de que aparezca el contenido (no se ve detrás de los botones ni la tarjeta) */
+.hero3d__logo { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: calc(1 - min(calc(var(--hp, 0) * 2.3), 1)); }
+.hero3d.is-open .hero3d__logo, .hero3d.logo-gone .hero3d__logo { opacity: 0; visibility: hidden; }
+html:not(.js) .hero3d__logo { display: none; }
 
 /* ============================================================
    Entrada del hero: la columna se arma, un haz de luz sale del

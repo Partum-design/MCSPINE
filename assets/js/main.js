@@ -33,6 +33,7 @@ function initHeroPin() {
     if (Math.abs(target - cur) < 0.0005) cur = target;
     stage.style.setProperty("--hp", cur.toFixed(4));
     stage.classList.toggle("is-open", cur > 0.55);
+    stage.classList.toggle("logo-gone", cur > 0.44); // MC · SPINE fuera antes de que entre el contenido
     if (cur !== target) raf = requestAnimationFrame(tick);
   };
   const req = () => { measure(); if (!raf) raf = requestAnimationFrame(tick); };

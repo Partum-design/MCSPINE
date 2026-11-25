@@ -277,7 +277,7 @@ function init() {
   let shiftPx = 0, viewW = 1, viewH = 1, lastShift = -1;
   function applyShift() {
     const hp = parseFloat(hero.style.getPropertyValue("--hp")) || 0;
-    const sh = Math.round(shiftPx * (1 - Math.min(hp * 1.7, 1)));
+    const sh = Math.round(shiftPx * (1 - Math.min(hp * 2.3, 1)));
     if (sh === lastShift) return;
     lastShift = sh;
     camera.setViewOffset(viewW, viewH, sh, 0, viewW, viewH);
