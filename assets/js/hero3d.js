@@ -40,6 +40,7 @@ function init() {
       return;
     }
   } catch { /* sin información del GPU: se intenta y se mide el rendimiento */ }
+  hero.classList.add("is-arming"); // el logotipo espera a que la columna se arme (ver CSS)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -253,6 +254,7 @@ function init() {
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), isMobile ? 0.55 : 0.62, 0.5, 0.6);
   composer.addPass(bloom);
+  const bloomBase = bloom.strength;
   composer.addPass(new OutputPass());
 
   /* ---------- Tamaño ---------- */
@@ -347,6 +349,7 @@ function init() {
   const startAssembly = () => {
     if (assembleStart !== null) return;
     assembleStart = performance.now();
+    camera.position.z = (camBase.zNow || camBase.z) + 9; // arranca lejos y entra
     hero.classList.add("is-live");
     requestFrame();
   };
@@ -374,6 +377,9 @@ function init() {
     last = now;
     const still = motionOff();
     if (!still) time += dt;
+    // segundos desde que arrancó la entrada (para giro, acercamiento y destello)
+    const intro = assembleStart === null ? 0 : (now - assembleStart) / 1000;
+    const introK = still ? 1 : easeOut(Math.min(intro / 2.8, 1));
     applyShift();
 
     // armado
@@ -394,7 +400,7 @@ function init() {
     // giro suave + paralaje
     ptr.sx += (ptr.x - ptr.sx) * 0.06;
     ptr.sy += (ptr.y - ptr.sy) * 0.06;
-    spine.rotation.y = -0.4 + (still ? 0 : Math.sin(time * 0.22) * 0.5) + ptr.sx * 0.6;
+    spine.rotation.y = -0.4 + (still ? 0 : Math.sin(time * 0.22) * 0.5) + ptr.sx * 0.6 + (1 - introK) * 2.6;
     spine.rotation.x = ptr.sy * 0.15;
     const out = 1 - ratio; // al salir del hero
     spine.rotation.z = out * 0.25;
@@ -402,15 +408,18 @@ function init() {
     // cámara hacia la zona elegida
     const zNow = camBase.zNow || camBase.z;
     camera.position.y += (camTarget.y + ptr.sy * -0.6 - camera.position.y) * 0.05;
-    camera.position.z += (zNow + camTarget.z + out * 4 - camera.position.z) * 0.05;
+    camera.position.z += (zNow + camTarget.z + out * 4 + (1 - introK) * 9 - camera.position.z) * 0.05;
     camera.position.x += (ptr.sx * 1.2 - camera.position.x) * 0.05;
     camera.lookAt(0, camTarget.look, 0);
 
     // brillo de discos (pulso)
     discMats.forEach((m, i) => {
       const pulse = still ? 0 : Math.sin(time * 2 + i) * 0.25;
-      m.emissiveIntensity += ((m.userData.target ?? 1.4) + pulse - m.emissiveIntensity) * 0.08;
+      // ola de luz de arriba hacia abajo al terminar de armarse (sincronizada con el haz del CSS)
+      const wave = still ? 0 : Math.max(0, 1 - Math.abs(intro - 1.3 - i * 0.14) / 0.35) * 5;
+      m.emissiveIntensity += ((m.userData.target ?? 1.4) + pulse + wave - m.emissiveIntensity) * (wave > 0 ? 0.3 : 0.08);
     });
+    bloom.strength = bloomBase + (still ? 0 : Math.max(0, 1 - Math.abs(intro - 1.45) / 0.55) * 1.1);
 
     // partículas que suben
     if (!still) {
