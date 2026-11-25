@@ -41,6 +41,7 @@ export const EN = {
   // Hero 3D
   "Certificados ISO 9001:2015": "ISO 9001:2015 certified",
   "Certificados en ISO 9001:2015": "Certified in ISO 9001:2015",
+  "Desliza para conocer más": "Scroll to learn more",
   "Implantes y sistemas para cirugía de columna con precisión certificada.": "Implants and systems for spine surgery with certified precision.",
   "Ver catálogo": "View catalog",
   "Contactar": "Contact us",

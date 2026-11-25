@@ -56,6 +56,7 @@ body {
   background: var(--paper);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 img, svg, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -1261,12 +1262,62 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 @keyframes wordIn { from { opacity: 0; transform: translateX(-40px); } }
 @keyframes wordInR { from { opacity: 0; transform: translateX(40px); } }
 
-/* Logotipo oficial en el hero: "MC" y "SPINE" a la misma altura, con la columna 3D al centro */
-.hero3d__word { --word-h: clamp(1.3rem, 6.5vw, 7rem); --word-gap: clamp(2.2rem, 8vw, 10rem); height: var(--word-h); width: auto; top: 30%; text-shadow: none; filter: drop-shadow(0 0 40px rgba(47,123,255,.4)); }
-.hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); }
-.hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); }
-@media (max-width: 960px) { .hero3d__word--l, .hero3d__word--r { top: 30%; } }
-@media (max-width: 560px) { .hero3d__word--l, .hero3d__word--r { top: 24%; left: auto; right: auto; } .hero3d__word--l { right: calc(50% + var(--word-gap)); } .hero3d__word--r { left: calc(50% + var(--word-gap)); } }
+/* ============================================================
+   Hero de inicio: primero solo la columna y el logotipo MC · SPINE;
+   al hacer scroll el logotipo se retira y aparece el contenido.
+   --hp (0 → 1) lo calcula main.js según el avance dentro del hero.
+   ============================================================ */
+.hero3d__word {
+  --word-h: clamp(1.25rem, 4.4vw, 5.2rem); --word-gap: clamp(1.4rem, 5.5vw, 6.5rem);
+  --out: min(calc(var(--hp, 0) * 2.6), 1);
+  height: var(--word-h); width: auto; top: 50%; text-shadow: none;
+  filter: drop-shadow(0 0 40px rgba(47,123,255,.45));
+  opacity: calc(1 - var(--out));
+}
+.hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); translate: calc(var(--out) * -9vw) -50%; scale: calc(1 - var(--out) * .25); transform-origin: right center; }
+.hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); translate: calc(var(--out) * 9vw) -50%; scale: calc(1 - var(--out) * .25); transform-origin: left center; }
+@media (max-width: 960px) { .hero3d__word--l, .hero3d__word--r { top: 50%; } }
+@media (max-width: 560px) {
+  .hero3d__word { --word-h: clamp(1.1rem, 5.6vw, 2rem); --word-gap: clamp(1rem, 6vw, 2rem); }
+  .hero3d__word--l, .hero3d__word--r { top: 46%; left: auto; right: auto; }
+  .hero3d__word--l { right: calc(50% + var(--word-gap)); }
+  .hero3d__word--r { left: calc(50% + var(--word-gap)); }
+}
+
+/* Indicador para desplazarse */
+.hero3d__hint {
+  position: absolute; z-index: 3; left: 50%; bottom: clamp(1.2rem, 4vh, 2.4rem); translate: -50% 0;
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75);
+  opacity: calc(1 - min(calc(var(--hp, 0) * 5), 1)); pointer-events: none; white-space: nowrap;
+}
+.hero3d__mouse { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; position: relative; }
+.hero3d__mouse::after { content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: #fff; }
+@media (prefers-reduced-motion: no-preference) { .hero3d__mouse::after { animation: mouseWheel 1.8s ease-in-out infinite; } }
+@keyframes mouseWheel { 0% { opacity: 0; translate: 0 -2px; } 30% { opacity: 1; } 70% { opacity: 0; translate: 0 8px; } 100% { opacity: 0; } }
+
+/* Contenido del hero: entra escalonado con el scroll */
+.hero-rv { --in: clamp(0, calc((var(--hp, 0) - .28 - var(--rv, 0) * .07) * 3.4), 1); opacity: var(--in); translate: 0 calc((1 - var(--in)) * 32px); }
+.hero3d:not(.is-open) .hero-rv { pointer-events: none; }
+.hero-pin .hero3d:not(.is-open) .hero3d__hotspot { opacity: 0; }
+.hero-rv:focus-within { opacity: 1; translate: none; } /* con teclado, siempre visible */
+
+/* Fijado mientras se recorre el hero (solo con JS) */
+.js .hero-pin { position: relative; height: 210svh; }
+.js .hero-pin > .hero3d { position: sticky; top: 0; height: 100svh; min-height: 560px; }
+.js .hero-pin .hero3d__ui { min-height: 100%; height: 100%; }
+@media (max-width: 960px) { .js .hero-pin { height: 200svh; } }
+/* Desktop: el texto ya no compite con el logotipo, se acomoda a media altura */
+.js .hero-pin .hero3d__copy { margin-top: 0; align-self: center; padding-bottom: 0; }
+@media (max-width: 960px) { .js .hero-pin .hero3d__copy { align-self: end; } }
+
+/* Sin JS o con movimiento reducido: sin desplazamientos */
+html:not(.js) .hero3d__hint, html:not(.js) .hero3d__word { display: none; }
+html:not(.js) .hero-rv { opacity: 1; translate: none; }
+@media (prefers-reduced-motion: reduce) { .hero3d__word, .hero-rv { translate: none !important; scale: none !important; } .hero3d__word { translate: 0 -50% !important; } }
+html.a11y-motion .hero3d__word, html.a11y-motion .hero-rv { scale: none !important; }
+html.a11y-motion .hero-rv { translate: none !important; }
+html.a11y-motion .hero3d__word { translate: 0 -50% !important; }
 
 /* ============================================================
    ISO 9001:2015 destacado

@@ -14,6 +14,26 @@ function initHeader() {
   new IntersectionObserver(([e]) => document.documentElement.classList.toggle("is-scrolled", !e.isIntersecting)).observe(sentinel);
 }
 
+/* ---------- Hero de inicio: avance del scroll (0 → 1) en --hp ---------- */
+function initHeroPin() {
+  const pin = document.querySelector("[data-hero-pin]");
+  const stage = pin?.querySelector(".hero3d");
+  if (!pin || !stage) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = pin.getBoundingClientRect();
+    const range = Math.max(pin.offsetHeight - window.innerHeight, 1);
+    const p = Math.min(Math.max(-r.top / range, 0), 1);
+    stage.style.setProperty("--hp", p.toFixed(4));
+    stage.classList.toggle("is-open", p > 0.45);
+  };
+  const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  window.addEventListener("scroll", req, { passive: true });
+  window.addEventListener("resize", req);
+  update();
+}
+
 /* ---------- Menú móvil ---------- */
 function initMenu() {
   const menu = document.querySelector("[data-menu]");
@@ -368,7 +388,7 @@ function runPreloader() {
 
 /* ---------- Arranque ---------- */
 function safe(fn) { try { fn(); } catch (err) { console.warn("[MC Spine]", fn.name, err); } }
-[initPrefs, initHeader, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
+[initPrefs, initHeader, initHeroPin, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
 // Las animaciones de entrada arrancan cuando el preloader se retira
 runPreloader().then(() => {
   window.__mcReady = true;

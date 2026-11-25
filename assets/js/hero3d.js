@@ -410,7 +410,10 @@ function init() {
     }
 
     // recorrido automático
-    if (autoZone && !still && assembleStart !== null && !assembling) {
+    // con el logotipo a la vista (antes de abrir el hero) la columna queda completa
+    const open = !hero.parentElement?.matches("[data-hero-pin]") || hero.classList.contains("is-open");
+    if (!open) { autoTimer = 0; if (zone !== -1) setZone(-1); }
+    if (open && autoZone && !still && assembleStart !== null && !assembling) {
       autoTimer += dt;
       if (autoTimer > 4.2) { autoTimer = 0; setZone(zone >= 2 ? -1 : zone + 1); }
     }

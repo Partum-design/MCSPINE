@@ -69,27 +69,29 @@
 
   <main id="main">
 
+    <div class="hero-pin" data-hero-pin>
     <section class="hero3d" data-hero3d>
       <canvas class="hero3d__canvas" aria-hidden="true"></canvas>
       <img class="hero3d__word hero3d__word--l" src="/assets/img/logo-mc.png" alt="" aria-hidden="true" width="406" height="192">
       <img class="hero3d__word hero3d__word--r" src="/assets/img/logo-spine.png" alt="" aria-hidden="true" width="1050" height="192">
       <div class="hero3d__hotspot" data-hotspot aria-hidden="true"><span class="dot"></span><span class="hs-label" data-hotspot-label></span></div>
+      <div class="hero3d__hint" aria-hidden="true"><span class="hero3d__mouse"></span>Desliza para conocer más</div>
       <div class="container hero3d__ui">
-        <div class="hero3d__copy">
-          <a class="iso-badge" href="/nosotros#calidad" data-reveal><span class="iso-badge__seal"><img src="/assets/img/iso-9001.png" alt="Sello de certificación ISO 9001:2015" width="64" height="64"></span><span><b>Certificados en ISO 9001:2015</b><small>Sistema de Gestión de Calidad</small></span></a>
-          <h1 data-reveal style="--d:100ms">Implantes y sistemas para cirugía de columna con precisión certificada.</h1>
-          <div class="hero3d__cta" data-reveal style="--d:200ms">
+        <div class="hero3d__copy hero-rv" style="--rv:0">
+          <a class="iso-badge" href="/nosotros#calidad"><span class="iso-badge__seal"><img src="/assets/img/iso-9001.png" alt="Sello de certificación ISO 9001:2015" width="64" height="64"></span><span><b>Certificados en ISO 9001:2015</b><small>Sistema de Gestión de Calidad</small></span></a>
+          <h1>Implantes y sistemas para cirugía de columna con precisión certificada.</h1>
+          <div class="hero3d__cta">
             <a class="btn btn--accent btn--split" href="/catalogo">Ver catálogo<span class="btn__dot"><i class="ph ph-arrow-up-right"></i></span></a>
             <a class="btn btn--glass" href="/contacto">Contactar</a>
           </div>
         </div>
-        <div class="hero3d__zones" data-reveal style="--d:300ms" role="group" aria-label="Zonas de la columna">
+        <div class="hero3d__zones hero-rv" style="--rv:1" role="group" aria-label="Zonas de la columna">
           <button class="zone-dot" type="button" data-hero-zone="0" data-label="Cervical, C1 a C7" aria-pressed="false">01<span class="zone-dot__tip">Cervical</span></button>
           <button class="zone-dot" type="button" data-hero-zone="1" data-label="Torácica, T1 a T12" aria-pressed="false">02<span class="zone-dot__tip">Torácica</span></button>
           <button class="zone-dot" type="button" data-hero-zone="2" data-label="Lumbar, L1 a L5" aria-pressed="false">03<span class="zone-dot__tip">Lumbar</span></button>
           <span class="hero3d__zones-label">Explora cada zona de la columna</span>
         </div>
-        <aside class="hero3d__card" data-reveal="blur" style="--d:400ms">
+        <aside class="hero3d__card hero-rv" style="--rv:2">
           <div class="hero3d__card-head"><div><b>MC SPINE</b><small>Medical Solutions</small></div><a class="btn btn--glass btn--icon btn--sm" href="/nosotros" aria-label="Conoce MC Spine"><i class="ph ph-arrow-up-right"></i></a></div>
           <p>Comercializadora mexicana que acompaña a cirujanos e instituciones con implantes especializados para columna vertebral.</p>
           <div class="hero3d__stats">
@@ -100,6 +102,7 @@
         </aside>
       </div>
     </section>
+    </div>
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
