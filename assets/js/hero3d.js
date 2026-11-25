@@ -266,8 +266,21 @@ function init() {
     camera.position.z = camBase.z * Math.max(1, (0.5 / camera.aspect) * 0.6 + 0.55);
     camBase.zNow = camera.position.z;
     camera.updateProjectionMatrix();
+    // corrimiento a la izquierda para centrar MC · columna · SPINE (igual que en el CSS)
+    const word = hero.querySelector(".hero3d__word");
+    shiftPx = word && getComputedStyle(word).display !== "none" ? word.offsetHeight * 1.68 : 0;
+    viewW = w; viewH = h; lastShift = -1;
     requestFrame();
   }
+  let shiftPx = 0, viewW = 1, viewH = 1, lastShift = -1;
+  function applyShift() {
+    const hp = parseFloat(hero.style.getPropertyValue("--hp")) || 0;
+    const sh = Math.round(shiftPx * (1 - Math.min(hp * 2.6, 1)));
+    if (sh === lastShift) return;
+    lastShift = sh;
+    camera.setViewOffset(viewW, viewH, sh, 0, viewW, viewH);
+  }
+  window.addEventListener("scroll", () => requestFrame(), { passive: true });
   new ResizeObserver(resize).observe(hero);
 
   /* ---------- Estado ---------- */
@@ -361,6 +374,7 @@ function init() {
     last = now;
     const still = motionOff();
     if (!still) time += dt;
+    applyShift();
 
     // armado
     let assembling = false;

@@ -1270,12 +1270,14 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 .hero3d__word {
   --word-h: clamp(1.25rem, 4.4vw, 5.2rem); --word-gap: clamp(1.4rem, 5.5vw, 6.5rem);
   --out: min(calc(var(--hp, 0) * 2.6), 1);
+  /* el conjunto MC · columna · SPINE se centra: SPINE es más ancho, todo se recorre a la izquierda */
+  --shift: calc(var(--word-h) * 1.68);
   height: var(--word-h); width: auto; top: 50%; text-shadow: none;
   filter: drop-shadow(0 0 40px rgba(47,123,255,.45));
   opacity: calc(1 - var(--out));
 }
-.hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); translate: calc(var(--out) * -9vw) -50%; scale: calc(1 - var(--out) * .25); transform-origin: right center; }
-.hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); translate: calc(var(--out) * 9vw) -50%; scale: calc(1 - var(--out) * .25); transform-origin: left center; }
+.hero3d__word--l { left: auto; right: calc(50% + var(--word-gap)); translate: calc(var(--out) * -9vw - var(--shift) * (1 - var(--out))) -50%; scale: calc(1 - var(--out) * .25); transform-origin: right center; }
+.hero3d__word--r { right: auto; left: calc(50% + var(--word-gap)); translate: calc(var(--out) * 9vw - var(--shift) * (1 - var(--out))) -50%; scale: calc(1 - var(--out) * .25); transform-origin: left center; }
 @media (max-width: 960px) { .hero3d__word--l, .hero3d__word--r { top: 50%; } }
 @media (max-width: 560px) {
   .hero3d__word { --word-h: clamp(1.1rem, 5.6vw, 2rem); --word-gap: clamp(1rem, 6vw, 2rem); }
@@ -1314,10 +1316,10 @@ html.a11y-contrast :focus-visible { outline: 3px solid #ffbf00; outline-offset: 
 /* Sin JS o con movimiento reducido: sin desplazamientos */
 html:not(.js) .hero3d__hint, html:not(.js) .hero3d__word { display: none; }
 html:not(.js) .hero-rv { opacity: 1; translate: none; }
-@media (prefers-reduced-motion: reduce) { .hero3d__word, .hero-rv { translate: none !important; scale: none !important; } .hero3d__word { translate: 0 -50% !important; } }
+@media (prefers-reduced-motion: reduce) { .hero3d__word, .hero-rv { translate: none !important; scale: none !important; } .hero3d__word { translate: calc(var(--shift) * -1) -50% !important; } }
 html.a11y-motion .hero3d__word, html.a11y-motion .hero-rv { scale: none !important; }
 html.a11y-motion .hero-rv { translate: none !important; }
-html.a11y-motion .hero3d__word { translate: 0 -50% !important; }
+html.a11y-motion .hero3d__word { translate: calc(var(--shift) * -1) -50% !important; }
 
 /* ============================================================
    ISO 9001:2015 destacado
@@ -1372,3 +1374,6 @@ html.a11y-motion .hero3d__word { translate: 0 -50% !important; }
 
 .preloader__label { display: inline-flex; align-items: center; gap: .55rem; }
 .preloader__label img { width: 22px; height: 22px; border-radius: 50%; background: #fff; }
+/* Imagen fija (sin 3D): mismo corrimiento a la izquierda que la columna 3D */
+.hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.25rem, 4.4vw, 5.2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.6), 1))) center; }
+@media (max-width: 560px) { .hero-pin .hero3d.no-webgl { background-position: calc(50% - clamp(1.1rem, 5.6vw, 2rem) * 1.68 * (1 - min(calc(var(--hp, 0) * 2.6), 1))) center; } }
