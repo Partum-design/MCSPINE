@@ -389,7 +389,7 @@ export const EN = {
   "Horario de atención": "Business hours",
   "Lunes a viernes": "Monday to Friday",
   "9:00 am a 6:00 pm": "9:00 am to 6:00 pm",
-  "Empresa certificada ISO 9001:2015": "ISO 9001:2015 certified company",
+  "Empresa certificada en ISO 9001:2015": "ISO 9001:2015 certified company",
   "Envíanos un mensaje": "Send us a message",
   "Te responderemos en menos de 24 horas hábiles.": "We'll reply within 24 business hours.",
   "Nombre completo": "Full name",
@@ -445,11 +445,13 @@ export const EN = {
   "Sello de certificación ISO 9001:2015": "ISO 9001:2015 certification seal",
   "Sello ISO 9001:2015 de OLA Certificación Internacional": "ISO 9001:2015 seal by OLA Certificación Internacional",
   "Empresa certificada": "Certified company",
+  "Empresa certificada en": "Certified company in",
   "Nuestro Sistema de Gestión de Calidad está certificado bajo la norma ISO 9001:2015 por OLA Certificación Internacional.": "Our Quality Management System is certified to the ISO 9001:2015 standard by OLA Certificación Internacional.",
   "Mejora continua en cada proceso.": "Continuous improvement in every process.",
   "Procesos operativos y comerciales estandarizados.": "Standardized operational and commercial processes.",
   "Conoce nuestra política de calidad": "See our quality policy",
   "Certificados": "Certified",
+  "Certificados en": "Certified in",
 };
 
 // Textos con números o nombres variables
