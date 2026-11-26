@@ -5,7 +5,9 @@
    La clave de la API se lee de la variable de entorno GOOGLE_API_KEY. */
 import { PRODUCTS, CATEGORY_LABEL, ZONE_LABEL } from "../assets/data/products.js";
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+// Modelos a intentar en orden (si uno no existe o está saturado se usa el siguiente)
+const MODELS = [...new Set([process.env.GEMINI_MODEL, "gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"].filter(Boolean))];
+const getKey = () => (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY || "").trim();
 const WA_NUMBER = "525543676490";
 const MAX_MSG = 800;
 const MAX_TURNS = 16;
@@ -112,9 +114,62 @@ function fallback(lang) {
     : { reply: "En este momento no puedo responder. Puedes hablar con nuestro equipo por WhatsApp y te atenderán de inmediato.", links: [{ label: "Contacto", url: "/contacto" }], whatsapp: true, whatsappText: "Hola, me gustaría más información sobre los productos MC Spine." };
 }
 
+async function callGemini(key, payload, timeout = 25_000) {
+  let error = "";
+  for (const model of MODELS) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(timeout),
+      });
+      if (r.ok) return { ok: true, model, data: await r.json() };
+      const body = (await r.text()).slice(0, 400);
+      error = `${model} → ${r.status} ${body}`;
+      console.error("Gemini", error);
+      // Clave inválida o sin permisos: no tiene caso probar otro modelo
+      if (r.status === 400 && /API_KEY|api key/i.test(body)) break;
+      if (r.status === 401 || r.status === 403) break;
+    } catch (e) {
+      error = `${model} → ${e.name}: ${e.message}`;
+      console.error("Gemini", error);
+    }
+  }
+  return { ok: false, error };
+}
+
+function parseJSON(text) {
+  try { return JSON.parse(text); } catch { /* puede venir envuelto en ```json */ }
+  const m = text.match(/\{[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch { /* nada */ } }
+  return text.trim() ? { reply: text.trim(), links: [], whatsapp: false } : null;
+}
+
+/* GET /api/chat?diag=1 · Comprueba la conexión sin mostrar la clave */
+async function diagnose(req, res) {
+  const key = getKey();
+  const info = {
+    ok: false,
+    keyFound: Boolean(key),
+    keyVariable: process.env.GOOGLE_API_KEY ? "GOOGLE_API_KEY" : process.env.GEMINI_API_KEY ? "GEMINI_API_KEY" : process.env.GOOGLE_GENERATIVE_AI_API_KEY ? "GOOGLE_GENERATIVE_AI_API_KEY" : null,
+    keyLength: key.length,
+    environment: process.env.VERCEL_ENV || "local",
+    models: MODELS,
+  };
+  if (!String(req.url || "").includes("diag")) return res.status(200).json({ ok: true, keyFound: info.keyFound });
+  if (key) {
+    const r = await callGemini(key, { contents: [{ role: "user", parts: [{ text: "Responde solo: ok" }] }], generationConfig: { maxOutputTokens: 20 } }, 15_000);
+    info.ok = r.ok;
+    if (r.ok) info.modelUsed = r.model; else info.error = r.error.replace(key, "***");
+  }
+  return res.status(200).json(info);
+}
+
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
-  if (req.method !== "POST") { res.setHeader("Allow", "POST"); return res.status(405).json({ error: "Método no permitido" }); }
+  if (req.method === "GET") return diagnose(req, res);
+  if (req.method !== "POST") { res.setHeader("Allow", "POST, GET"); return res.status(405).json({ error: "Método no permitido" }); }
 
   let body;
   try { body = await readBody(req); } catch { return res.status(400).json({ error: "JSON inválido" }); }
@@ -122,7 +177,7 @@ export default async function handler(req, res) {
   const message = typeof body.message === "string" ? body.message.trim().slice(0, MAX_MSG) : "";
   if (!message) return res.status(400).json({ error: "Mensaje vacío" });
 
-  const key = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+  const key = getKey();
   if (!key) { console.error("Falta GOOGLE_API_KEY"); return res.status(200).json(fallback(lang)); }
 
   const page = typeof body.page === "string" ? body.page.slice(0, 120) : "/";
@@ -138,20 +193,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM }] },
-        contents,
-        generationConfig: { temperature: 0.4, maxOutputTokens: 1024, responseMimeType: "application/json", responseSchema: SCHEMA },
-      }),
-      signal: AbortSignal.timeout(25_000),
+    const { ok, data, error } = await callGemini(key, {
+      systemInstruction: { parts: [{ text: SYSTEM }] },
+      contents,
+      generationConfig: { temperature: 0.4, maxOutputTokens: 2048, responseMimeType: "application/json", responseSchema: SCHEMA },
     });
-    if (!r.ok) { console.error("Gemini", r.status, (await r.text()).slice(0, 500)); return res.status(200).json(fallback(lang)); }
-    const data = await r.json();
-    const text = data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
-    const out = JSON.parse(text);
+    if (!ok) { console.error("Gemini:", error); return res.status(200).json(fallback(lang)); }
+    const text = data?.candidates?.[0]?.content?.parts?.filter((p) => !p.thought).map((p) => p.text || "").join("") || "";
+    const out = parseJSON(text);
+    if (!out) { console.error("Respuesta no válida de Gemini:", text.slice(0, 300)); return res.status(200).json(fallback(lang)); }
 
     const links = (Array.isArray(out.links) ? out.links : [])
       .filter((l) => l && typeof l.url === "string" && ALLOWED.has(l.url) && typeof l.label === "string")
