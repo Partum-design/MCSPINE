@@ -46,8 +46,8 @@ function filtered() {
     if (state.cat !== "all" && p.category !== state.cat) return false;
     if (state.zone !== "all" && p.zone !== state.zone) return false;
     if (!terms.length) return true;
-    const es = `${p.name} ${p.desc} ${CATEGORY_LABEL[p.category]} ${p.zone ? ZONE_LABEL[p.zone] : ""}`;
-    const en = [p.name, p.desc, CATEGORY_LABEL[p.category], p.zone && ZONE_LABEL[p.zone]].map((x) => (x && EN[x]) || "").join(" ");
+    const es = `${p.name} ${p.brand || ""} ${p.desc} ${(p.features || []).join(" ")} ${CATEGORY_LABEL[p.category]} ${p.zone ? ZONE_LABEL[p.zone] : ""}`;
+    const en = [p.name, p.desc, ...(p.features || []), CATEGORY_LABEL[p.category], p.zone && ZONE_LABEL[p.zone]].map((x) => (x && EN[x]) || "").join(" ");
     const hay = norm(`${es} ${en}`);
     return terms.every((t) => hay.includes(t));
   });
@@ -137,6 +137,7 @@ const m = {
   tags: modal.querySelector("[data-m-tags]"),
   title: modal.querySelector("[data-m-title]"),
   desc: modal.querySelector("[data-m-desc]"),
+  features: modal.querySelector("[data-m-features]"),
   add: modal.querySelector("[data-m-add]"),
   wa: modal.querySelector("[data-m-wa]"),
   info: modal.querySelector("[data-m-info]"),
@@ -153,9 +154,11 @@ function fillModal(slug, animate) {
   m.img.src = p.img; m.img.alt = p.name;
   if (animate && !reduceMotion) { m.img.classList.remove("is-swapping"); void m.img.offsetWidth; m.img.classList.add("is-swapping"); }
   m.word.textContent = p.name.replace(/[⁺®™]/g, "").split(" ")[0].toUpperCase();
-  m.tags.innerHTML = `<span>${CATEGORY_LABEL[p.category]}</span>${p.zone ? `<span>${ZONE_LABEL[p.zone]}</span>` : ""}`;
+  m.tags.innerHTML = `${p.brand ? `<span data-no-i18n>${esc(p.brand)}</span>` : ""}<span>${CATEGORY_LABEL[p.category]}</span>${p.zone ? `<span>${ZONE_LABEL[p.zone]}</span>` : ""}`;
   m.title.textContent = p.name;
   m.desc.textContent = p.desc;
+  m.features.innerHTML = (p.features || []).map((f) => `<li><i class="ph ph-caret-right" aria-hidden="true"></i><span>${esc(f)}</span></li>`).join("");
+  m.features.hidden = !p.features?.length;
   m.add.dataset.add = p.slug;
   m.wa.href = waLink(`Hola MC Spine, me gustaría información sobre ${p.name}.`);
   m.info.href = `/contacto?producto=${p.slug}`;

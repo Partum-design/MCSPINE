@@ -130,6 +130,7 @@ export function productCard(p, i = 0, highlight = (s) => s) {
     <div class="p-card__media"><img src="${p.img}" alt="${p.name}" width="250" height="250" loading="lazy"></div>
     <div class="p-card__body">
       <div class="p-card__meta"><span>${CATEGORY_LABEL[p.category]}</span>${zone}</div>
+      ${p.brand ? `<small class="p-card__brand" data-no-i18n>${p.brand}</small>` : ""}
       <h3><a class="p-card__open" href="/catalogo?p=${p.slug}" data-open="${p.slug}">${highlight(p.name)}</a></h3>
       <p>${highlight(p.desc)}</p>
       <div class="p-card__actions">
@@ -144,9 +145,9 @@ export function productCard(p, i = 0, highlight = (s) => s) {
    INICIO
    ============================================================ */
 const ZONE_COPY = {
-  cervical: { title: "Columna cervical", text: "Placas, sistemas occipito-cervicales, mallas y sistemas intercorporales para la región cervical." },
-  toracolumbar: { title: "Columna toracolumbar", text: "Sistemas de tornillos poliaxiales para estabilización de la región torácica y lumbar." },
-  lumbar: { title: "Columna lumbar", text: "Cajas para fusión PLIF, TLIF, ALIF y lateral, disco artificial y espaciadores interespinosos." },
+  cervical: { title: "Columna cervical", text: "Cajas stand-alone con fijación integrada y prótesis de disco cervical." },
+  toracolumbar: { title: "Columna toracolumbar", text: "Fijación pedicular e interespinosa para la región torácica, lumbar y sacra." },
+  lumbar: { title: "Columna lumbar", text: "Cajas para fusión ALIF, TLIF, PLIF y lateral, cajas expandibles, prótesis de disco lumbar y estabilización dinámica." },
 };
 
 function initSpineExplorer() {
@@ -214,19 +215,19 @@ function initSpineExplorer() {
 // Anotaciones tomadas de la descripción de cada producto (sin datos inventados)
 const TECH = [
   {
-    slug: "tornillo-transpedicular", word: "PRECISIÓN",
-    left: [["Autorroscante", "Pensado para una inserción rápida."], ["Cabeza poliaxial", "Diseño especial en la cabeza del tornillo."]],
-    right: [["Estabilidad angular", "Una fijación angular más firme."]],
+    slug: "px-titan", word: "PRECISIÓN",
+    left: [["Recubrimiento BONIT®", "Favorece la integración ósea."], ["Aumento con cemento", "Mayor fijación en hueso osteoporótico."]],
+    right: [["Listo para usar", "Esterilizado y empaquetado en individual."]],
   },
   {
-    slug: "roi-a", word: "ANCLAJE",
-    left: [["Perfil cero", "Ningún componente sobresale por delante de los cuerpos vertebrales."], ["Sin placa anterior", "Su anclaje evita el uso de placa o tornillo."]],
-    right: [["Jaula ALIF", "Con un sistema de anclaje innovador."]],
+    slug: "mectalif-anterior", word: "ANCLAJE",
+    left: [["Stand-alone", "Caja y fijación anterior en un solo sistema."], ["Tecnología TiPEEK", "PEEK radiolúcido con recubrimiento de titanio."]],
+    right: [["Lordosis a elegir", "Ángulos de 5°, 10°, 15° y 20°."]],
   },
   {
-    slug: "mobi-c2", word: "MOVILIDAD",
-    left: [["Segunda generación", "Disco artificial de diseño avanzado."], ["Diseñado por cirujanos", "Creado por especialistas en ortopedia espinal."]],
-    right: [["Implantación patentada", "Un sistema único y fiable."]],
+    slug: "cp-esp", word: "MOVILIDAD",
+    left: [["Núcleo móvil", "De poliuretano quirúrgico."], ["Hidroxiapatita", "Recubrimiento que mejora la integración con el hueso."]],
+    right: [["Alternativa a la fusión", "Conserva la movilidad natural del cuello."]],
   },
 ];
 
@@ -281,7 +282,7 @@ function initTech() {
 function initRail() {
   const rail = document.querySelector("[data-rail]");
   if (!rail) return;
-  const featured = ["mobi-c2", "roi-a", "tornillo-transpedicular", "avenue-l", "c-plate", "adonis-tlif", "venus6t", "inswing", "placa-cervical-anterior"];
+  const featured = ["px-titan", "mectalif-anterior", "mectalif-transforaminal", "cp-esp", "regatta", "megafix", "perfect-c", "orthoblast-ii", "surgi-max-ultra"];
   rail.innerHTML = featured.map((s, i) => productCard(PRODUCTS.find((p) => p.slug === s), i)).join("");
   paintAddButtons(rail);
   document.querySelectorAll("[data-rail-dir]").forEach((b) => b.addEventListener("click", () => {
