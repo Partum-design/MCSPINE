@@ -128,10 +128,12 @@ export function productCard(p, i = 0, highlight = (s) => s) {
   const bi = brandInfo(p.brand);
   return `
   <article class="p-card${bi ? " p-card--featured" : ""}" style="--i:${i}">
-    <div class="p-card__media">${bi ? `<span class="p-card__logo"><img src="${bi.logo}" alt="${p.brand}" width="${bi.w}" height="${bi.h}" loading="lazy"></span>` : ""}<img src="${p.img}" alt="${p.name}" width="250" height="250" loading="lazy"></div>
+    <div class="p-card__media"><img src="${p.img}" alt="${p.name}" width="500" height="500" loading="lazy"></div>
     <div class="p-card__body">
+      ${bi
+        ? `<span class="p-card__mark"><img src="${bi.mark}" alt="${p.brand}" width="${bi.mw}" height="${bi.mh}" loading="lazy"></span>`
+        : p.brand ? `<small class="p-card__brand" data-no-i18n>${p.brand}</small>` : ""}
       <div class="p-card__meta"><span class="p-card__sub">${SUB_LABEL[p.sub]}</span>${zones}</div>
-      ${p.brand ? `<small class="p-card__brand" data-no-i18n>${p.brand}</small>` : ""}
       <h3><a class="p-card__open" href="/catalogo?p=${p.slug}" data-open="${p.slug}">${highlight(p.name)}</a></h3>
       <p>${highlight(p.desc)}</p>
       <div class="p-card__actions">

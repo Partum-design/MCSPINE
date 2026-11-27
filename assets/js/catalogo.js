@@ -80,7 +80,7 @@ function renderBrands() {
     const n = PRODUCTS.filter((p) => p.brand === b.name).length;
     return `
     <button class="brand-card" type="button" data-brand="${esc(b.name)}" aria-pressed="${state.brand === b.name}" aria-label="${esc(b.name)}: ver ${n} ${n === 1 ? "producto" : "productos"}">
-      <img src="${b.logo}" alt="" width="${b.w}" height="${b.h}">
+      <img src="${b.mark}" alt="" width="${b.mw}" height="${b.mh}">
       <span class="brand-card__meta"><span data-no-i18n>${esc(b.name)}</span><small>${n} ${n === 1 ? "producto" : "productos"}</small></span>
     </button>`;
   }).join("");
@@ -215,7 +215,7 @@ function fillModal(slug, animate) {
   if (animate && !reduceMotion) { m.img.classList.remove("is-swapping"); void m.img.offsetWidth; m.img.classList.add("is-swapping"); }
   m.word.textContent = p.name.replace(/[⁺®™]/g, "").split(" ")[0].toUpperCase();
   const bi = brandInfo(p.brand);
-  m.brand.innerHTML = bi ? `<img src="${bi.logo}" alt="${esc(p.brand)}" width="${bi.w}" height="${bi.h}">` : "";
+  m.brand.innerHTML = bi ? `<img src="${bi.mark}" alt="${esc(p.brand)}" width="${bi.mw}" height="${bi.mh}">` : "";
   m.brand.hidden = !bi;
   m.tags.innerHTML = `${p.brand ? `<span class="tag-brand" data-no-i18n>${esc(p.brand)}</span>` : ""}<span>${SUB_LABEL[p.sub]}</span><span>${CATEGORY_LABEL[p.category]}</span>${p.zones.map((z) => `<span class="tag-zone">${ZONE_LABEL[z]}</span>`).join("")}`;
   m.title.textContent = p.name;
@@ -233,7 +233,7 @@ function fillModal(slug, animate) {
     ...PRODUCTS.filter((x) => x.slug !== p.slug && x.zones[0] === p.zones[0] && x.sub === p.sub),
     ...PRODUCTS.filter((x) => x.slug !== p.slug && x.category === p.category),
   ].filter((x, i, a) => a.indexOf(x) === i).sort(byRecommended).slice(0, 3);
-  m.related.innerHTML = rel.map((r) => `<button type="button" data-goto="${r.slug}"><img src="${r.img}" alt="" width="250" height="250" loading="lazy">${r.name}</button>`).join("");
+  m.related.innerHTML = rel.map((r) => `<button type="button" data-goto="${r.slug}"><img src="${r.img}" alt="" width="500" height="500" loading="lazy">${r.name}</button>`).join("");
   paintAddButtons(modal);
   return true;
 }

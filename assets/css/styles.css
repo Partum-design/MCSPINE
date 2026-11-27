@@ -1832,3 +1832,49 @@ button.iso-seal:hover .iso-seal__cta, button.iso-seal:focus-visible .iso-seal__c
   .cert-modal__actions { width: 100%; justify-content: space-between; }
   .cert-modal__body { padding: .7rem; }
 }
+
+/* ============================================================
+   Imágenes de producto y logotipos de marca (v5.1)
+   Las imágenes vienen recortadas y centradas en un lienzo cuadrado;
+   el logotipo vive en el cuerpo de la tarjeta, nunca sobre el producto.
+   ============================================================ */
+.p-card__media,
+.p-card--featured .p-card__media {
+  aspect-ratio: 1 / .82;
+  background:
+    radial-gradient(70% 60% at 50% 42%, #fff 0%, #fff 35%, rgba(255,255,255,0) 72%),
+    linear-gradient(180deg, #f6f9fc, #e9f0f7);
+}
+.p-card__media::after { /* sombra de apoyo bajo el producto */
+  content: ""; position: absolute; left: 22%; right: 22%; bottom: 9%; height: 10%;
+  border-radius: 50%; background: radial-gradient(closest-side, rgba(13,37,70,.16), rgba(13,37,70,0));
+  pointer-events: none;
+}
+.p-card__media img {
+  position: relative; z-index: 1; width: 84%; height: 84%; object-fit: contain;
+  mix-blend-mode: normal; filter: drop-shadow(0 14px 18px rgba(13,37,70,.16));
+}
+.p-card:hover .p-card__media img { transform: scale(1.06) rotate(-2deg); }
+.p-card__mark { display: flex; align-items: center; height: 26px; margin-bottom: .1rem; }
+.p-card__mark img { height: 100%; width: auto; max-width: 150px; object-fit: contain; object-position: left center; }
+.p-card--featured { border-color: rgba(31,111,229,.18); }
+
+/* Ficha de producto */
+.p-modal__media img { width: min(78%, 420px); height: auto; aspect-ratio: 1; object-fit: contain; mix-blend-mode: normal; filter: drop-shadow(0 24px 30px rgba(13,37,70,.2)); }
+.p-modal__brand img { height: 40px; width: auto; max-width: 220px; object-fit: contain; }
+.related__list img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; mix-blend-mode: normal; }
+
+/* Banda de marcas del catálogo */
+.brand-card img { height: 40px; width: 150px; }
+@media (max-width: 640px) {
+  .p-card__mark { height: 20px; }
+  .p-card__mark img { max-width: 110px; }
+  .brand-card img { height: 30px; width: 120px; }
+}
+
+/* Miniaturas en inicio */
+.mini-card__img img, .tile--products .thumbs img { object-fit: contain; mix-blend-mode: normal; }
+.tech__figure img { mix-blend-mode: normal; }
+.p-card__mark { height: 30px; }
+.p-card__mark img { max-width: 160px; }
+@media (max-width: 640px) { .p-card__mark { height: 22px; } .p-card__mark img { max-width: 116px; } }

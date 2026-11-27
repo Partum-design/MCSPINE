@@ -37,8 +37,11 @@ export const ZONE_LABEL = Object.fromEntries(ZONES.map((z) => [z.id, z.label]));
 
 // Marcas con mayor peso visual (acuerdo de la minuta del 26/11/2026)
 export const FEATURED_BRANDS = [
-  { name: "Peter Brehm", logo: "/assets/img/marcas/peter-brehm.png", origin: "Alemania", w: 480, h: 455 },
-  { name: "Medacta International", logo: "/assets/img/marcas/medacta.png", origin: "Suiza", w: 480, h: 187 },
+  // logo: versión completa (espacios grandes) · mark: versión horizontal para tarjetas y fichas
+  { name: "Peter Brehm", logo: "/assets/img/marcas/peter-brehm.png", origin: "Alemania", w: 480, h: 455,
+    mark: "/assets/img/marcas/peter-brehm-h.png", mw: 677, mh: 120 },
+  { name: "Medacta International", logo: "/assets/img/marcas/medacta.png", origin: "Suiza", w: 480, h: 187,
+    mark: "/assets/img/marcas/medacta.png", mw: 480, mh: 187 },
 ];
 export const isFeaturedBrand = (brand) => FEATURED_BRANDS.some((b) => b.name === brand);
 export const brandInfo = (brand) => FEATURED_BRANDS.find((b) => b.name === brand);
