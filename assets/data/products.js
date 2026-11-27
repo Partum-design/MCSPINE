@@ -1,17 +1,21 @@
 // MC Spine — catálogo de productos (Catálogo de productos MC Spine, edición 2026).
-// Cada producto: { slug, name, brand, category, zone?, img, desc, features? }
-// zone (cervical | toracolumbar | lumbar) solo se asigna cuando el catálogo lo indica.
-// Productos sin zona aparecen en "Todas".
-// Categorías: fijacion | cajas | implantes | biologicos | equipos
+// Cada producto: { slug, zones, sub, name, brand, category, img, desc, features? }
+//
+// zones: zonas anatómicas donde se usa (un producto puede tener varias).
+//   PROPUESTA DE CLASIFICACIÓN PENDIENTE DE VALIDACIÓN POR MC SPINE (minuta 26/11/2026).
+//   Se basa en lo que dice cada ficha; PX-Titan no indica niveles en su técnica y se
+//   propone como torácica y lumbar por ser un sistema de tornillos pediculares.
+// sub: subcategoría acordada con el cliente (implantes | consumibles | equipos).
+// category: tipo de producto, se muestra como etiqueta en la ficha.
 
-export const CATEGORIES = [
+export const SUBCATEGORIES = [
   { id: "all", label: "Todos" },
-  { id: "fijacion", label: "Sistemas de fijación" },
-  { id: "cajas", label: "Cajas intersomáticas" },
-  { id: "implantes", label: "Prótesis y estabilización" },
-  { id: "biologicos", label: "Biológicos y selladores" },
-  { id: "equipos", label: "Equipos quirúrgicos" },
+  { id: "implantes", label: "Implantes" },
+  { id: "consumibles", label: "Consumibles" },
+  { id: "equipos", label: "Equipos" },
 ];
+
+export const SUB_LABEL = { implantes: "Implantes", consumibles: "Consumibles", equipos: "Equipos" };
 
 export const CATEGORY_LABEL = {
   fijacion: "Sistemas de fijación",
@@ -21,18 +25,30 @@ export const CATEGORY_LABEL = {
   equipos: "Equipos quirúrgicos",
 };
 
+// Orden de la columna, de arriba hacia abajo. "general" agrupa lo que se usa en cualquier nivel.
 export const ZONES = [
-  { id: "cervical", label: "Cervical" },
-  { id: "toracolumbar", label: "Toracolumbar" },
-  { id: "lumbar", label: "Lumbar" },
+  { id: "cervical", label: "Cervical", levels: "C1 – C7" },
+  { id: "toracica", label: "Torácica", levels: "T1 – T12" },
+  { id: "lumbar", label: "Lumbar y sacra", levels: "L1 – S1" },
+  { id: "general", label: "Toda la columna", levels: "Uso en cualquier nivel" },
 ];
 
-export const ZONE_LABEL = { cervical: "Cervical", toracolumbar: "Toracolumbar", lumbar: "Lumbar" };
+export const ZONE_LABEL = Object.fromEntries(ZONES.map((z) => [z.id, z.label]));
+
+// Marcas con mayor peso visual (acuerdo de la minuta del 26/11/2026)
+export const FEATURED_BRANDS = [
+  { name: "Peter Brehm", logo: "/assets/img/marcas/peter-brehm.png", origin: "Alemania", w: 480, h: 455 },
+  { name: "Medacta International", logo: "/assets/img/marcas/medacta.png", origin: "Suiza", w: 480, h: 187 },
+];
+export const isFeaturedBrand = (brand) => FEATURED_BRANDS.some((b) => b.name === brand);
+export const brandInfo = (brand) => FEATURED_BRANDS.find((b) => b.name === brand);
 
 export const PRODUCTS = [
   // ---------- Peter Brehm ----------
   {
     slug: "px-titan",
+    zones: ["toracica", "lumbar"],
+    sub: "implantes",
     name: "PX-Titan® Expertise Integration",
     brand: "Peter Brehm",
     category: "fijacion",
@@ -51,7 +67,8 @@ export const PRODUCTS = [
   // ---------- Medacta International ----------
   {
     slug: "mecta-c",
-    zone: "cervical",
+    zones: ["cervical"],
+    sub: "implantes",
     name: "Mecta-C® Stand Alone",
     brand: "Medacta International",
     category: "cajas",
@@ -67,7 +84,8 @@ export const PRODUCTS = [
   },
   {
     slug: "mectalif-anterior",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "MectaLIF® Anterior",
     brand: "Medacta International",
     category: "cajas",
@@ -84,7 +102,8 @@ export const PRODUCTS = [
   },
   {
     slug: "mectalif-transforaminal",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "MectaLIF® Transforaminal",
     brand: "Medacta International",
     category: "cajas",
@@ -102,7 +121,8 @@ export const PRODUCTS = [
   // ---------- Group FH Ortho ----------
   {
     slug: "cp-esp",
-    zone: "cervical",
+    zones: ["cervical"],
+    sub: "implantes",
     name: "CP-ESP®",
     brand: "Group FH Ortho",
     category: "implantes",
@@ -119,7 +139,8 @@ export const PRODUCTS = [
   },
   {
     slug: "lp-esp",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "LP-ESP®",
     brand: "Group FH Ortho",
     category: "implantes",
@@ -138,7 +159,8 @@ export const PRODUCTS = [
   // ---------- SeaSpine ----------
   {
     slug: "regatta",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "REGATTA®",
     brand: "SeaSpine",
     category: "cajas",
@@ -155,7 +177,8 @@ export const PRODUCTS = [
   },
   {
     slug: "seaspine-interespinoso",
-    zone: "toracolumbar",
+    zones: ["toracica", "lumbar"],
+    sub: "implantes",
     name: "Sistema Interespinoso SeaSpine®",
     brand: "SeaSpine",
     category: "fijacion",
@@ -174,7 +197,8 @@ export const PRODUCTS = [
   // ---------- Medtronic ----------
   {
     slug: "diam",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "DIAM™",
     brand: "Medtronic",
     category: "implantes",
@@ -193,7 +217,8 @@ export const PRODUCTS = [
   // ---------- SeohanCare ----------
   {
     slug: "megafix",
-    zone: "toracolumbar",
+    zones: ["toracica", "lumbar"],
+    sub: "implantes",
     name: "MEGAFIX®",
     brand: "SeohanCare",
     category: "fijacion",
@@ -209,7 +234,8 @@ export const PRODUCTS = [
   },
   {
     slug: "procage",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "PROCAGE™",
     brand: "SeohanCare",
     category: "cajas",
@@ -225,7 +251,8 @@ export const PRODUCTS = [
   },
   {
     slug: "perfect-c",
-    zone: "cervical",
+    zones: ["cervical"],
+    sub: "implantes",
     name: "PERFECT-C®",
     brand: "SeohanCare",
     category: "cajas",
@@ -240,7 +267,8 @@ export const PRODUCTS = [
   },
   {
     slug: "banane",
-    zone: "lumbar",
+    zones: ["lumbar"],
+    sub: "implantes",
     name: "BANANE®",
     brand: "SeohanCare",
     category: "cajas",
@@ -258,6 +286,8 @@ export const PRODUCTS = [
   // ---------- Biológicos ----------
   {
     slug: "orthoblast-ii",
+    zones: ["general"],
+    sub: "consumibles",
     name: "OrthoBlast® II",
     brand: "Biograft",
     category: "biologicos",
@@ -273,6 +303,8 @@ export const PRODUCTS = [
   },
   {
     slug: "duraseal",
+    zones: ["general"],
+    sub: "consumibles",
     name: "DuraSeal®",
     brand: "Integra",
     category: "biologicos",
@@ -290,6 +322,8 @@ export const PRODUCTS = [
   // ---------- Equipos quirúrgicos ----------
   {
     slug: "surgi-max-ultra",
+    zones: ["general"],
+    sub: "equipos",
     name: "Surgi-Max® Ultra",
     brand: "Elliquence",
     category: "equipos",
@@ -305,6 +339,8 @@ export const PRODUCTS = [
   },
   {
     slug: "trigger-flex",
+    zones: ["general"],
+    sub: "consumibles",
     name: "Trigger-Flex® Bipolar",
     brand: "Elliquence",
     category: "equipos",
@@ -320,6 +356,8 @@ export const PRODUCTS = [
   },
   {
     slug: "pinzas-bipolares",
+    zones: ["general"],
+    sub: "equipos",
     name: "Pinzas Bipolares Reutilizables",
     brand: "Elliquence",
     category: "equipos",
@@ -335,6 +373,8 @@ export const PRODUCTS = [
   },
   {
     slug: "sonopet",
+    zones: ["general"],
+    sub: "equipos",
     name: "SONOPET®",
     brand: "Stryker",
     category: "equipos",

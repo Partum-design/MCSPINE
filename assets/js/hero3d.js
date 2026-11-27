@@ -1,7 +1,7 @@
 /* MC Spine · Columna 3D del hero (Three.js, modelado procedural)
    - Se arma vértebra por vértebra al terminar el preloader
    - Discos con brillo (bloom), partículas, paralaje con el puntero
-   - Selector de zona: cervical / toracolumbar / lumbar
+   - Selector de zona: cervical / torácica / lumbar
    - Solo renderiza mientras el hero está visible; respeta "reducir movimiento" */
 import * as THREE from "three";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
@@ -42,25 +42,25 @@ function init() {
   } catch { /* sin información del GPU: se intenta y se mide el rendimiento */ }
   hero.classList.add("is-arming"); // el logotipo espera a que la columna se arme (ver CSS)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.5));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = THREE.NoToneMapping; // fondo blanco exacto (ACES lo agrisaba)
   renderer.toneMappingExposure = 1.0;
-  renderer.setClearColor(0x06132a, 1);
+  renderer.setClearColor(0xf4f8fc, 1); // línea visual blanca
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x06132a, 22, 70);
+  scene.fog = new THREE.Fog(0xf4f8fc, 24, 70);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   const camBase = { z: isMobile ? 19 : 15.5, y: 0 };
   camera.position.set(0, 0, camBase.z);
 
   /* ---------- Luces ---------- */
-  scene.add(new THREE.HemisphereLight(0x9cc3ff, 0x07142b, 0.55));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb4cc, 0.9));
   const key = new THREE.DirectionalLight(0xffffff, 1.5);
   key.position.set(-6, 6, 9);
   scene.add(key);
-  const rimA = new THREE.PointLight(0x2f7bff, 90, 24, 1.6);
+  const rimA = new THREE.PointLight(0x2f7bff, 60, 24, 1.6);
   rimA.position.set(4, 2, -5);
   scene.add(rimA);
-  const rimB = new THREE.PointLight(0x5fd2ff, 55, 22, 1.6);
+  const rimB = new THREE.PointLight(0x5fd2ff, 35, 22, 1.6);
   rimB.position.set(-5, -4, -4);
   scene.add(rimB);
 
@@ -70,9 +70,9 @@ function init() {
     c.width = c.height = 256;
     const g = c.getContext("2d");
     const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    grd.addColorStop(0, "rgba(47,123,255,0.9)");
-    grd.addColorStop(0.35, "rgba(31,90,200,0.35)");
-    grd.addColorStop(1, "rgba(6,19,42,0)");
+    grd.addColorStop(0, "rgba(120,170,240,0.55)");
+    grd.addColorStop(0.4, "rgba(185,209,234,0.3)");
+    grd.addColorStop(1, "rgba(244,248,252,0)");
     g.fillStyle = grd;
     g.fillRect(0, 0, 256, 256);
     return new THREE.CanvasTexture(c);
@@ -105,11 +105,11 @@ function init() {
 
   /* ---------- Materiales ---------- */
   const bone = new THREE.MeshPhysicalMaterial({
-    color: 0xd4e3f6, roughness: 0.42, metalness: 0.04, clearcoat: 0.55, clearcoatRoughness: 0.35,
-    emissive: 0x0b2350, emissiveIntensity: 0.22,
+    color: 0xb4c6dc, roughness: 0.42, metalness: 0.04, clearcoat: 0.55, clearcoatRoughness: 0.35,
+    emissive: 0x0b2350, emissiveIntensity: 0.12,
   });
   const discMats = [0, 1, 2].map(() => new THREE.MeshStandardMaterial({
-    color: 0x8cc6ff, emissive: 0x2f86ff, emissiveIntensity: 1.4, roughness: 0.25, metalness: 0,
+    color: 0x2f7bff, emissive: 0x1f6fe5, emissiveIntensity: 1.4, roughness: 0.25, metalness: 0,
   }));
 
   /* ---------- Geometrías ---------- */
@@ -236,23 +236,23 @@ function init() {
     c.width = c.height = 64;
     const g = c.getContext("2d");
     const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grd.addColorStop(0, "rgba(255,255,255,1)");
-    grd.addColorStop(0.3, "rgba(140,198,255,.8)");
-    grd.addColorStop(1, "rgba(47,123,255,0)");
+    grd.addColorStop(0, "rgba(31,111,229,.9)");
+    grd.addColorStop(0.35, "rgba(31,111,229,.45)");
+    grd.addColorStop(1, "rgba(31,111,229,0)");
     g.fillStyle = grd;
     g.fillRect(0, 0, 64, 64);
     return new THREE.CanvasTexture(c);
   })();
   const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
     size: isMobile ? 0.16 : 0.13, map: dotTex, transparent: true, depthWrite: false,
-    blending: THREE.AdditiveBlending, opacity: 0.85, color: 0x9fd0ff,
+    blending: THREE.NormalBlending, opacity: 0.45, color: 0xffffff,
   }));
   scene.add(particles);
 
   /* ---------- Post-procesado ---------- */
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), isMobile ? 0.55 : 0.62, 0.5, 0.6);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), isMobile ? 0.3 : 0.35, 0.4, 0.97);
   composer.addPass(bloom);
   const bloomBase = bloom.strength;
   composer.addPass(new OutputPass());

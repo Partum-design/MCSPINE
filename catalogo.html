@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Catálogo de productos | MC Spine</title>
-  <meta name="description" content="Catálogo MC Spine: sistemas de fijación, cajas intersomáticas, prótesis de disco, biológicos y equipos quirúrgicos. Busca, filtra por zona y solicita tu cotización.">
+  <meta name="description" content="Catálogo MC Spine por zona anatómica: implantes, consumibles y equipos para cirugía de columna de Peter Brehm, Medacta y otras marcas líderes. Solicita tu cotización.">
   <link rel="canonical" href="https://mcspine.vercel.app/catalogo">
-  <meta name="theme-color" content="#0a1b33">
+  <meta name="theme-color" content="#ffffff">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_MX">
   <meta property="og:site_name" content="MC Spine">
   <meta property="og:title" content="Catálogo de productos | MC Spine">
-  <meta property="og:description" content="Catálogo MC Spine: sistemas de fijación, cajas intersomáticas, prótesis de disco, biológicos y equipos quirúrgicos. Busca, filtra por zona y solicita tu cotización.">
+  <meta property="og:description" content="Catálogo MC Spine por zona anatómica: implantes, consumibles y equipos para cirugía de columna de Peter Brehm, Medacta y otras marcas líderes. Solicita tu cotización.">
   <meta property="og:url" content="https://mcspine.vercel.app/catalogo">
   <meta property="og:image" content="https://mcspine.vercel.app/assets/img/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -72,28 +72,41 @@
       <div class="container page-hero__inner">
         <nav class="breadcrumb" aria-label="Ruta"><a href="/">Inicio</a><span>/</span><span>Catálogo</span></nav>
         <h1 class="h1" data-reveal>Catálogo de productos</h1>
-        <p class="lead" data-reveal style="--d:100ms">Implantes y sistemas para cirugía de columna de alta precisión. Marca los que te interesan y solicita tu cotización en un solo mensaje.</p>
+        <p class="lead" data-reveal style="--d:100ms">Implantes, consumibles y equipos para cirugía de columna, organizados por zona anatómica. Marca los que te interesan y solicita tu cotización en un solo mensaje.</p>
       </div>
     </section>
 
-    <section class="container" style="padding-bottom:2rem">
-      <div class="catalog-bar">
-        <div class="catalog-bar__row">
-          <label class="search">
-            <span class="sr-only">Buscar productos</span>
-            <i class="ph ph-magnifying-glass"></i>
-            <input type="search" data-search placeholder="Buscar producto (ej. lumbar, Medacta)" autocomplete="off">
-            <kbd aria-hidden="true">/</kbd>
-            <button class="search__clear" type="button" aria-label="Borrar búsqueda"><i class="ph ph-x"></i></button>
-          </label>
-          <label><span class="sr-only">Zona de la columna</span><select class="select" data-zone-select></select></label>
-          <label><span class="sr-only">Orden</span><select class="select" data-sort><option value="default">Recomendados</option><option value="az">Nombre A-Z</option></select></label>
-          <button class="btn" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
-        </div>
-        <div class="chips" data-chips role="group" aria-label="Categorías"></div>
+    <section class="container catalog-brands" aria-labelledby="brands-title">
+      <div class="catalog-brands__head">
+        <span class="label">Marcas destacadas</span>
+        <h2 id="brands-title" class="h3">Tecnología alemana y suiza para columna</h2>
       </div>
-      <div class="catalog-status" data-status aria-live="polite"></div>
-      <div class="product-grid" data-grid></div>
+      <div class="catalog-brands__list" data-brands role="group" aria-label="Filtrar por marca"></div>
+    </section>
+
+    <section class="container catalog" style="padding-bottom:2rem">
+      <aside class="zone-col" aria-labelledby="zone-col-title">
+        <h2 id="zone-col-title" class="zone-col__title"><i class="ph ph-person-simple" aria-hidden="true"></i>Zona anatómica</h2>
+        <div class="zone-col__list" data-zone-col role="group" aria-label="Zona anatómica"></div>
+      </aside>
+      <div class="catalog__main">
+        <div class="catalog-bar">
+          <div class="catalog-bar__row">
+            <label class="search">
+              <span class="sr-only">Buscar productos</span>
+              <i class="ph ph-magnifying-glass"></i>
+              <input type="search" data-search placeholder="Buscar producto (ej. lumbar, Medacta)" autocomplete="off">
+              <kbd aria-hidden="true">/</kbd>
+              <button class="search__clear" type="button" aria-label="Borrar búsqueda"><i class="ph ph-x"></i></button>
+            </label>
+            <label><span class="sr-only">Orden</span><select class="select" data-sort><option value="default">Por zona anatómica</option><option value="az">Nombre A-Z</option></select></label>
+            <button class="btn" type="button" data-quote-open><i class="ph ph-clipboard-text"></i>Mi cotización</button>
+          </div>
+          <div class="chips" data-chips role="group" aria-label="Subcategorías"></div>
+        </div>
+        <div class="catalog-status" data-status aria-live="polite"></div>
+        <div data-grid></div>
+      </div>
     </section>
 
     <section class="section" style="padding-bottom:0">
@@ -124,6 +137,7 @@
         </div>
         <div class="p-modal__body">
           <button class="p-modal__close" type="button" data-m-close aria-label="Cerrar"><i class="ph ph-x"></i></button>
+          <div class="p-modal__brand" data-m-brand hidden></div>
           <div class="p-modal__tags" data-m-tags></div>
           <h2 id="m-title" data-m-title></h2>
           <p class="p-modal__desc" data-m-desc></p>

@@ -1,6 +1,6 @@
 /* MC Spine · interacciones compartidas (sin dependencias) */
 window.__mcBoot = true;
-import { PRODUCTS, CATEGORY_LABEL, ZONE_LABEL } from "../data/products.js";
+import { PRODUCTS, CATEGORY_LABEL, SUB_LABEL, ZONE_LABEL, brandInfo, isFeaturedBrand } from "../data/products.js";
 import { quote, initQuoteUI, toast, openQuote, waLink, mailLink, quoteMessage } from "./quote.js";
 import { initPrefs } from "./prefs.js";
 
@@ -124,12 +124,13 @@ function initAddButtons() {
 
 /* ---------- Tarjeta de producto reutilizable ---------- */
 export function productCard(p, i = 0, highlight = (s) => s) {
-  const zone = p.zone ? `<span>${ZONE_LABEL[p.zone]}</span>` : "";
+  const zones = p.zones.map((z) => `<span>${ZONE_LABEL[z]}</span>`).join("");
+  const bi = brandInfo(p.brand);
   return `
-  <article class="p-card" style="--i:${i}">
-    <div class="p-card__media"><img src="${p.img}" alt="${p.name}" width="250" height="250" loading="lazy"></div>
+  <article class="p-card${bi ? " p-card--featured" : ""}" style="--i:${i}">
+    <div class="p-card__media">${bi ? `<span class="p-card__logo"><img src="${bi.logo}" alt="${p.brand}" width="${bi.w}" height="${bi.h}" loading="lazy"></span>` : ""}<img src="${p.img}" alt="${p.name}" width="250" height="250" loading="lazy"></div>
     <div class="p-card__body">
-      <div class="p-card__meta"><span>${CATEGORY_LABEL[p.category]}</span>${zone}</div>
+      <div class="p-card__meta"><span class="p-card__sub">${SUB_LABEL[p.sub]}</span>${zones}</div>
       ${p.brand ? `<small class="p-card__brand" data-no-i18n>${p.brand}</small>` : ""}
       <h3><a class="p-card__open" href="/catalogo?p=${p.slug}" data-open="${p.slug}">${highlight(p.name)}</a></h3>
       <p>${highlight(p.desc)}</p>
@@ -146,8 +147,8 @@ export function productCard(p, i = 0, highlight = (s) => s) {
    ============================================================ */
 const ZONE_COPY = {
   cervical: { title: "Columna cervical", text: "Cajas stand-alone con fijación integrada y prótesis de disco cervical." },
-  toracolumbar: { title: "Columna toracolumbar", text: "Fijación pedicular e interespinosa para la región torácica, lumbar y sacra." },
-  lumbar: { title: "Columna lumbar", text: "Cajas para fusión ALIF, TLIF, PLIF y lateral, cajas expandibles, prótesis de disco lumbar y estabilización dinámica." },
+  toracica: { title: "Columna torácica", text: "Fijación pedicular e interespinosa para la región torácica." },
+  lumbar: { title: "Columna lumbar y sacra", text: "Cajas para fusión ALIF, TLIF, PLIF y lateral, cajas expandibles, prótesis de disco lumbar, estabilización dinámica y fijación posterior." },
 };
 
 function initSpineExplorer() {
@@ -160,7 +161,7 @@ function initSpineExplorer() {
   // Columna dibujada con el mismo motivo de vértebras del logotipo
   const groups = [
     { id: "cervical", n: 7, w: [20, 30], h: 10, gap: 5 },
-    { id: "toracolumbar", n: 12, w: [32, 44], h: 13, gap: 5 },
+    { id: "toracica", n: 12, w: [32, 44], h: 13, gap: 5 },
     { id: "lumbar", n: 5, w: [48, 58], h: 19, gap: 6 },
   ];
   let y = 4, idx = 0, out = "";
@@ -183,7 +184,7 @@ function initSpineExplorer() {
   const select = (zone) => {
     btns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.zone === zone)));
     svg.querySelectorAll(".zone").forEach((g) => g.classList.toggle("is-active", g.dataset.zoneSvg === zone));
-    const items = PRODUCTS.filter((p) => p.zone === zone);
+    const items = PRODUCTS.filter((p) => p.zones.includes(zone)).sort((a, b) => (isFeaturedBrand(b.brand) - isFeaturedBrand(a.brand)));
     const c = ZONE_COPY[zone];
     panel.innerHTML = `
       <div class="zone-panel__head">
@@ -198,7 +199,12 @@ function initSpineExplorer() {
           </a>`).join("")}
       </div>`;
   };
-  btns.forEach((b) => b.addEventListener("click", () => select(b.dataset.zone)));
+  btns.forEach((b) => {
+    const n = PRODUCTS.filter((p) => p.zones.includes(b.dataset.zone)).length;
+    const small = b.querySelector("small");
+    if (small) small.textContent = `${n} productos`;
+    b.addEventListener("click", () => select(b.dataset.zone));
+  });
   svg.addEventListener("click", (e) => { const g = e.target.closest("[data-zone-svg]"); if (g) select(g.dataset.zoneSvg); });
   // Navegación con flechas entre pestañas
   root.querySelector("[role=tablist]").addEventListener("keydown", (e) => {
@@ -288,6 +294,17 @@ function initRail() {
   document.querySelectorAll("[data-rail-dir]").forEach((b) => b.addEventListener("click", () => {
     rail.scrollBy({ left: +b.dataset.railDir * (rail.clientWidth * 0.8), behavior: reduceMotion ? "auto" : "smooth" });
   }));
+}
+
+
+/* ---------- Certificado ISO 9001:2015 en ventana ---------- */
+function initCert() {
+  const dlg = document.querySelector("[data-cert]");
+  if (!dlg) return;
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-cert-open]")) { e.preventDefault(); dlg.showModal(); dlg.querySelector(".cert-modal__body").scrollTop = 0; }
+  });
+  dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-cert-close]")) dlg.close(); });
 }
 
 /* ============================================================
@@ -397,7 +414,7 @@ function runPreloader() {
 
 /* ---------- Arranque ---------- */
 function safe(fn) { try { fn(); } catch (err) { console.warn("[MC Spine]", fn.name, err); } }
-[initPrefs, initHeader, initHeroPin, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initContact, initLegalToc].forEach(safe);
+[initPrefs, initHeader, initHeroPin, initMenu, initQuoteUI, initAddButtons, initSpineExplorer, initTech, initRail, initCert, initContact, initLegalToc].forEach(safe);
 // Las animaciones de entrada arrancan cuando el preloader se retira
 runPreloader().then(() => {
   window.__mcReady = true;
